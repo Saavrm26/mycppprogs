@@ -1,0 +1,1 @@
+{"name":"Local: test1","url":"e:\\c++\\codechef\\temp\\test1.cpp","tests":[{"id":1643273134425,"input":"4\n9669\n9996\n6996\n96669","output":"9969\n9999\n9996\n99669"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\c++\\codechef\\temp\\test1.cpp","group":"local","local":true}

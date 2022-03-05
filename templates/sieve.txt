@@ -1,0 +1,11 @@
+vector<int> isPrime(1e5+1,1);
+isPrime[0]=0;
+isPrime[1]=0;
+for(int i=2;i<1e5+1;i++){
+    if(isPrime[i]){
+        vec[i]=1;
+        for(int j=2*i;j<1e5+1;j=j+i){
+            isPrime[j]=0;
+        }
+    }
+}

@@ -1,0 +1,31 @@
+{
+    
+    "version": "2.0.0",
+    "tasks": [
+		{
+			"type": "shell",
+			"label": "(GLOBAL)Run C++ Program: g++.exe ",
+			"command": "C:\\msys64\\mingw64\\bin\\g++ -fdiagnostics-color=always -g3 -Wall \"${file}\" -o \"..\\out\\${fileBasenameNoExtension}.exe\" &&cd \"..\\out\" && \"${fileBasenameNoExtension}.exe\"",
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"detail": "compiler : C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\bin\\g++.exe"
+		},
+		{
+			"type": "shell",
+			"label": "(GLOBAL)Run C++ Program: gcc.exe ",
+			"command": "C:\\msys64\\mingw64\\bin\\gcc -fdiagnostics-color=always -g3 -Wall \"${file}\" -o \"..\\out\\${fileBasenameNoExtension}.exe\" &&cd \"..\\out\" && \"${fileBasenameNoExtension}.exe\"",
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"detail": "compiler : C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\bin\\gcc.exe"
+		}
+	]
+}
+
