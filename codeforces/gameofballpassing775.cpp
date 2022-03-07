@@ -30,9 +30,7 @@ int main(){
         //     }
         // }
         if(sum<max){
-            
-            cout<<1+ (max-sum)/(n-1) + ((max-sum)%(n-1) ? 1 : 0)<<"\n" ;
-            
+            cout<<max-sum<<endl;
         }
         else{
             if(max!=0)
