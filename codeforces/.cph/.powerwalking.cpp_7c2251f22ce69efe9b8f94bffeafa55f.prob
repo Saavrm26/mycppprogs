@@ -1,0 +1,1 @@
+{"name":"Local: powerwalking","url":"d:\\c++\\codeforces\\powerwalking.cpp","tests":[{"id":1646555136792,"input":"2\n3\n1 1 2\n6\n5 1 2 2 2 4","output":"2 2 3 \n4 4 4 4 5 6"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codeforces\\powerwalking.cpp","group":"local","local":true}
