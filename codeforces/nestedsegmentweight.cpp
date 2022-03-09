@@ -10,12 +10,9 @@ int main(){
     int t;
     cin>>t;
     while(t--){
-        // string garb;
-        // cin>>garb;
-        // // cin.ignore();
         int n,m;
         cin>>n>>m;
-        vector<pair<int , pair<int,int>>> vec(m); // m and x
+        vector<pair<int , pair<int,int>>> vec(m); // m and x and i
         for(int i=0;i<m;i++){
             int a,b;
             cin>>a>>b;
