@@ -1,0 +1,1 @@
+{"name":"Local: div_mod","url":"d:\\c++\\codeforces\\div_mod.cpp","tests":[{"id":1646753938027,"input":"7\n14 16 7\n5 8 4\n6 10 6\n1000000000 1000000000 1000000000\n2 19 5\n11 14 13\n2 32 5","output":"4\n4\n5\n1\n7\n12"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codeforces\\div_mod.cpp","group":"local","local":true}
