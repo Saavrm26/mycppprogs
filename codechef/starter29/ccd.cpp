@@ -15,16 +15,42 @@ int main(){
         cin>>n>>q;
         string a,b;
         cin>>a>>b;
-        vll a_sum(n);
+        vll diff_arr(n);
         vll b_sum(n);
-        a_sum[0]=(ll)(a[0])-96;
-        b_sum[0]=(ll)(b[0])-96;
+        diff_arr[0]=(ll)(a[0]-b[0]);
         for(ll i=1;i<n;i++){
-            a_sum[i] += a_sum[i-1] +(ll)(a[i])-96;
-            b_sum[i] += b_sum[i-1] +(ll)(b[i])-96;
+            if((i+1)%2==0){
+                if(a[i]<b[i])
+                    diff_arr[i] += diff_arr[i-1] - (ll)(b[i]-a[i]);
+                else
+                    diff_arr[i] += diff_arr[i-1] -(ll)(('z'-a[i]+b[i] - 'a' +1));
+            }
+            else{
+                if(a[i]<b[i])
+                    diff_arr[i] += diff_arr[i-1] + (ll)(b[i]-a[i]);
+                else
+                    diff_arr[i] += diff_arr[i-1] + (ll)(('z'-a[i]+b[i]-'a'+1));
+            }
         }
         while(q--){
-            
+            int l,r;
+            cin>>l>>r;
+            if(l==r){
+                cout<<"yes"<<endl;
+            }
+            else if(l!=1)
+                if(diff_arr[r-1]-diff_arr[l-2]==0)
+                    cout<<"Yes"<<endl;
+                else{
+                    cout<<"No"<<endl;
+                }
+            else{
+                if(diff_arr[r-1]==0)
+                    cout<<"Yes"<<endl;
+                else
+                    cout<<"No"<<endl;
+                
+            }
         }
     }
 }

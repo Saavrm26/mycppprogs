@@ -19,14 +19,14 @@ int main(){
         auto v=vec;
         sort(v.begin(),v.end());
         int k_largest=1;
-        string ans="";
+        vector<int> ans;
         while(k_largest<=n){
             if(vec[n-k_largest]==v[n-k_largest]){
-                ans += "0 ";
+                ans.push_back(0);
             }
             else{
                 auto idx = find(vec.begin(),vec.end(),v[n-k_largest]);
-                ans+=to_string(idx+1-vec.begin()) + " ";
+                ans.push_back(idx+1-vec.begin());
                 rotate(vec.begin(),idx+1,vec.end()-k_largest+1);
             }
             k_largest++;
@@ -36,10 +36,12 @@ int main(){
             if(vec[i]==v[i]) f=true;
             else{f=false;break;}
         }
-        if(f)
-            reverse(ans.begin(),ans.end());
+        if(f){
+            for(int i=ans.size()-1;i>=0;i--)
+                cout<<ans[i]<<" ";
+        }
         else
             cout<<"-1";
-            cout<<ans<<"\n";
+        cout<<"\n";
     }
 }
