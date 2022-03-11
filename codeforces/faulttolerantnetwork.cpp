@@ -55,10 +55,11 @@ int main(){
         minis.push_back(column_mini(grid,1));
         minis.push_back(column_mini(grid,2));
         sort(minis.begin(),minis.end());
-        if(abs(A[0]-B[0])+abs(A[3]-B[3])==(minis[0]+minis[1]))
-            cout<<(ll)(minis[0])+(ll)(minis[1])<<"\n";
-        else{
-            cout<<(ll)(minis[0])+(ll)(minis[1])+(ll)(minis[2])+(ll)(minis[3])<<"\n";
-        }
+        // if(abs(A[0]-B[0])+abs(A[3]-B[3])==(minis[0]+minis[1]))
+        //     cout<<(ll)(minis[0])+(ll)(minis[1])<<"\n";
+        // else{
+        //     cout<<(ll)(minis[0])+(ll)(minis[1])+(ll)(minis[2])+(ll)(minis[3])<<"\n";
+        // }
+        cout<<min(((ll)(minis[0])+(ll)(minis[1])+(ll)(minis[2])+(ll)(minis[3])),(ll)(abs(A[0]-B[0])+abs(A[3]-B[3])))<<"\n";
     }
 }
