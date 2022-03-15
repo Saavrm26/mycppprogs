@@ -3,7 +3,7 @@ using namespace std;
 
 int main(){
     string s;
-    s="2";
-    s += 1;
-    cout<<s;   
+    s="0111";
+    int n= 
+    cout<<n;   
 }
