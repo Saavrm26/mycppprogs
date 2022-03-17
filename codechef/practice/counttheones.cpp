@@ -3,18 +3,20 @@ using namespace std;
 
 #define vi vector<int>
 #define ll long long
+#define vll vector<long long>
+vll fact_lookup(51);
 ll ncr(ll n,ll r){
-    ll numerator=1,denominator=1;
-    for(int i=n-r+1;i<=n;i++)
-        numerator *=i;
-    for(int i=1;i<=r;i++)
-        denominator *= i;
-    return (numerator/denominator);
+    return (fact_lookup[n]/(fact_lookup[r]*fact_lookup[n-r]));
 }
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
+    fact_lookup[0]=1;
+    fact_lookup[1]=1;
+    for(ll i=2;i<=50;i++){
+        fact_lookup[i]=fact_lookup[i-1]*i;
+    }
     int t;
     cin>>t;
     while(t--){
