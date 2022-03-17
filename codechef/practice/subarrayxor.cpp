@@ -3,50 +3,47 @@ using namespace std;
 
 #define vi vector<int>
 #define ll long long
+#define vll vector<long long>
 #define mod 998244353;
-ll stob(string str){
-    ll num=0;
-    for(int i=str.size()-1;i>=0;i--){
-        int bit=str[i]-'0';
-        num += bit*(1<<(str.size()-i-1)); 
-    }
-    return num;
-}
 int main(){
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    int t;
+    ll t;
     cin>>t;
     while(t--){
         ll n;
         cin>>n;
         string str;
         cin>>str;
-        ll odd_mask=0,even_mask=0;
-        // even_mask=2,odd_mask=1;
-        for(ll i=1;i<=(n+1)/2;i++){
-            even_mask=(even_mask<<2)+2 ;
-            odd_mask=(odd_mask<<2)+1;
-        }
-        ll num=stob(str);
-        ll beauty=0;
-        if(n%2==0){
-            for(ll i =n-1;i>=0;i--){
-                beauty=beauty^(num&even_mask);
-                // beauty=beauty%mod;
-                even_mask=even_mask>>1;
-                num=num>>1;
+        vll prefix(n,0);
+        for(ll i=0;i<n;i++){
+            if(str[i]=='1'){
+                if(i==0)
+                    prefix[0]=i+1;
+                else
+                    prefix[i]=prefix[i-1]+i+1;
+            }
+            else{
+                if(i!=0)
+                    prefix[i]=prefix[i-1];
             }
         }
-        else{
-            for(ll i =n-1;i>=0;i--){
-                beauty=beauty^(num&odd_mask);
-                odd_mask=odd_mask>>1;
-                num=num>>1;
+        // vector<int> cnt(n);
+        // for (int i = 0; i < n; ++i)
+        //     if (str[i] == '1') cnt [n - i - 1] += (i + 1);
+        // for (int j = n - 2; j >= 0; --j)
+        //     cnt[j] += cnt[j + 1];
+        // reverse(cnt.begin(),cnt.end());
+
+        ll xor_ans=0,expo=1;
+        for(int i=n-1;i>=0;i--){
+            if(prefix[i]%2){
+                xor_ans = (xor_ans+expo) % mod;
             }
+            expo=(expo*2)%mod;
+            
         }
-        // beauty = beauty %mod;
-        cout<<beauty<<"\n";
+        cout<<xor_ans<<"\n";
     }
 }

@@ -20,48 +20,50 @@ int main(){
                 grid[i][j]=(i+1)+(j+1);
             }
         }
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                
-                if((i+1+j+1)&1){
-                    if((x1-1+y1-1)&1){
-                        grid[i][j]=1;
+        if(((x1+y1)&1)^((x2+y2)&1)){
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    
+                    if((i+1+j+1)&1){
+                        if((x1-1+y1-1)&1){
+                            grid[i][j]=1;
+                        }
+                        else{
+                            grid[i][j]=2;
+                        }
+                    }
+                    else
+                    {
+                        if((x1+y1)&1){
+                            grid[i][j]=2;
+                        }
+                        else{
+                            grid[i][j]=1;
+                        }
+                    }    
+                }
+            }
+        }
+        else{
+            for(int i=0;i<n;i++){
+                for(int j=0;j<m;j++){
+                    if((i+j)&1){
+                        if((x1+y1)&1)
+                            grid[i][j]=1;
+                        else
+                            grid[i][j]=3;
                     }
                     else{
-                        grid[i][j]=2;
+                        if((x1+y1)&1)
+                            grid[i][j]=3;
+                        else
+                            grid[i][j]=1;
                     }
                 }
-                else
-                {
-                    if((x1+y1)&1){
-                        grid[i][j]=2;
-                    }
-                    else{
-                        grid[i][j]=1;
-                    }
-                }    
             }
         }
         grid[x1-1][y1-1]=1;
         grid[x2-1][y2-1]=2;
-        if(!((x1+y1)&1)^((x2+y2)&1)){
-            if(y1-2>=0)
-                grid[x1-1][y1-2]=3;
-            if(y2-2>=0)
-                grid[x2-1][y2-2]=3;
-            if(y1-1+1<n)
-                grid[x1-1][y1]=3;
-            if(y2-1+1<n)
-                grid[x2-1][y2]=3;
-            if(x1-2>=0)
-                grid[x1-2][y1-1]=3;
-            if(x2-2>=0)
-                grid[x2-2][y2-1]=3;
-            if(x1<m)
-                grid[x1][y1-1]=3;
-            if(x2<m)
-                grid[x2][y2-1]=3;
-        }
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 cout<<grid[i][j]<<" ";
