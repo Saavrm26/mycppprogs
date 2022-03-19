@@ -27,8 +27,8 @@ int main(){
             bool flag=1;
             vll c_copy=c;
             for(int i=0;i<n&&flag;i++){
-                bool f1=(a[i]&filter)&(c_copy[i]==-1);
-                bool f2=(b[i]&filter)&(c_copy[i]==-1);
+                bool f1=(a[i]&filter)&&(c_copy[i]==-1);
+                bool f2=(b[i]&filter)&&(c_copy[i]==-1);
                 if(f1){
                     if(f2)
                         c_copy[i]=(max(a[i],b[i]));
