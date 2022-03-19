@@ -1,0 +1,1 @@
+{"name":"Local: swapcw","url":"d:\\c++\\codechef\\starter30\\swapcw.cpp","tests":[{"id":1647443045858,"input":"3\n4\ndbca\n3\nccc\n3\nbza","output":"YES\nYES\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codechef\\starter30\\swapcw.cpp","group":"local","local":true}
