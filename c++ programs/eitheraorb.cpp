@@ -22,29 +22,27 @@ int main(){
             cin>>b[i];
         }
         int filter=1<<30;
-        vll c(n,-1);
+        vll c(n);
+        int ans=0;
         while(filter>0){
             bool flag=1;
-            vll c_copy=c;
             for(int i=0;i<n&&flag;i++){
-                bool f1=(a[i]&filter)&&(c_copy[i]==-1);
-                bool f2=(b[i]&filter)&&(c_copy[i]==-1);
-                if(f1){
-                    if(f2)
-                        c_copy[i]=(max(a[i],b[i]));
-                    else
-                        c_copy[i]=(a[i]);
-                }
-                else if(f2)
-                    c_copy[i]=(b[i]);
-                else{
+                bool f1=(a[i]&filter);
+                bool f2=(b[i]&filter);
+                if(f1||f2)
+                    flag=1;
+                else
                     flag=0;
-                }
             }
             if(flag)
-                c=c_copy;
-            c_copy.clear();
+                ans = ans | filter;
             filter=filter>>1;
+        }
+        for(int i=0;i<n;i++){
+            if(ans&a[i]==ans)
+                c[i]=a[i];
+            else
+                c[i]=b[i];
         }
         for(auto i:c)
             cout<<i<<" ";
