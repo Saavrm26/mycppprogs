@@ -33,20 +33,21 @@ int main(){
         ll beauty=0;
         if(n%2==0){
             for(ll i =n-1;i>=0;i--){
-                beauty=beauty^(num&even_mask);
-                // beauty=beauty%mod;
+                beauty=(beauty^(num&even_mask))%mod;
+                beauty=beauty%mod;
                 even_mask=even_mask>>1;
                 num=num>>1;
             }
         }
         else{
             for(ll i =n-1;i>=0;i--){
-                beauty=beauty^(num&odd_mask);
+                beauty=(beauty^(num&odd_mask))%mod;
+                beauty=beauty%mod;
                 odd_mask=odd_mask>>1;
                 num=num>>1;
             }
         }
-        // beauty = beauty %mod;
+        beauty = beauty %mod;
         cout<<beauty<<"\n";
     }
 }
