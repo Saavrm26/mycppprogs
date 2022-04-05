@@ -19,12 +19,17 @@ ll maximum(ll a,ll b){if(a>b) return a;else return b;}
 ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 #define yes cout<<"YES\n"
 #define no cout<<"NO\n"
+#define fastIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 using namespace std;
 
 int main(){
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    #ifndef ONLINE_JUDGE
+        system("ls output.txt && rm output.txt");
+        freopen("input.txt", "r", stdin);
+        system("touch output.txt");
+        freopen("output.txt", "w", stdout);
+    #endif
+    fastIO;
     int t;
     cin>>t;
     while(t--){
@@ -44,4 +49,5 @@ int main(){
         }
         cout<<cost<<"\n";
     }
+
 }
