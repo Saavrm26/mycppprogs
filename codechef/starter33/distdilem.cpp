@@ -22,26 +22,29 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 #define fastIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 using namespace std;
 
-int knapsack(int weight[],int value[],int knapsack_weight,int index){
-    if(index==0||knapsack_weight==0) return 0;
-    if(weight[index-1]>knapsack_weight)
-        return knapsack(weight,value,knapsack_weight,index-1);
-    else
-        return maximum(
-            knapsack(weight,value,knapsack_weight-weight[index-1],index-1)+value[index-1],
-            knapsack(weight,value,knapsack_weight,index-1)
-        );
-}
-
 int main(){
     #ifndef ONLINE_JUDGE
         system("ls output.txt && rm output.txt");freopen("input.txt", "r", stdin);system("touch output.txt");freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    int n,knapsack_weight;
-    cin>>n>>knapsack_weight;
-    int weight[n],value[n];
-    for(int i=0;i<n;i++){cin>>weight[i];}
-    for(int i=0;i<n;i++){cin>>value[i];}
-    cout<<knapsack(weight,value,knapsack_weight,n);
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        vll vec(n);
+        ll sum=0;
+        for(int i=0;i<n;i++){
+            cin>>vec[i];
+            sum+=vec[i];
+        }
+        ll x=1,ans=0;
+        while(sum>0){
+            sum -=x;
+            if(sum>=0)
+                ans++;
+            x++;
+        }
+        cout<<ans<<"\n";
+    }
 }
