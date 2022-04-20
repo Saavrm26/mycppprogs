@@ -55,31 +55,33 @@ public:
                 }
                 if(j==0){
                     dp[i][j]=1;
+                    continue;
                 }
-                if(arr[i-1]==j){
-                    dp[i][j]=1;
-                }
-                else if(arr[i-1]>j){
-                    dp[i][j]=dp[i-1][j];
-                }
-                else{
-                    if(dp[i-1][j]==1)
+                if(i>0){
+                    if(arr[i-1]==j){
+                        dp[i][j]=1;
+                    }
+                    else if(arr[i-1]>j){
                         dp[i][j]=dp[i-1][j];
-                    else if(dp[i-1][j-arr[i-1]]==1)
-                        dp[i][j]=dp[i-1][j-arr[i-1]];
-                    else
-                        dp[i][j]=dp[i][j]=0;
+                    }
+                    else{
+                        if(dp[i-1][j]==1)
+                            dp[i][j]=dp[i-1][j];
+                        else if(dp[i-1][j-arr[i-1]]==1)
+                            dp[i][j]=dp[i-1][j-arr[i-1]];
+                        else
+                            dp[i][j]=dp[i][j]=0;
+                    }
                 }
-            
             }
         }
 
-        // ff(i,0,n){
-        //     ff(j,0,sum){
-        //         cout<<dp[i][j]<<" ";
-        //     }
-        //     cout<<"\n";
-        // }
+        ff(i,0,n){
+            ff(j,0,sum){
+                cout<<dp[i][j]<<" ";
+            }
+            cout<<"\n";
+        }
         if(dp[n][sum]==1)
             return true;
         else

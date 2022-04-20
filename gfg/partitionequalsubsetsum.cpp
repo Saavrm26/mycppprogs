@@ -6,6 +6,9 @@ using namespace std;
 
  // } Driver Code Ends
 // User function Template for C++
+
+class Solution{
+public:
 //datatype snippets
 #define ll long long
 //stl snippets
@@ -36,8 +39,6 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 #define ffs(i,init,fin,step) for(int i=init;i<=fin;i=i+step)
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
 
-class Solution{
-public:
     int equalPartition(int N, int arr[])
     {
         ll sum = 0;
@@ -47,7 +48,7 @@ public:
         if((sum&1)==0){
             bool dp[N+1][sum/2+1],f=0;
             ff(i,0,N){
-                ff(j,0,sum){
+                ff(j,0,sum/2){
                     dp[i][j]=0;
                 }
             }
@@ -61,26 +62,28 @@ public:
                     }
                     if(j==0){
                         dp[i][j]=1;
-                    }
-                    if(j==arr[i]){
-                        dp[i][j]=1;
                         continue;
                     }
-                    bool ans1=0,ans2=0;
-                    if(j-arr[i]>=0){
-                        ans1=dp[i-1][j-arr[i]];
-                        ans2=dp[i-1][j];
-                        dp[i][j]=ans1|ans2;
+                    if(i>0){
+                        if(j==arr[i-1]){
+                            dp[i][j]=1;
+                            continue;
+                        }
+                        bool ans1=0,ans2=0;
+                        if(j-arr[i-1]>=0){
+                            ans1=dp[i-1][j-arr[i-1]];
+                        }
+                            ans2=dp[i-1][j];
+                            dp[i][j]=ans1|ans2;
                     }
-                    
                 }
             }
-            // ff(i,0,N){
-            //     ff(j,0,sum/2){
-            //         cout<<dp[i][j]<<" ";
-            //     }
-            //     cout<<"\n";
-            // }
+            ff(i,0,N){
+                ff(j,0,sum/2){
+                    cout<<dp[i][j]<<" ";
+                }
+                cout<<"\n";
+            }
             f=dp[N][sum/2];
             if(f)
                 return 1;

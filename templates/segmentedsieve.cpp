@@ -17,11 +17,8 @@ int main(){
     vector<int> vec(r-l+1,0);
     for(int i=2;i<=sqrt(r);i++){
         if(isPrime[i]==1){
-            int firstMultiple = (l/i)*i;
-            if(firstMultiple<l)
-                firstMultiple +=i;
             for(int j=l+l%(i*i);j<r;j += i){
-
+                
             }
         }
     }
