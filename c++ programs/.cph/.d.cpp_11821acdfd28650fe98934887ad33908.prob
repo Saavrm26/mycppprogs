@@ -1,0 +1,1 @@
+{"name":"Local: d","url":"d:\\mycppprogs\\c++ programs\\d.cpp","tests":[{"id":1650620711059,"input":"2\n5\n2 300 2 1000 500\n4\n1000 100000 3002 200000000","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\mycppprogs\\c++ programs\\d.cpp","group":"local","local":true}

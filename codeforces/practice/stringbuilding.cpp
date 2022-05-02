@@ -11,6 +11,7 @@ typedef vector<pair<long long,long long>> vpll;
 typedef vector<vector<int>> vvi;
 typedef vector<vector<long long>> vvll;
 typedef set<int> si;
+typedef set<ll> sll;
 typedef map<int,int> mii;
 typedef map<long long,long long> mll;
 #define eb emplace_back
@@ -31,12 +32,56 @@ ll minimum(ll a,ll b){if(a<b) return a;else return b;}
 ll maximum(ll a,ll b){if(a>b) return a;else return b;}
 ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
+ll binpow(ll a, ll b) {ll res = 1;while (b > 0) { if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
-ll mod_mult(ll a, ll b){ll mod=1e9+7;return ((a%mod)*(b%mod))%mod;}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-
+    int t;
+    cin>>t;
+    while(t--){
+        string s;
+        cin>>s;
+        int a=0,b=0,n=s.size();
+        ff(i,0,n-1){
+            if(s[i]=='a')
+                a++;
+            else
+                b++;
+        }
+        if(a==1||b==1){
+            no;
+        }
+        else{
+            int cnta=0,cntb=0;
+            bool f=1;
+            ff(i,0,n-1){
+                if(s[i]=='a'){
+                    if(cntb==1){
+                        f=0;
+                        break;
+                    }
+                    cntb=0;
+                    cnta++;
+                }
+                else{
+                    if(cnta==1){
+                        f=0;
+                        break;
+                    }
+                    cnta=0;
+                    cntb++;
+                }
+            }
+            if(cnta==1||cntb==1)
+                f=0;
+            if(f)
+                yes;
+            else
+                no;
+        }
+    }
 }

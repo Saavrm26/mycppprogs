@@ -1,2 +1,3 @@
-
-    for(int i=1;i<17;i++){
+f ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    #endif

@@ -32,11 +32,27 @@ ll maximum(ll a,ll b){if(a>b) return a;else return b;}
 ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
-ll mod_mult(ll a, ll b){ll mod=1e9+7;return ((a%mod)*(b%mod))%mod;}
-int main(){
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    #endif
-    fastIO;
 
+bool isPalindrome(string S)
+
+        {
+            for (int i = 0; i < S.length() / 2; i++) {
+                if (S[i] != S[S.length() - i - 1]) {
+                    return false;
+                }
+            }
+        return true;
+        }
+
+int main(){
+    fastIO;
+    int a,b,ans=0;
+    cin>>a>>b;
+    ff(i,a,b){
+        string x=to_string(i);
+        if(isPalindrome(x)){
+            ans++;
+        }
+    }
+    cout<<ans<<"\n";
 }

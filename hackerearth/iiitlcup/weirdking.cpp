@@ -31,12 +31,25 @@ ll minimum(ll a,ll b){if(a<b) return a;else return b;}
 ll maximum(ll a,ll b){if(a>b) return a;else return b;}
 ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
+ll binpow(ll a, ll b) {ll res = 1;while (b > 0) { if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
-ll mod_mult(ll a, ll b){ll mod=1e9+7;return ((a%mod)*(b%mod))%mod;}
-int main(){
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    #endif
-    fastIO;
 
+int main(){
+    fastIO;
+    int t;
+    cin>>t;
+    while(t--){
+        ll h,a;
+        cin>>h>>a;
+        int x=1,k;
+        while(1){
+            k = ((x*(x-1))/2)*a + 1;
+            if(k>0){
+            if((h-x*k + ((x*(x-1)/2)*a ))<=0)
+                break;
+            x++;
+            }
+        }
+        cout<<k<<"\n";
+    }
 }

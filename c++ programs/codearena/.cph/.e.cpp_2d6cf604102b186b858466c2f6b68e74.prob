@@ -1,0 +1,1 @@
+{"name":"Local: e","url":"d:\\mycppprogs\\c++ programs\\codearena\\e.cpp","tests":[{"id":1650623478807,"input":"5\nabacaba\nzyxaabcaabkjh\nonetwothree\nthreetwoone\none\nzzonneyy\none\nnone\ntwenty\nten","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\mycppprogs\\c++ programs\\codearena\\e.cpp","group":"local","local":true}

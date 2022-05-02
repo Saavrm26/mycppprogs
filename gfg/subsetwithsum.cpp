@@ -1,7 +1,7 @@
 //Initial template for C++
 
-#include<bits/stdc++.h> 
-using namespace std; 
+#include<bits/stdc++.h>
+using namespace std;
 
  // } Driver Code Ends
 //User function template for C++
@@ -33,13 +33,13 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 #define fd(i,init,fin) for(int i=init;i>=fin;i--)
 #define ffs(i,init,fin,step) for(int i=init;i<=fin;i=i+step)
 #define fds(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
-class Solution{   
+class Solution{
 public:
     bool isSubsetSum(vector<int>arr, int sum){
         //TOPDOWN
         int n=arr.size();
         int dp[n+1][sum+1];
-        
+
         // ff(i,0,n+1){
         //     ff(j,0,sum+1){
         //         dp[i][j]=-1;
@@ -70,7 +70,7 @@ public:
                         else if(dp[i-1][j-arr[i-1]]==1)
                             dp[i][j]=dp[i-1][j-arr[i-1]];
                         else
-                            dp[i][j]=dp[i][j]=0;
+                            dp[i][j]=0;
                     }
                 }
             }
@@ -90,8 +90,8 @@ public:
 };
 
 // { Driver Code Starts.
-int main() 
-{ 
+int main()
+{
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
@@ -107,11 +107,11 @@ int main()
             cin >> arr[i];
         }
         cin >> sum;
-        
+
         Solution ob;
         cout << ob.isSubsetSum(arr, sum) << endl;
     }
-    return 0; 
-} 
+    return 0;
+}
   // } Driver Code Ends
 

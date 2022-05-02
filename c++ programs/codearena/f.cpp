@@ -11,6 +11,7 @@ typedef vector<pair<long long,long long>> vpll;
 typedef vector<vector<int>> vvi;
 typedef vector<vector<long long>> vvll;
 typedef set<int> si;
+typedef set<ll> sll;
 typedef map<int,int> mii;
 typedef map<long long,long long> mll;
 #define eb emplace_back
@@ -32,11 +33,10 @@ ll maximum(ll a,ll b){if(a>b) return a;else return b;}
 ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
-ll mod_mult(ll a, ll b){ll mod=1e9+7;return ((a%mod)*(b%mod))%mod;}
+
 int main(){
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    #endif
     fastIO;
+    int n;
+    cin>>n;
 
 }
