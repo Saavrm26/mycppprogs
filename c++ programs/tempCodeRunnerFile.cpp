@@ -1,0 +1,1 @@
+                    miniSum-=mini[lMin];
