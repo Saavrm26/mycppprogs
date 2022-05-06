@@ -7,6 +7,7 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vll;
 typedef vector<pair<int,int>> vpii;
+typedef vector<pair<char,int>> vpci;
 typedef vector<pair<long long,long long>> vpll;
 typedef vector<vector<int>> vvi;
 typedef vector<vector<long long>> vvll;
@@ -43,6 +44,10 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
+#define tracearray(arr,n) cout<<#arr<<"\n";for(int i=0;i<n;i++)cout<<(arr[i])<<" ";cout<<"\n";
+#define trace(x) cout<<#x<<" "<<x<<"\n";
+
+
 // Questions to ask before submitting any code on OJ
 // Q1. Is my approach handling all the cases ? Think of some edge cases
 // Q2. How complicated is my approach
@@ -58,42 +63,13 @@ int main(){
     int t;
     cin>>t;
     while(t--){
-        int n;
-        cin>>n;
-        vi v(n);
-        // vi even,odd;
-        ll evenSum=0,oddSum=0;
-        // ll sum=0;
-        ff(i,0,n-1){
-            cin>>v[i];
-            if(v[i]&1) oddSum+=v[i];
-            else evenSum+=v[i];
-        }
-        // sort(odd.begin(),odd.end());
-        // sort(even.begin(),even.end());
-        // bool f=1;
-
-        // ff(i,1,n/2-1){
-        //     if((even[i]-even[0])!=(odd[i]-odd[0])){
-        //         f=0;
-        //         break;
-        //     }
-        // }
-        // if(f) yes;
-        // else no;
-        // int f1=(evenSum%(n/2));
-        // int f2=oddSum%(n/2);
-        // if((evenSum%(n/2)==0)&&(oddSum%(n/2)==0)){
-        //     if(((evenSum/(n/2))%2)!=((oddSum/(n/2))%2))
-        //         yes;
-        //     else
-        //         no;
-        // }
-        // else no;
-        if((((evenSum+oddSum)/(n/2))==0)&&((((evenSum+oddSum)/(n/2))%2)==1)){
+        ll a,b,c,x,y;
+        cin>>a>>b>>c>>x>>y;
+        ll remainDogs=(a-x>=0)?0:(x-a);
+        ll remainCats=(b-y>=0)?0:(y-b);
+        if(c-remainCats-remainDogs>=0){
             yes;
         }
-        else
-            no;
+        else no;
     }
 }
