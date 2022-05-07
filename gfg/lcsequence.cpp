@@ -7,11 +7,9 @@ typedef long long ll;
 typedef vector<int> vi;
 typedef vector<long long> vll;
 typedef vector<pair<int,int>> vpii;
-typedef vector<pair<char,int>> vpci;
 typedef vector<pair<long long,long long>> vpll;
 typedef vector<vector<int>> vvi;
 typedef vector<vector<long long>> vvll;
-typedef pair<int,int> pii;
 typedef set<int> si;
 typedef set<ll> sll;
 typedef map<int,int> mii;
@@ -44,42 +42,51 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
-//tracing
-#define tracearray(arr,n) cout<<#arr<<"\n";for(int i=0;i<n;i++)cout<<(arr[i])<<" ";cout<<"\n";
-#define trace(x) cout<<#x<<" "<<x<<"\n";
-
-// Questions to ask before submitting any code on OJ
-// Q1. Is my approach handling all the cases ? Think of some edge cases
-// Q2. How complicated is my approach
-// Q3. Will your implementation be a barrier?
-// Remember:
-// Competition is with yourself
-
+// vvi dp(3001,vi(3001,-1));
+// int lcs(string s,string t,int is,int it){
+//     if(is==0||it==0) return 0;
+//     if(dp[is][it]!=-1){
+//         return dp[is][it];
+//     }
+//     if(s[is-1]==t[it-1]){
+//         return dp[is][it]=1+lcs(s,t,is-1,it-1);
+//     }
+//     else{
+//         return dp[is][it]=max(lcs(s,t,is-1,it),lcs(s,t,is,it-1));
+//     }
+// }
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    ini(n);ini(w);
-    vi val(n),wt(n);
-    ll sum=0;
-    ff(i,0,n-1){
-        cin>>wt[i]>>val[i];
-        sum+=val[i];
-    }
-    //dp represnts value with minimum weight
-    vll dp(sum+1,INT32_MAX);
-    dp[0]=0;
-    ff(i,0,n-1){
-        fb(j,sum-val[i],0){
-            dp[j+val[i]]=min(dp[j]+wt[i],dp[j+val[i]]);
+    ins(s)
+    ins(t)
+    // int y=lcs(s,t,s.size(),t.size());
+    // if(y>0){
+    //     cout<<y<<"\n";
+    // }
+    // else{
+    //     cout<<"\n";
+    // }
+    int ns=s.size();
+    int nt=s.size();
+    vvi dp(ns,vi(nt,-1));
+    ff(i,0,ns){
+        ff(j,0,nt){
+            if(i==0||j==0){
+                dp[i][j]=0;
+            }
+            else{
+                if(s[i-1]==s[j-1]){
+                    dp[i][j]=dp[i-1][i-1]+1;
+                }
+                else{
+                    dp[i][j]=max(dp[i][j-1],dp[i-1][j]);
+                }
+            }
         }
     }
-    // tracearray(dp,sum);
-    fb(i,sum,0){
-        if(dp[i]<INT32_MAX&&dp[i]<=w){
-            cout<<i<<"\n";
-            break;
-        }
-    }
+    cout<<dp[ns][nt]<<"\n";
+
 }
