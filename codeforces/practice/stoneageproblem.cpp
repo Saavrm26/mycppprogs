@@ -5,11 +5,14 @@ using namespace std;
 typedef long long ll;
 //stl snippets
 typedef vector<int> vi;
+typedef vector<bool> vb;
 typedef vector<long long> vll;
 typedef vector<pair<int,int>> vpii;
+typedef vector<pair<char,int>> vpci;
 typedef vector<pair<long long,long long>> vpll;
 typedef vector<vector<int>> vvi;
 typedef vector<vector<long long>> vvll;
+typedef pair<int,int> pii;
 typedef set<int> si;
 typedef set<ll> sll;
 typedef map<int,int> mii;
@@ -42,52 +45,68 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
-// vvi dp(3001,vi(3001,-1));
-// int lcs(string s,string t,int is,int it){
-//     if(is==0||it==0) return 0;
-//     if(dp[is][it]!=-1){
-//         return dp[is][it];
-//     }
-//     if(s[is-1]==t[it-1]){
-//         return dp[is][it]=1+lcs(s,t,is-1,it-1);
-//     }
-//     else{
-//         return dp[is][it]=max(lcs(s,t,is-1,it),lcs(s,t,is,it-1));
-//     }
-// }
+#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
+#define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
+#define trace(x) cout<<#x<<" "<<x<<"\n";
+
+
+// Questions to ask before submitting any code on OJ
+// Q1. Is my approach handling all the cases ? Think of some edge cases
+// Q2. How complicated is my approach
+// Q3. Will your implementation be a barrier?
+// Remember:
+// Competition is with yourself
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    ins(s)
-    ins(t)
-    // int y=lcs(s,t,s.size(),t.size());
-    // if(y>0){
-    //     cout<<y<<"\n";
-    // }
-    // else{
-    //     cout<<"\n";
-    // }
-    int ns=s.size();
-    int nt=t.size();
-    vvi dp(ns+1,vi(nt+1,-1));
-    string str="";
-    ff(i,0,ns){
-        ff(j,0,nt){
-            if(i==0||j==0){
-                dp[i][j]=0;
+    ll n,q;
+    cin>>n>>q;
+    vi v(n);
+    ll sum=0;
+    ff(i,0,n-1){
+        cin>>v[i];
+        sum+=v[i];
+    }
+    bool isBaseChanged=0;
+    int numberOfBaseChange=0;
+    int baseval;
+    mii m;
+    // vi marked(n,0);
+    while(q--){
+        int t;
+        cin>>t;
+        if(t==1){
+            ll i,x;
+            cin>>i>>x;
+            if(!isBaseChanged){
+                sum += x-v[i-1];
+                v[i-1]=x;
+                cout<<sum<<"\n";
             }
             else{
-                if(s[i-1]==t[j-1]){
-                    dp[i][j]=dp[i-1][j-1]+1;
+                if(m.find(i-1)==m.end()){
+                    m[i-1]=x;
+                    sum+=m[i-1]-baseval;
                 }
                 else{
-                    dp[i][j]=max(dp[i][j-1],dp[i-1][j]);
+                    sum+=x-m[i-1];
+                    m[i-1]=x;
                 }
+                cout<<sum<<"\n";
             }
         }
+        else{
+            ll x;
+            cin>>x;
+            sum=n*x;
+            isBaseChanged=1;
+            numberOfBaseChange++;
+            baseval=x;
+            m.clear();
+            cout<<sum<<"\n";
+        }
     }
-    cout<<str<<"\n";
-
 }
