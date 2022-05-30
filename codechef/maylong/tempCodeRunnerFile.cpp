@@ -1,0 +1,1 @@
+ m[v[i]].se-curr.fi+1

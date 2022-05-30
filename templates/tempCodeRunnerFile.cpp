@@ -1,0 +1,1 @@
+#define ffa(it,x) for(auto it:x)
