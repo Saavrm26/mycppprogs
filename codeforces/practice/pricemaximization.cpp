@@ -41,6 +41,7 @@ typedef map<int,pair<int,int>> mipii;
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
 #define ffit(it,x) for(auto it=x.begin();it!=x.end();it++)
 #define ffa(it,x) for(auto it:x)
+//bit snippets
 #define popcnt __builtin_popcount
 //function snippets
 ll minimum(ll a,ll b){if(a<b) return a;else return b;}
@@ -60,35 +61,85 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-const int N=1e5+1;
-vi v[N];
-bool vis[N];
-void solve(int par){
-    vis[par]=1;
-    ffa(child,v[par]){
-        if(!vis[child]){
-            cout<<"parent : "<<par<<" child : "<<child<<"\n";
-            vis[child]=1;
-            solve(child);
-        }
-    }
-    return;
-}
+
+// int mod_lower_bound(vi v,vb &mark,int l, int r,int x,int k){
+//     int req = ceil(double(x)/k)*k - x;
+//     int so=INT32_MAX,si=-1;
+//     while(l<=r){
+//         int m= (r + l) / 2;
+//         if(!mark[m]){
+//             if(v[m]==req){
+//                 so = req;
+//                 si=m;
+//                 break;
+//             }
+//             else if(v[m]>req){
+//                 if(so>v[m]){
+//                     so=v[m];
+//                     si=m;
+//                 }
+//                 r=m-1;
+//             }
+//             else{
+//                 if(so>v[m]&&(so<req||so==INT32_MAX)){
+//                     so=v[m];
+//                     si=m;
+//                 }
+//                 l=m+1;
+//             }
+//         }
+//         else{
+//             if(v[m]>req) r=m-1;
+//             else l=m+1;
+//         }
+//     }
+//     mark[si]=1;
+//     return (so+x)/k;
+// }
+
+// int twopointer(int l,int r,vi v,vi &mark){
+//     for()
+// }
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
-    memset(vis,0, sizeof(vis));
     fastIO;
-    ini(n) ini(m)
-
-    while(m--){
-        ini(v1) ini(v2)
-        v[v1].eb(v2);
-        v[v2].eb(v1);
-    }
-    ff(i,1,n){
-        if(!vis[i])
-            solve(i);
+    int t;
+    cin>>t;
+    while(t--){
+        ini(n) ini(k)
+        invi(v,n)
+        sort(v.begin(),v.end());
+        ll ans=0;
+        vb mark(n);
+        int initial=0;
+        fb(r,n-1,1){
+            if(!mark[r]){
+                mark[r]=1;
+                int l=initial,so=INT32_MAX,si=-1;
+                int req = ceil(v[r]/k+1)*k - v[r];
+                while(l<r){
+                    if(!mark[l]){
+                        if(v[l]>=req){
+                            so=v[l];
+                            if(l==initial) initial++;
+                            si=l;break;
+                        }
+                        else{
+                            if(so>v[l]){
+                                so=v[l];
+                                si=l;
+                            }
+                        }
+                    }
+                    l++;
+                }
+                mark[si]=1;
+                ans+= (so+v[r])/k;
+            }
+        }
+        cout<<ans<<"\n";
     }
 }

@@ -41,6 +41,7 @@ typedef map<int,pair<int,int>> mipii;
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
 #define ffit(it,x) for(auto it=x.begin();it!=x.end();it++)
 #define ffa(it,x) for(auto it:x)
+//bit snippets
 #define popcnt __builtin_popcount
 //function snippets
 ll minimum(ll a,ll b){if(a<b) return a;else return b;}
@@ -60,35 +61,102 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-const int N=1e5+1;
-vi v[N];
-bool vis[N];
-void solve(int par){
-    vis[par]=1;
-    ffa(child,v[par]){
-        if(!vis[child]){
-            cout<<"parent : "<<par<<" child : "<<child<<"\n";
-            vis[child]=1;
-            solve(child);
-        }
-    }
-    return;
-}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
-    memset(vis,0, sizeof(vis));
     fastIO;
-    ini(n) ini(m)
-
-    while(m--){
-        ini(v1) ini(v2)
-        v[v1].eb(v2);
-        v[v2].eb(v1);
-    }
-    ff(i,1,n){
-        if(!vis[i])
-            solve(i);
+    int t;
+    cin>>t;
+    while(t--){
+        ini(n);
+        invi(a,n)
+        invi(b,n)
+        // int max0=INT32_MIN;
+        // bool f=0;
+        // ff(i,0,n-1){
+        //     if(b[i]==0){
+        //         if(f==0)
+        //             f=1;
+        //         max0=max(max0,a[i]);
+        //     }
+        // }
+        // if(f){
+        //     bool f2=1;
+        //     ff(i,0,n-1){
+        //         if(b[i]==0){
+        //             a[i]=0;
+        //         }
+        //         else{
+        //             if(a[i]-max0!=b[i]){
+        //                 f2=0;break;
+        //             }
+        //         }
+        //     }
+        //     if(f2) yes;
+        //     else no;
+        // }
+        // else{
+        //     bool f2=1;
+        //     int diff=INT32_MAX;
+        //     ff(i,0,n-1){
+        //         if(a[i]<b[i]){
+        //             f2=0;break;
+        //         }
+        //         else{
+        //             diff=min(diff,a[i]-b[i]);
+        //         }
+        //     }
+        //     if(f2){
+        //         ff(i,0,n-1){
+        //             if((a[i]-diff)!=b[i]) {f2 =0;break;}
+        //         }
+        //     }
+        //     if(f2) yes;
+        //     else no;
+        // }
+        // int j=0;
+        bool f=1;
+        // while(j<n){
+        //     if(a[j]<b[j]){
+        //         f=0;break;
+        //     }
+        //     int diff = a[j]-b[j];
+        //     ff(i,0,n-1){
+        //         if(a[i]!=0){
+        //             a[i] = a[i] - diff;
+        //         }
+        //         if(a[i]<b[i]){f=0;break;}
+        //     }
+        //     j++;
+        // }
+        int max_diff=INT32_MIN;
+        ff(i,0,n-1){
+            if(a[i]>=b[i]){
+                max_diff=max(a[i]-b[i],max_diff);
+            }
+            else{
+                f=0;break;
+            }
+        }
+        if(f){
+            ff(i,0,n-1){
+                if(a[i]-max_diff<b[i]){
+                    if(b[i]==0){ a[i]=0;continue;}
+                    else{f=0;break;}
+                }
+                else{
+                    a[i]-=max_diff;
+                }
+            }
+            if(f){
+                ff(i,0,n-1){
+                    if(a[i]!=b[i]){f=0;break;}
+                }
+            }
+        }
+        if(f) yes;
+        else no;
     }
 }

@@ -41,6 +41,7 @@ typedef map<int,pair<int,int>> mipii;
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
 #define ffit(it,x) for(auto it=x.begin();it!=x.end();it++)
 #define ffa(it,x) for(auto it:x)
+//bit snippets
 #define popcnt __builtin_popcount
 //function snippets
 ll minimum(ll a,ll b){if(a<b) return a;else return b;}
@@ -60,35 +61,67 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-const int N=1e5+1;
-vi v[N];
-bool vis[N];
-void solve(int par){
-    vis[par]=1;
-    ffa(child,v[par]){
-        if(!vis[child]){
-            cout<<"parent : "<<par<<" child : "<<child<<"\n";
-            vis[child]=1;
-            solve(child);
-        }
-    }
-    return;
-}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
-    memset(vis,0, sizeof(vis));
     fastIO;
-    ini(n) ini(m)
-
-    while(m--){
-        ini(v1) ini(v2)
-        v[v1].eb(v2);
-        v[v2].eb(v1);
-    }
-    ff(i,1,n){
-        if(!vis[i])
-            solve(i);
+    int t;
+    cin>>t;
+    while(t--){
+        int n,m,k;cin>>n>>m>>k;
+        ins(a) ins(b)
+        sort(a.begin(),a.end());
+        sort(b.begin(),b.end());
+        int currk=0;
+        int ia=0,ib=0;
+        char currs;
+        if(a[ia]<=b[ib]) currs='a';
+        else currs='b';
+        string c="";
+        while(ia<n&&ib<m){
+            if(a[ia]<b[ib]){
+                if(currs=='a'){
+                    if(currk<k){
+                        c+=a[ia];
+                        ia++;
+                        currk++;
+                    }else{
+                        currs='b';
+                        c+=b[ib];
+                        ib++;
+                        currk=1;
+                    }
+                }
+                else{
+                    currs='a';
+                    currk=1;
+                    c+=a[ia];
+                    ia++;
+                }
+            }
+            else{
+                if(currs=='b'){
+                    if(currk<k){
+                        c+=b[ib];
+                        ib++;
+                        currk++;
+                    }else{
+                        currs='a';
+                        c+=a[ia];
+                        ia++;
+                        currk=1;
+                    }
+                }
+                else{
+                    currs='b';
+                    currk=1;
+                    c+=b[ib];
+                    ib++;
+                }
+            }
+        }
+        cout<<c<<"\n";
     }
 }

@@ -41,6 +41,7 @@ typedef map<int,pair<int,int>> mipii;
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
 #define ffit(it,x) for(auto it=x.begin();it!=x.end();it++)
 #define ffa(it,x) for(auto it:x)
+//bit snippets
 #define popcnt __builtin_popcount
 //function snippets
 ll minimum(ll a,ll b){if(a<b) return a;else return b;}
@@ -60,35 +61,43 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-const int N=1e5+1;
-vi v[N];
-bool vis[N];
-void solve(int par){
-    vis[par]=1;
-    ffa(child,v[par]){
-        if(!vis[child]){
-            cout<<"parent : "<<par<<" child : "<<child<<"\n";
-            vis[child]=1;
-            solve(child);
-        }
-    }
-    return;
-}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
-    memset(vis,0, sizeof(vis));
     fastIO;
-    ini(n) ini(m)
+    int t;
+    cin>>t;
+    while(t--){
+        ini(n) invi(v,n);
+        auto vec=v;
+        sort(vec.begin(),vec.end());
+        if(n!=1){
+            // ff(i,0,n/2-1){
+            //     int p=i*2;
+            //     int q=i*2+1;
+            //     if((v[p]==vec[p])||(v[q]==vec[q])){
+            //         swap(vec[p],vec[q]);
+            //     }
+            // }
+            ff(i,0,n-2){
+                if(v[i]==vec[i]){
+                    swap(vec[i],vec[i+1]);
+                }
+            }
 
-    while(m--){
-        ini(v1) ini(v2)
-        v[v1].eb(v2);
-        v[v2].eb(v1);
-    }
-    ff(i,1,n){
-        if(!vis[i])
-            solve(i);
+            if(v[n-1]==vec[n-1]){
+                swap(vec[n-2],vec[n-1]);
+            }
+
+            ff(i,0,n-1){
+                cout<<vec[i]<<" ";
+            }
+            cout<<"\n";
+        }
+        else{
+            cout<<-1<<"\n";
+        }
     }
 }

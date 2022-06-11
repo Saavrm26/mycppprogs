@@ -8,6 +8,7 @@ typedef vector<bool> vb;
 typedef vector<int> vi;
 typedef vector<long long> vll;
 typedef vector<string> vs;
+typedef vector<char> vc;
 typedef vector<pair<int,int>> vpii;
 typedef vector<pair<char,int>> vpci;
 typedef vector<pair<long long,long long>> vpll;
@@ -41,6 +42,7 @@ typedef map<int,pair<int,int>> mipii;
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
 #define ffit(it,x) for(auto it=x.begin();it!=x.end();it++)
 #define ffa(it,x) for(auto it:x)
+//bit snippets
 #define popcnt __builtin_popcount
 //function snippets
 ll minimum(ll a,ll b){if(a<b) return a;else return b;}
@@ -60,35 +62,39 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-const int N=1e5+1;
-vi v[N];
-bool vis[N];
-void solve(int par){
-    vis[par]=1;
-    ffa(child,v[par]){
-        if(!vis[child]){
-            cout<<"parent : "<<par<<" child : "<<child<<"\n";
-            vis[child]=1;
-            solve(child);
-        }
-    }
-    return;
-}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
-    memset(vis,0, sizeof(vis));
     fastIO;
-    ini(n) ini(m)
+    int t;
+    cin>>t;
+    while(t--){
+        ini(n) ini(k)
+        string s;
+        cin>>s;
+        vi v(n);
+        // ff(i,0,n-1){
+        //     str+="B";
+        // }
+        // ff(i,0,n-1){
 
-    while(m--){
-        ini(v1) ini(v2)
-        v[v1].eb(v2);
-        v[v2].eb(v1);
-    }
-    ff(i,1,n){
-        if(!vis[i])
-            solve(i);
+        // }
+        if(s[0]=='W') v[0]=1;
+        ff(i,1,n-1){
+            if(s[i]=='W') v[i]=v[i-1]+1;
+            else{v[i]=v[i-1];}
+        }
+        int ans=INT32_MAX;
+        ff(i,0,n-k){
+            if(i!=0){
+                ans = min(ans,v[i+k-1]-v[i-1]);
+            }
+            else{
+                ans = min(ans,v[i+k-1]);
+            }
+        }
+        cout<<ans<<"\n";
     }
 }

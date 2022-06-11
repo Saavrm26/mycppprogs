@@ -41,6 +41,7 @@ typedef map<int,pair<int,int>> mipii;
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
 #define ffit(it,x) for(auto it=x.begin();it!=x.end();it++)
 #define ffa(it,x) for(auto it:x)
+//bit snippets
 #define popcnt __builtin_popcount
 //function snippets
 ll minimum(ll a,ll b){if(a<b) return a;else return b;}
@@ -60,35 +61,34 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-const int N=1e5+1;
-vi v[N];
-bool vis[N];
-void solve(int par){
-    vis[par]=1;
-    ffa(child,v[par]){
-        if(!vis[child]){
-            cout<<"parent : "<<par<<" child : "<<child<<"\n";
-            vis[child]=1;
-            solve(child);
-        }
-    }
-    return;
-}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
-    memset(vis,0, sizeof(vis));
     fastIO;
-    ini(n) ini(m)
-
-    while(m--){
-        ini(v1) ini(v2)
-        v[v1].eb(v2);
-        v[v2].eb(v1);
-    }
-    ff(i,1,n){
-        if(!vis[i])
-            solve(i);
+    int t;
+    cin>>t;
+    while(t--){
+        vi v(26);
+        ini(n) while(n--){
+            ins(s1)
+            ins(s2)
+            ff(i,0,25){
+                char chr = char(i+97);
+                v[i] += count(s1.begin(), s1.end(), chr) + count(s2.begin(), s2.end(), chr);
+            }
+        }
+        ins(s)
+        ff(i,0,25){
+            char chr = char(i+97);
+            v[i] += count(s.begin(), s.end(), chr);
+        }
+        ff(i,0,25){
+            if(v[i]&1){
+                cout<<char(i+97)<<"\n";
+                break;
+            }
+        }
     }
 }

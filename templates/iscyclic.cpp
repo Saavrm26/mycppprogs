@@ -64,17 +64,16 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 const int N=1e5+1;
 vi v[N];
 bool vis[N];
-bool solve(int curr,int par){
-    vis[curr]=1;
+bool solve(int par){
+    vis[par]=1;
     bool isCyclic=false;
-    ffa(child,v[curr]){
+    ffa(child,v[par]){
         if(!vis[child]){
             vis[child]=1;
-            isCyclic!=solve(child,curr);
+            isCyclic|=solve(child);
         }
         else{
-            if(child==par) continue;
-            else return true;
+            return true;
         }
 
     }
@@ -95,12 +94,14 @@ int main(){
         v[v1].eb(v2);
         v[v2].eb(v1);
     }
-    ll ans=0;
+    bool f=0;
     ff(i,0,n-1){
         if(vis[i]!=1){
-            solve(par);
-            ans++;
+            f=solve(par);
+            if(f) break;
+
         }
     }
-    cout<<ans<<"\n";
+    if(f) cout<<"cyclic\n";
+    else cout<<"not cyclic\n";
 }
