@@ -62,8 +62,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-
-
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -72,37 +70,25 @@ int main(){
     int t;
     cin>>t;
     while(t--){
-        ini(n) ini(k) invi(v,n);
-        ll ans=0;
-        mii m;
-        ff(i,0,n-1){
-            ans+=v[i]/k;
-            if(v[i]%k)
-                m[v[i]%k]++;
+        ini(n) ini(m) invi(v,n)
+        // 1≤n≤100; 1≤m≤104 1≤ai≤100
+        vll prefix(n);
+        prefix[0]=v[0];
+        ff(i,1,n-1){
+            prefix[i]=prefix[i-1]+v[i];
         }
-        auto it=m.begin();
-        while(m.size()>0){
-            int x=it->se;
-            while(x>0){
-                auto itr=m.lb(k-it->fi);
-                if(itr==it) itr++;
-                if(itr!=m.end()){
-                    int u=min(itr->se,it->se);
-                    itr->se-=u;
-                    it->se-=u;
-                    x-=u;
-                    ans+=u*((itr->fi+it->fi)/k);
-                    if(itr->se==0)
-                        m.erase(itr);
-                }
-                else{
-                    ans+=(((it->fi)*2)/k)*(x/2);
-                    x=0;
-                }
+        auto it=lb(prefix.begin(),prefix.end(),m);
+        if(it!=prefix.end()){
+            int curr=it-prefix.begin();
+            ll energyspent=m;
+            if(prefix[curr]!=m){
+                energyspent=prefix[curr-1];
             }
-            m.erase(it);
-            it=m.begin();
+
+            cout<<prefix[n-1]-(m-energyspent)-energyspent<<"\n";
         }
-        cout<<ans<<"\n";
+        else{
+            cout<<0<<"\n";
+        }
     }
 }

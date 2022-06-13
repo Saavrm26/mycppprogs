@@ -62,47 +62,26 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-
-
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    int t;
-    cin>>t;
-    while(t--){
-        ini(n) ini(k) invi(v,n);
-        ll ans=0;
-        mii m;
-        ff(i,0,n-1){
-            ans+=v[i]/k;
-            if(v[i]%k)
-                m[v[i]%k]++;
-        }
-        auto it=m.begin();
-        while(m.size()>0){
-            int x=it->se;
-            while(x>0){
-                auto itr=m.lb(k-it->fi);
-                if(itr==it) itr++;
-                if(itr!=m.end()){
-                    int u=min(itr->se,it->se);
-                    itr->se-=u;
-                    it->se-=u;
-                    x-=u;
-                    ans+=u*((itr->fi+it->fi)/k);
-                    if(itr->se==0)
-                        m.erase(itr);
-                }
-                else{
-                    ans+=(((it->fi)*2)/k)*(x/2);
-                    x=0;
-                }
+
+        ini(n) ini(q)
+        invi(v,n)
+        sort(v.begin(),v.end());
+        reverse(v.begin(),v.end());
+        vll pre(n);
+        pre[0]=v[0];
+        ff(i,1,n-1){pre[i]=pre[i-1]+v[i];}
+        while(q--){
+            ini(x) ini(y)
+            if(x!=y)
+                cout<<pre[x-1]-pre[x-y-1]<<"\n";
+            else{
+                cout<<pre[x-1]<<"\n";
             }
-            m.erase(it);
-            it=m.begin();
         }
-        cout<<ans<<"\n";
-    }
+
 }
