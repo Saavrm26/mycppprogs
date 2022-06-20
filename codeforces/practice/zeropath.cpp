@@ -19,7 +19,7 @@ typedef set<ll> sll;
 typedef map<int,int> mii;
 typedef map<long long,long long> mll;
 typedef map<int,pair<int,int>> mipii;
-#define all(v) v.begin(),v.end()
+#define all(v) v.begin(), v.end()
 #define eb emplace_back
 #define mp make_pair
 #define lb lower_bound
@@ -63,7 +63,54 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-
+int n,m;
+int dp_max[1001][1001];
+int dp_min[1001][1001];
+int v[1001][1001];
+int solve_max(int i,int j){
+    if(i==n&&j==m){
+        return v[i-1][j-1];
+    }
+    if(dp_max[i][j]!=INT32_MIN){
+        return dp_max[i][j];
+    }
+    int ans1=0,ans2=0;
+    if(i<n){
+        ans1+=solve_max(i+1,j)+v[i-1][j-1];
+    }
+    else{
+        ans1=INT32_MIN;
+    }
+    if(j<m){
+        ans2+=solve_max(i,j+1)+v[i-1][j-1];
+    }
+    else{
+        ans2=INT32_MIN;
+    }
+    return dp_max[i][j]=max(ans1,ans2);
+}
+int solve_min(int i,int j){
+    if(i==n&&j==m){
+        return v[i-1][j-1];
+    }
+    if(dp_min[i][j]!=INT32_MAX){
+        return dp_min[i][j];
+    }
+    int ans1=0,ans2=0;
+    if(i<n){
+        ans1+=solve_min(i+1,j)+v[i-1][j-1];
+    }
+    else{
+        ans1=INT32_MAX;
+    }
+    if(j<m){
+        ans2+=solve_min(i,j+1)+v[i-1][j-1];
+    }
+    else{
+        ans2=INT32_MAX;
+    }
+    return dp_min[i][j]=min(ans1,ans2);
+}
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -72,33 +119,36 @@ int main(){
     int t;
     cin>>t;
     while(t--){
-        ini(n) ini(s)
-        invi(v,n)
-        vi pre(n);
-        pre[0]=v[0];
-        ll ans=INT32_MAX;
-        ff(i,1,n-1){
-            pre[i]=pre[i-1]+v[i];
-        }
-        ll sum=pre[n-1];
-        if(sum>s){
-            ff(i,0,n-1){
-                auto it=ub(pre.begin()+i,pre.end(),s-v[i]+pre[i]);
-                it--;
-                if(it!=pre.end()&&(*it)==s-v[i]+pre[i]){
-                    ans=minimum(ans,i+(n-1-(it-pre.begin())));
-                }
-            }
-            if(ans!=INT32_MAX){
-                cout<<ans<<"\n";
-            }
-            else{
-                cout<<-1<<"\n";
+        // memset(dp_max,INT32_MIN,sizeof(dp_max));
+        // memset(dp_min,INT32_MAX,sizeof(dp_min));
+        cin>>n>>m;
+
+        ff(i,0,n){
+            ff(j,0,m){
+                dp_max[i][j]=INT32_MIN;
             }
         }
-        else if(sum==s) cout<<0<<"\n";
+        ff(i,0,n){
+            ff(j,0,m){
+                dp_min[i][j]=INT32_MAX;
+            }
+        }
+        bool f=0;
+        ff(i,0,n-1){
+            ff(j,0,m-1){
+                cin>>v[i][j];
+            }
+        }
+        if((n+m-1)%2) f=0;
         else{
-            cout<<-1<<"\n";
+            int mini=solve_min(1,1);
+            int maxi=solve_max(1,1);
+            if(mini<=0&&0<=maxi){
+                f=1;
+            }
         }
+        if(f) yes;
+        else no;
+
     }
 }

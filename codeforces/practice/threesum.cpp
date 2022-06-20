@@ -19,7 +19,7 @@ typedef set<ll> sll;
 typedef map<int,int> mii;
 typedef map<long long,long long> mll;
 typedef map<int,pair<int,int>> mipii;
-#define all(v) v.begin(),v.end()
+#define all(v) v.begin(), v.end()
 #define eb emplace_back
 #define mp make_pair
 #define lb lower_bound
@@ -63,7 +63,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -72,33 +71,46 @@ int main(){
     int t;
     cin>>t;
     while(t--){
-        ini(n) ini(s)
+        ini(n)
         invi(v,n)
-        vi pre(n);
-        pre[0]=v[0];
-        ll ans=INT32_MAX;
-        ff(i,1,n-1){
-            pre[i]=pre[i-1]+v[i];
+        mii m;
+        ff(i,0,n-1){
+            m[v[i]%10]++;
         }
-        ll sum=pre[n-1];
-        if(sum>s){
-            ff(i,0,n-1){
-                auto it=ub(pre.begin()+i,pre.end(),s-v[i]+pre[i]);
-                it--;
-                if(it!=pre.end()&&(*it)==s-v[i]+pre[i]){
-                    ans=minimum(ans,i+(n-1-(it-pre.begin())));
+        // (1 1 1) (1 2 0) (0 3 0) (9 3 1) (9 2 2) (9 4 0) ()
+        vvi entries;
+        ff(i,0,9){
+            ff(j,0,9){
+                ff(k,0,9){
+                    if((i+j+k)%10==3){
+                        vi tmp;
+                        tmp.eb(i);
+                        tmp.eb(j);
+                        tmp.eb(k);
+                        entries.eb(tmp);
+                    }
                 }
             }
-            if(ans!=INT32_MAX){
-                cout<<ans<<"\n";
-            }
-            else{
-                cout<<-1<<"\n";
-            }
         }
-        else if(sum==s) cout<<0<<"\n";
-        else{
-            cout<<-1<<"\n";
+
+        int x=entries.size();
+        bool f=0;
+        ff(i,0,x-1){
+            mii mm;
+            ff(j,0,2){
+                mm[entries[i][j]]++;
+            }
+            ffa(tmp,mm){
+                if(m[tmp.fi]>=tmp.se){
+                    f=1;
+                }
+                else{
+                    f=0;break;
+                }
+            }
+            if(f) break;
         }
+        if(f) yes;
+        else no;
     }
 }

@@ -19,7 +19,7 @@ typedef set<ll> sll;
 typedef map<int,int> mii;
 typedef map<long long,long long> mll;
 typedef map<int,pair<int,int>> mipii;
-#define all(v) v.begin(),v.end()
+#define all(v) v.begin(), v.end()
 #define eb emplace_back
 #define mp make_pair
 #define lb lower_bound
@@ -63,7 +63,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -72,33 +71,44 @@ int main(){
     int t;
     cin>>t;
     while(t--){
-        ini(n) ini(s)
+        ini(n)
         invi(v,n)
-        vi pre(n);
-        pre[0]=v[0];
-        ll ans=INT32_MAX;
-        ff(i,1,n-1){
-            pre[i]=pre[i-1]+v[i];
+        int mini=INT32_MAX;
+        vi mini_pos;
+        ff(i,0,n-1){
+            if(v[i]<mini){
+                mini=v[i];
+            }
         }
-        ll sum=pre[n-1];
-        if(sum>s){
-            ff(i,0,n-1){
-                auto it=ub(pre.begin()+i,pre.end(),s-v[i]+pre[i]);
-                it--;
-                if(it!=pre.end()&&(*it)==s-v[i]+pre[i]){
-                    ans=minimum(ans,i+(n-1-(it-pre.begin())));
+        auto vec=v;
+        ll ops=0;
+        ff(i,0,n-1){
+            if(vec[i]==mini){
+                mini_pos.eb(i);
+            }
+            vec[i]-=mini;
+        }
+        ops+=mini;
+        if(mini_pos.size()>1){
+            int mini2=INT32_MAX;
+            ff(i,0,mini_pos[0]){
+                if(vec[i]!=0){
+                    if(mini2<vec[i]){
+                        mini2=vec[i];
+                    }
                 }
             }
-            if(ans!=INT32_MAX){
-                cout<<ans<<"\n";
+            ff(i,0,n-1){
+                vec[i]-=mini2;
             }
-            else{
-                cout<<-1<<"\n";
-            }
+            ops+=mini2;
         }
-        else if(sum==s) cout<<0<<"\n";
-        else{
-            cout<<-1<<"\n";
+        int pos_temp=mini_pos[0];
+        int curr=0;
+        ff(i,pos_temp+1,n-1){
+
+            vec[i]=0;
+            curr
         }
     }
 }

@@ -19,7 +19,7 @@ typedef set<ll> sll;
 typedef map<int,int> mii;
 typedef map<long long,long long> mll;
 typedef map<int,pair<int,int>> mipii;
-#define all(v) v.begin(),v.end()
+#define all(v) v.begin(), v.end()
 #define eb emplace_back
 #define mp make_pair
 #define lb lower_bound
@@ -63,7 +63,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -72,33 +71,45 @@ int main(){
     int t;
     cin>>t;
     while(t--){
-        ini(n) ini(s)
+        ini(n)
         invi(v,n)
-        vi pre(n);
-        pre[0]=v[0];
-        ll ans=INT32_MAX;
-        ff(i,1,n-1){
-            pre[i]=pre[i-1]+v[i];
+        if(n%2){
+            cout<<"Mike\n";
         }
-        ll sum=pre[n-1];
-        if(sum>s){
-            ff(i,0,n-1){
-                auto it=ub(pre.begin()+i,pre.end(),s-v[i]+pre[i]);
-                it--;
-                if(it!=pre.end()&&(*it)==s-v[i]+pre[i]){
-                    ans=minimum(ans,i+(n-1-(it-pre.begin())));
+        else{
+            vpii mike,joe;
+            ff(i,1,n){
+                if(i&1){
+                    mike.eb(mp(v[i-1],i));
+                }
+                else{
+                    joe.eb(mp(v[i-1],i));
                 }
             }
-            if(ans!=INT32_MAX){
-                cout<<ans<<"\n";
+            int mini_mike=INT32_MAX,mini_joe=INT32_MAX;
+            int mike_pos,joe_pos;
+            ff(i,0,n/2-1){
+                if(mike[i].fi<mini_mike){
+                    mini_mike=mike[i].fi;
+                    mike_pos=mike[i].se;
+                }
+                if(joe[i].fi<mini_joe){
+                    mini_joe=joe[i].fi;
+                    joe_pos=joe[i].se;
+                }
+            }
+            if(mini_joe<mini_mike){
+                cout<<"Mike\n";
+            }
+            else if(mini_joe==mini_mike){
+                if(mike_pos<joe_pos)
+                    cout<<"Joe\n";
+                else
+                    cout<<"Mike\n";
             }
             else{
-                cout<<-1<<"\n";
+                cout<<"Joe\n";
             }
-        }
-        else if(sum==s) cout<<0<<"\n";
-        else{
-            cout<<-1<<"\n";
         }
     }
 }
