@@ -24,6 +24,7 @@ typedef deque<pair<long long,long long>> dqpll;
 typedef pair<int,int> pii;
 typedef set<int> si;
 typedef set<ll> sll;
+typedef set<pair<int,int>> spii;
 typedef map<int,int> mii;
 typedef map<long long,long long> mll;
 typedef map<int,pair<int,int>> mipii;
@@ -59,7 +60,6 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
-
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
@@ -71,6 +71,7 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
+
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
@@ -84,27 +85,33 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(v,n)
-    // finding 1 and 0
-    const int N = 1e5+1;
-    vi pos(N);
+    ini(n) ini(m)
+    invi(v,m)
+    sort(all(v));
+    spii st;
     ff(i,0,n-1){
-        pos[v[i]]=i;
+        st.insert(mp(0,i+1));
     }
-    int l = pos[0],r=pos[0];
-    ll ans=1,mod=1e9+7;
-    ff(i,1,n-1){
-        if(l<pos[i]&&pos[i]<r){
-            ans*= (r - l + 1) - i;
-            ans = ans%mod;
+    ff(i,0,m-1){
+        auto curr=st.begin();
+        auto new_node1=mp((*curr).fi+2,(*curr).se);
+        if((*curr).se==v[i]){
+            auto new_node2=mp((*curr).fi+1,(*curr).se);
+            st.erase(curr);
+            st.insert(new_node2);
+            continue;
         }
-        else if(pos[i]<l){
-            l=pos[i];
+        auto found=st.upper_bound(mp((*curr).fi,v[i]));
+        if(((*found).fi+1)<=((*curr).fi+2)){
+            auto new_node2=mp((*found).fi+1,v[i]);
+            st.erase(found);
+            st.insert(new_node2);
         }
-        else if(pos[i]>r){
-            r=pos[i];
+        else{
+            st.erase(curr);
+            st.insert(new_node1);
         }
     }
-    cout<<ans<<"\n";
+    auto end = --(st.end());
+    cout<<(*end).fi<<"\n";
 }

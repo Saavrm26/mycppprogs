@@ -59,8 +59,7 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
-
-#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
+#define trace1d(arr,n) for(int i=0;i<=n;i++)cout<<(arr[i]);cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
 
@@ -71,6 +70,7 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
+
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
@@ -85,26 +85,30 @@ int main(){
 }
 void solve(){
     ini(n)
-    invi(v,n)
-    // finding 1 and 0
-    const int N = 1e5+1;
-    vi pos(N);
+    vs v(n);
+    vector<pair<string,int>> vec(n);
     ff(i,0,n-1){
-        pos[v[i]]=i;
+        cin>>v[i];
+        vec[i]=mp(v[i],i);
     }
-    int l = pos[0],r=pos[0];
-    ll ans=1,mod=1e9+7;
-    ff(i,1,n-1){
-        if(l<pos[i]&&pos[i]<r){
-            ans*= (r - l + 1) - i;
-            ans = ans%mod;
+    sort(all(v));
+    sort(all(vec));
+    vi ans(n);
+
+    ff(i,0,n-1){
+        bool f=0;
+        // cout<<v[i]<<" sdfaf\n";
+        int idx=-1;
+        ff(j,1,int(v[i].size())-1){
+            string s1=v[i].substr(0,j);
+            string s2=v[i].substr(j);
+            // cout<<s1<<" "<<s2<<"\n";
+            if(binary_search(all(v),s1)&&binary_search(all(v),s2)){
+                idx=vec[i].se;
+                f=1;break;
+            }
         }
-        else if(pos[i]<l){
-            l=pos[i];
-        }
-        else if(pos[i]>r){
-            r=pos[i];
-        }
+        if(f) ans[idx]=1;
     }
-    cout<<ans<<"\n";
+    trace1d(ans,n-1);
 }

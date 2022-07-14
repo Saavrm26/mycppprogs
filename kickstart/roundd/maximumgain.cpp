@@ -59,7 +59,6 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
-
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
@@ -71,40 +70,84 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-void solve();
+
+void solve(int x);
 int main(){
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    #endif
     fastIO;
     int t;
     cin>>t;
+    int x=1;
     while(t--){
-        solve();
+        solve(x);
+        x++;
     }
 }
-void solve(){
-    ini(n)
-    invi(v,n)
-    // finding 1 and 0
-    const int N = 1e5+1;
-    vi pos(N);
-    ff(i,0,n-1){
-        pos[v[i]]=i;
-    }
-    int l = pos[0],r=pos[0];
-    ll ans=1,mod=1e9+7;
+void solve(int x){
+    ini(n) invi(v1,n)
+    ini(m) invi(v2,m)
+    ini(k)
+    vll pre1(n,0);
+    pre1[0]=v1[0];
+    vll pre2(m,0);
+    pre2[0]=v2[0];
     ff(i,1,n-1){
-        if(l<pos[i]&&pos[i]<r){
-            ans*= (r - l + 1) - i;
-            ans = ans%mod;
-        }
-        else if(pos[i]<l){
-            l=pos[i];
-        }
-        else if(pos[i]>r){
-            r=pos[i];
-        }
+        pre1[i]=pre1[i-1]+v1[i];
     }
-    cout<<ans<<"\n";
+    ff(i,1,m-1){
+        pre2[i]=pre2[i-1]+v2[i];
+    }
+    ll ans=INT64_MIN;
+    ff(i,0,k){
+        ll ans1=0,ans2=0;
+        int left1=n-i;
+        if(left1>0){
+            ff(j,0,n-left1){
+                if(j==0){
+                    ans1=pre1[n-1]-pre1[(left1-1)];
+                }
+                else{
+                    ans1=max(ans1,pre1[n-1]-(pre1[j+left1-1]-pre1[j-1]));
+                }
+            }
+        }
+        else if(left1==0){
+            ans1=pre1[n-1];
+        }
+        else{
+            ans1=-1;
+        }
+        int left2 = m-(k-i);
+        if(left2>0){
+            ff(j,0,m-left2){
+                if(j==0){
+                    ans2=pre2[m-1]-pre2[(left2-1)];
+                }
+                else{
+                    ans2=max(ans2,pre2[m-1]-(pre2[j+left2-1]-pre2[j-1]));
+                }
+            }
+        }
+        else if(left2==0){
+            ans2=pre2[m-1];
+        }
+        else{
+            ans2=-1;
+        }
+        if(ans1!=-1&&ans2!=-1)
+            ans=max(ans,ans1+ans2);
+    }
+    // ff(kitne_bache_from_n,1,n){
+    //     ff(kitne_bache_from_m,1,m){
+    //         int total_deleted=n-kitne_bache_from_n + m - kitne_bache_from_m;
+    //         if(k-total_deleted<0){
+    //             continue;
+    //         }
+    //         else{
+
+    //         }
+    //     }
+    // }
+
+
+    cout<<"Case "<<"#"<<x<<": "<<ans<<"\n";
 }
