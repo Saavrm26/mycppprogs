@@ -71,72 +71,24 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-pii check(vi v,int j){
-    auto it1=lb(all(v),j);
-    auto it2=ub(all(v),j);
-    if(it1==it2){
-        if(it1==v.end()){
-            return mp(*(--it1),*(--it2));
-        }
-        if(it1==v.begin()){
-            return mp((*it1),*(it2));
-        }
-        return mp(*(--it1),*(it2));
-    }
-    else{
-        if(it2==v.end())
-            return mp(*(it1),*(--it2));
-        else
-            return mp(*(it1),*(it2));
-    }
-}
-
-void solve(int x);
+void solve();
 int main(){
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    #endif
     fastIO;
-    int t,x=1;
+    int t;
     cin>>t;
     while(t--){
-        solve(x);
-        x++;
+        solve();
     }
 }
-void solve(int x){
-    ini(n) invi(v1,n)
-    ini(m) invi(v2,m)
-    vvi vec(2501);
+void solve(){
+    ini(n) ini(m) ini(k)
+    vi vec[n];
     ff(i,0,m-1){
-        vec[v2[i]].eb(i+1);
+        ini(x) ini(y)
+        vec[x].eb(y);
     }
-    //dp[i][j]  i is the number of digits considered and j is the position on the keyboard
-    vvi dp(n+1,vi(m+1));
-    ff(i,0,n){
-        ff(j,0,m){
-            if(i==0||j==0){
-                dp[i][j]=0;
-                continue;
-            }
-            if(v2[j-1]==v1[i-1]){
-                if(i==1){
-                    dp[i][j]=0;
-                }
-                else{
-                    int sz=vec[v1[i-2]].size();
-                    auto itrs1=check(vec[v1[i-2]],j);
-                    int p1=itrs1.fi;
-                    int p2=itrs1.se;
-                    int dp1=dp[i-1][p1] + abs(j - p1);
-                    int dp2=dp[i-1][p2] + abs(j - p2);
-                    dp[i][j]=min(dp1,dp2);
-                }
-            }
-        }
-    }
-    // trace2d(dp,n,m);
-    int ans=INT32_MAX;
-    ff(i,1,m){
-        if(v2[i-1]==v1[n-1])
-            ans=min(ans,dp[n][i]);
-    }
-    cout<<"Case "<<"#"<<x<<": "<<ans<<"\n";
+    
 }

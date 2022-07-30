@@ -59,7 +59,7 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
-#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
+#define trace1d(arr,n) for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
 
@@ -71,72 +71,54 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-pii check(vi v,int j){
-    auto it1=lb(all(v),j);
-    auto it2=ub(all(v),j);
-    if(it1==it2){
-        if(it1==v.end()){
-            return mp(*(--it1),*(--it2));
+void solve();
+int main(){
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    #endif
+    fastIO;
+    solve();
+}
+void solve(){
+    ini(n) ini(m)
+    vi adj[n+1];
+    int lev[n+1];
+    int path[n+1];
+    ff(i,0,n){
+        lev[i]=INT32_MAX;
+    }
+    ff(i,0,m-1){
+        ini(v) ini(u);
+        adj[v].eb(u);
+        adj[u].eb(v);
+    }
+    qi q;
+    q.push(1);
+    lev[1]=0;
+    path[1]=-1;
+    while(!q.empty()){
+        int par=q.front();
+        q.pop();
+        ffa(child,adj[par]){
+            if(child!=par&&lev[child]>lev[par]+1){
+                q.push(child);
+                lev[child]=lev[par]+1;
+                path[child]=par;
+            }
         }
-        if(it1==v.begin()){
-            return mp((*it1),*(it2));
+    }
+    if(lev[n]!=INT32_MAX){
+        cout<<lev[n]+1<<"\n";
+        int curr=n;
+        vi ans;
+        while(curr!=-1){
+            ans.eb(curr);
+            curr=path[curr];
         }
-        return mp(*(--it1),*(it2));
+        reverse(all(ans));
+        trace1d(ans,int(ans.size())-1);
     }
     else{
-        if(it2==v.end())
-            return mp(*(it1),*(--it2));
-        else
-            return mp(*(it1),*(it2));
+        cout<<"IMPOSSIBLE\n";
     }
-}
-
-void solve(int x);
-int main(){
-    fastIO;
-    int t,x=1;
-    cin>>t;
-    while(t--){
-        solve(x);
-        x++;
-    }
-}
-void solve(int x){
-    ini(n) invi(v1,n)
-    ini(m) invi(v2,m)
-    vvi vec(2501);
-    ff(i,0,m-1){
-        vec[v2[i]].eb(i+1);
-    }
-    //dp[i][j]  i is the number of digits considered and j is the position on the keyboard
-    vvi dp(n+1,vi(m+1));
-    ff(i,0,n){
-        ff(j,0,m){
-            if(i==0||j==0){
-                dp[i][j]=0;
-                continue;
-            }
-            if(v2[j-1]==v1[i-1]){
-                if(i==1){
-                    dp[i][j]=0;
-                }
-                else{
-                    int sz=vec[v1[i-2]].size();
-                    auto itrs1=check(vec[v1[i-2]],j);
-                    int p1=itrs1.fi;
-                    int p2=itrs1.se;
-                    int dp1=dp[i-1][p1] + abs(j - p1);
-                    int dp2=dp[i-1][p2] + abs(j - p2);
-                    dp[i][j]=min(dp1,dp2);
-                }
-            }
-        }
-    }
-    // trace2d(dp,n,m);
-    int ans=INT32_MAX;
-    ff(i,1,m){
-        if(v2[i-1]==v1[n-1])
-            ans=min(ans,dp[n][i]);
-    }
-    cout<<"Case "<<"#"<<x<<": "<<ans<<"\n";
 }

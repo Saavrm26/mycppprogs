@@ -14,6 +14,8 @@ typedef vector<pair<long long,long long>> vpll;
 typedef vector<vector<int>> vvi;
 typedef vector<vector<bool>> vvb;
 typedef vector<vector<long long>> vvll;
+typedef vector<vector<pair<int,int>>> vvpii;
+typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
@@ -71,72 +73,95 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-pii check(vi v,int j){
-    auto it1=lb(all(v),j);
-    auto it2=ub(all(v),j);
-    if(it1==it2){
-        if(it1==v.end()){
-            return mp(*(--it1),*(--it2));
-        }
-        if(it1==v.begin()){
-            return mp((*it1),*(it2));
-        }
-        return mp(*(--it1),*(it2));
-    }
-    else{
-        if(it2==v.end())
-            return mp(*(it1),*(--it2));
-        else
-            return mp(*(it1),*(it2));
-    }
-}
-
-void solve(int x);
+void solve();
 int main(){
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    #endif
     fastIO;
-    int t,x=1;
+    int t;
     cin>>t;
     while(t--){
-        solve(x);
-        x++;
+        solve();
     }
 }
-void solve(int x){
-    ini(n) invi(v1,n)
-    ini(m) invi(v2,m)
-    vvi vec(2501);
-    ff(i,0,m-1){
-        vec[v2[i]].eb(i+1);
-    }
-    //dp[i][j]  i is the number of digits considered and j is the position on the keyboard
-    vvi dp(n+1,vi(m+1));
-    ff(i,0,n){
-        ff(j,0,m){
-            if(i==0||j==0){
-                dp[i][j]=0;
-                continue;
-            }
-            if(v2[j-1]==v1[i-1]){
-                if(i==1){
-                    dp[i][j]=0;
-                }
-                else{
-                    int sz=vec[v1[i-2]].size();
-                    auto itrs1=check(vec[v1[i-2]],j);
-                    int p1=itrs1.fi;
-                    int p2=itrs1.se;
-                    int dp1=dp[i-1][p1] + abs(j - p1);
-                    int dp2=dp[i-1][p2] + abs(j - p2);
-                    dp[i][j]=min(dp1,dp2);
-                }
-            }
+void solve(){
+    ins(s);
+    if(s=="??"){yes;return;}
+    stack<char> st;
+    int n=s.size();
+    vi v;
+    int ctr=n/2;
+    ff(i,0,n-1){
+        if(s[i]=='('){
+            st.push('(');
+            ctr--;
         }
     }
-    // trace2d(dp,n,m);
-    int ans=INT32_MAX;
-    ff(i,1,m){
-        if(v2[i-1]==v1[n-1])
-            ans=min(ans,dp[n][i]);
+    ff(i,0,n-1){
+        if(s[i]=='('){
+            st.push('(');
+
+        }
+        if(s[i]==')'){
+            if(st.empty()){
+                no;return;
+            }
+            else{
+                st.pop();
+            }
+        }
+        if(s[i]=='?'){
+            v.eb(i);
+                if(ctr==0){
+                    if(!(st.empty()))
+                    {
+                        st.pop();
+                        s[i]=')';
+                    }
+                    else{
+                        no;
+                        return;
+                    }
+                }
+                else{
+                    st.push('(');
+                    s[i]='(';
+                    ctr--;
+                }
+        }
     }
-    cout<<"Case "<<"#"<<x<<": "<<ans<<"\n";
+    int o=v.size();
+    if(o>0){
+        int i1=-1,i2=-1;
+        ff(i,0,o-1){
+            if(s[v[i]]!='('){
+                i2=v[i];break;
+            }
+            else{
+                i1=v[i];
+            }
+        }
+        if(i1==-1||i2==-1){yes;}
+        else{
+            swap(s[i1],s[i2]);
+            stack<int> st;
+            ff(i,0,n-1){
+                if(s[i]=='('){
+                    st.push('(');
+                }
+                if(s[i]==')'){
+                    if(st.empty()){
+                        yes;return;
+                    }
+                    else{
+                        st.pop();
+                    }
+                }
+            }
+            no;
+        }
+    }
+    else
+        yes;
 }

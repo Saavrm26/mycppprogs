@@ -14,6 +14,8 @@ typedef vector<pair<long long,long long>> vpll;
 typedef vector<vector<int>> vvi;
 typedef vector<vector<bool>> vvb;
 typedef vector<vector<long long>> vvll;
+typedef vector<vector<pair<int,int>>> vvpii;
+typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
@@ -71,72 +73,98 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-pii check(vi v,int j){
-    auto it1=lb(all(v),j);
-    auto it2=ub(all(v),j);
-    if(it1==it2){
-        if(it1==v.end()){
-            return mp(*(--it1),*(--it2));
-        }
-        if(it1==v.begin()){
-            return mp((*it1),*(it2));
-        }
-        return mp(*(--it1),*(it2));
-    }
-    else{
-        if(it2==v.end())
-            return mp(*(it1),*(--it2));
-        else
-            return mp(*(it1),*(it2));
-    }
+void solve();
+int main(){
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    #endif
+    fastIO;
+    solve();
+
+}
+int N=1e3+1;
+int n,m;
+vvi mat(N,vi(N,INT32_MAX));
+vs lab(N);
+
+bool isValid(int i,int j){
+    if(i<0||i>=n) return 0;
+    if(j<0||j>=m) return 0;
+    if(lab[i][j]=='#') return 0;
+    return 1;
 }
 
-void solve(int x);
-int main(){
-    fastIO;
-    int t,x=1;
-    cin>>t;
-    while(t--){
-        solve(x);
-        x++;
+void solve(){
+    vpii moves={{1,0},{-1,0},{0,1},{0,-1}};
+    pii start={-1,-1};
+    pii finish=start;
+    cin>>(n); cin>>(m);
+    ff(i,0,n-1){
+        cin>>lab[i];
+        ff(j,0,m-1){
+            if(lab[i][j]=='A'){ start.fi=i;start.se=j;}
+            if(lab[i][j]=='B'){ finish.fi=i;finish.se=j;}
+        }
     }
-}
-void solve(int x){
-    ini(n) invi(v1,n)
-    ini(m) invi(v2,m)
-    vvi vec(2501);
-    ff(i,0,m-1){
-        vec[v2[i]].eb(i+1);
-    }
-    //dp[i][j]  i is the number of digits considered and j is the position on the keyboard
-    vvi dp(n+1,vi(m+1));
-    ff(i,0,n){
-        ff(j,0,m){
-            if(i==0||j==0){
-                dp[i][j]=0;
-                continue;
-            }
-            if(v2[j-1]==v1[i-1]){
-                if(i==1){
-                    dp[i][j]=0;
-                }
-                else{
-                    int sz=vec[v1[i-2]].size();
-                    auto itrs1=check(vec[v1[i-2]],j);
-                    int p1=itrs1.fi;
-                    int p2=itrs1.se;
-                    int dp1=dp[i-1][p1] + abs(j - p1);
-                    int dp2=dp[i-1][p2] + abs(j - p2);
-                    dp[i][j]=min(dp1,dp2);
+    qpii q;
+    //assumming B is alredy in the path
+    int ans_len=0;
+    q.push(start);
+    // this will store number of steps taken and the parent for every vertex
+    vector<vector<pair<int,pair<int,int>>>> path(n,vector<pair<int,pair<int,int>>>(m,mp(INT32_MAX,mp(-1,-1))));
+    bool f=0;
+    path[start.fi][start.se].fi=0;
+    while(!q.empty()){
+        auto par=q.front();
+        int len=path[par.fi][par.se].fi;
+        q.pop();
+        ffa(k,moves){
+            auto child=mp(par.fi+k.fi,par.se+k.se);
+            if(isValid(child.fi,child.se)){
+                if(path[child.fi][child.se].fi>len+1){
+                    q.push(child);
+                    path[child.fi][child.se].fi=len+1;
+                    path[child.fi][child.se].se=par;
+                    if(child==finish){
+                        ans_len=len+1;
+                        f=1;break;
+                    }
                 }
             }
         }
+        if(f==1) break;
+
     }
-    // trace2d(dp,n,m);
-    int ans=INT32_MAX;
-    ff(i,1,m){
-        if(v2[i-1]==v1[n-1])
-            ans=min(ans,dp[n][i]);
+
+    if(f) yes;
+    else{no;return;}
+    cout<<ans_len<<"\n";
+    auto curr=finish;
+    string str="";
+    while(curr!=start){
+        auto par=path[curr.fi][curr.se].se;
+        //diff1 row ke liye hai
+        int diff1=par.fi - curr.fi;
+        //diff2 column ke liye hai
+        int diff2=par.se - curr.se;
+        if(diff1){
+            if(diff1==-1){
+                str+='D';
+            }
+            else{
+                str+='U';
+            }
+        }
+        else{
+            if(diff2==-1){
+                str+='R';
+            }
+            else{
+                str+='L';
+            }
+        }
+        curr=par;
     }
-    cout<<"Case "<<"#"<<x<<": "<<ans<<"\n";
+    reverse(str.begin(),str.end());
+    cout<<str<<"\n";
 }

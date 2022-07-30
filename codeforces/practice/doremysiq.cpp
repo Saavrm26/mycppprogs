@@ -14,6 +14,8 @@ typedef vector<pair<long long,long long>> vpll;
 typedef vector<vector<int>> vvi;
 typedef vector<vector<bool>> vvb;
 typedef vector<vector<long long>> vvll;
+typedef vector<vector<pair<int,int>>> vvpii;
+typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
@@ -62,7 +64,8 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
+#define print1d(arr,n) for(int i=0;i<=n;i++)cout<<(arr[i])<<"";cout<<"\n";
+#define print2d(arr,n,m) for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 
 // Questions to ask before submitting any code on OJ
 // Q1. Is my approach handling all the cases ? Think of some edge cases
@@ -71,72 +74,34 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
-pii check(vi v,int j){
-    auto it1=lb(all(v),j);
-    auto it2=ub(all(v),j);
-    if(it1==it2){
-        if(it1==v.end()){
-            return mp(*(--it1),*(--it2));
-        }
-        if(it1==v.begin()){
-            return mp((*it1),*(it2));
-        }
-        return mp(*(--it1),*(it2));
-    }
-    else{
-        if(it2==v.end())
-            return mp(*(it1),*(--it2));
-        else
-            return mp(*(it1),*(it2));
-    }
-}
-
-void solve(int x);
+void solve();
 int main(){
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    #endif
     fastIO;
-    int t,x=1;
+    int t;
     cin>>t;
     while(t--){
-        solve(x);
-        x++;
+        solve();
     }
 }
-void solve(int x){
-    ini(n) invi(v1,n)
-    ini(m) invi(v2,m)
-    vvi vec(2501);
-    ff(i,0,m-1){
-        vec[v2[i]].eb(i+1);
-    }
-    //dp[i][j]  i is the number of digits considered and j is the position on the keyboard
-    vvi dp(n+1,vi(m+1));
-    ff(i,0,n){
-        ff(j,0,m){
-            if(i==0||j==0){
-                dp[i][j]=0;
-                continue;
-            }
-            if(v2[j-1]==v1[i-1]){
-                if(i==1){
-                    dp[i][j]=0;
-                }
-                else{
-                    int sz=vec[v1[i-2]].size();
-                    auto itrs1=check(vec[v1[i-2]],j);
-                    int p1=itrs1.fi;
-                    int p2=itrs1.se;
-                    int dp1=dp[i-1][p1] + abs(j - p1);
-                    int dp2=dp[i-1][p2] + abs(j - p2);
-                    dp[i][j]=min(dp1,dp2);
-                }
-            }
+void solve(){
+    ini(n) ini(q)
+    invi(v,n)
+    int iq=0;
+    vi ans(n);
+    fb(i,n-1,0){
+        if(v[i]<=iq){
+            ans[i]=1;
+        }
+        else if(iq<q){
+            ans[i]=1;
+            iq++;
+        }
+        else{
+            ans[i]=0;
         }
     }
-    // trace2d(dp,n,m);
-    int ans=INT32_MAX;
-    ff(i,1,m){
-        if(v2[i-1]==v1[n-1])
-            ans=min(ans,dp[n][i]);
-    }
-    cout<<"Case "<<"#"<<x<<": "<<ans<<"\n";
+    print1d(ans,n-1);
 }
