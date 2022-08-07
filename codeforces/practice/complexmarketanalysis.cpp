@@ -79,9 +79,9 @@ vector<bool> is_prime(N+1, true);
 void solve();
 int main(){
     is_prime[0] = is_prime[1] = false;
-    for (int i = 2; i <= N; i++) {
+    for (ll i = 2; i <= N; i++) {
         if (is_prime[i] && (long long)i * i <= N) {
-            for (int j = i * i; j <= N; j += i)
+            for (ll j = i * i; j <= N; j += i)
                 is_prime[j] = false;
         }
     }
@@ -97,50 +97,68 @@ int main(){
 }
 void solve(){
     ini(n) ini(e)
-    invi(v,n);
+    invll(v,n);
     vb mark(n);
     ll ans=0;
+    vpll vec(n);
     fb(i,n-1,0){
         if(!mark[i]){
-            int idx=i;
-            bool begin=0,prev=0;
-            ll steps=0;
+            ll idx=i;
+            bool begin=0;
+            ll before=0,after=0,curr=-1;
             while(idx>=0){
+                mark[idx]=1;
                 if(!begin){
                     if(v[idx]==1){
-                        begin=0;
-                        steps++;
-                        prev=1;
-                        mark[idx]=1;
+                        before+=1;
                     }
                     else{
                         if(is_prime[v[idx]]){
                             begin=1;
-                            mark[idx]=1;
-                            if(prev) ans++;
+                            curr=idx;
                         }
                         else{
-                            mark[idx]=1;
                             break;
                         }
                     }
                 }
                 else{
                     if(v[idx]==1){
-                        ans++;
-                        // steps++;
+                        after+=1;
+                        if(idx==0){
+                            vec[curr]=mp(before,after);
+                        }
                     }
                     else{
-                        if(!is_prime[v[idx]]){
-                            mark[idx]=1;
-                            // ans+=steps;
+                        // agar 2 or more prime hai then
+                        if(is_prime[v[idx]]){
+                            vec[curr]=mp(before,after);
+                            before=after;
+                            after=0;
+                            curr=idx;
+
                         }
+                        else if(idx==0){
+                            vec[curr]=mp(before,after);
+                        }
+                        else{
                             break;
+                        }
                     }
                 }
                 idx-=e;
+                if(idx<0){
+                    if(curr!=-1)
+                        vec[curr]=mp(before,after);
+                }
             }
         }
+    }
+    ffa(i,vec){
+        if(i!=mp(0*1LL,0*1LL)){
+            ans+=(i.fi+1)*(i.se+1)-1;
+        }
+
     }
     cout<<ans<<"\n";
 }
