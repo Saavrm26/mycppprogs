@@ -17,7 +17,6 @@ typedef vector<vector<long long>> vvll;
 typedef vector<vector<pair<int,int>>> vvpii;
 typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
-typedef queue<long long> qll;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
 typedef queue<pair<int,int>> qpii;
@@ -75,11 +74,18 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Competition is with yourself
 
 void solve();
+vll mat;
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
+    ll curr=0;
+    while(1){
+        if(curr*curr>ll(1e7)){mat.eb(curr*curr);break;}
+        mat.eb(curr*curr);
+        curr++;
+    }
     int t;
     cin>>t;
     while(t--){
@@ -87,40 +93,45 @@ int main(){
     }
 }
 
-bool check(int time,vll &tlist){
-    int n=tlist.size();
-    n--;
-    ll left=0,help=0;
-    ff(i,1,n){
-        if(time<tlist[i]){
-            left+=(tlist[i]-time);
-        }
-        else if(time>tlist[i]){
-            help+=(time-tlist[i])/2;
-        }
-    }
-    if(help>=left) return true;
-    return false;
-}
-
 void solve(){
-    ini(n) ini(m)
-    invll(v,m)
-    vll tlist(n+1);
-    ff(i,0,m-1){
-        tlist[v[i]]++;
-    }
-    int l=1,r=2*m;
-    int ans=INT32_MAX;
-    while(l<=r){
-        int time=(l+ r)/2;
-        if(check(time,tlist)){
-            ans=min(time,ans);
-            r=time-1;
+    ini(n)
+    auto it = lb(all(mat),n);
+    vll ans(n);
+    vb mark(n);
+    fb(i,n-1,0){
+        ll req = (*it) - i;
+        if(req>n-1){
+            --it;
+            req = (*it) - i;
         }
+        if(!mark[req]){mark[req]=1;}
         else{
-            l=time+1;
+            bool ok=0;
+            while(1){
+                --it;
+                req = (*it) - i;
+                if(req<0){break;}
+                if(!mark[req]){
+                    ok=1;
+                    mark[req]=1;
+                    break;
+                }
+            }
+            if(!ok){
+                cout<<-1<<"\n";
+                return;
+            }
+        }
+        ans[i]=req;
+    }
+    ff(i,0,n-1){
+        if(ceil(sqrt(i+ans[i]))!=sqrt(i+ans[i])){
+            cout<<-1<<"\n";
+            return;
         }
     }
-    cout<<ans<<"\n";
+    ff(i,0,n-1){
+        cout<<ans[i]<<" ";
+    }
+    cout<<"\n";
 }

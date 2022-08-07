@@ -17,7 +17,6 @@ typedef vector<vector<long long>> vvll;
 typedef vector<vector<pair<int,int>>> vvpii;
 typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
-typedef queue<long long> qll;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
 typedef queue<pair<int,int>> qpii;
@@ -74,8 +73,18 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Remember:
 // Competition is with yourself
 
+int N=1e6;
+vector<bool> is_prime(N+1, true);
+
 void solve();
 int main(){
+    is_prime[0] = is_prime[1] = false;
+    for (int i = 2; i <= N; i++) {
+        if (is_prime[i] && (long long)i * i <= N) {
+            for (int j = i * i; j <= N; j += i)
+                is_prime[j] = false;
+        }
+    }
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
@@ -86,40 +95,51 @@ int main(){
         solve();
     }
 }
-
-bool check(int time,vll &tlist){
-    int n=tlist.size();
-    n--;
-    ll left=0,help=0;
-    ff(i,1,n){
-        if(time<tlist[i]){
-            left+=(tlist[i]-time);
-        }
-        else if(time>tlist[i]){
-            help+=(time-tlist[i])/2;
-        }
-    }
-    if(help>=left) return true;
-    return false;
-}
-
 void solve(){
-    ini(n) ini(m)
-    invll(v,m)
-    vll tlist(n+1);
-    ff(i,0,m-1){
-        tlist[v[i]]++;
-    }
-    int l=1,r=2*m;
-    int ans=INT32_MAX;
-    while(l<=r){
-        int time=(l+ r)/2;
-        if(check(time,tlist)){
-            ans=min(time,ans);
-            r=time-1;
-        }
-        else{
-            l=time+1;
+    ini(n) ini(e)
+    invi(v,n);
+    vb mark(n);
+    ll ans=0;
+    fb(i,n-1,0){
+        if(!mark[i]){
+            int idx=i;
+            bool begin=0,prev=0;
+            ll steps=0;
+            while(idx>=0){
+                if(!begin){
+                    if(v[idx]==1){
+                        begin=0;
+                        steps++;
+                        prev=1;
+                        mark[idx]=1;
+                    }
+                    else{
+                        if(is_prime[v[idx]]){
+                            begin=1;
+                            mark[idx]=1;
+                            if(prev) ans++;
+                        }
+                        else{
+                            mark[idx]=1;
+                            break;
+                        }
+                    }
+                }
+                else{
+                    if(v[idx]==1){
+                        ans++;
+                        // steps++;
+                    }
+                    else{
+                        if(!is_prime[v[idx]]){
+                            mark[idx]=1;
+                            // ans+=steps;
+                        }
+                            break;
+                    }
+                }
+                idx-=e;
+            }
         }
     }
     cout<<ans<<"\n";

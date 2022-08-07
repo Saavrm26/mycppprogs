@@ -17,7 +17,6 @@ typedef vector<vector<long long>> vvll;
 typedef vector<vector<pair<int,int>>> vvpii;
 typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
-typedef queue<long long> qll;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
 typedef queue<pair<int,int>> qpii;
@@ -75,7 +74,17 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 // Competition is with yourself
 
 void solve();
+vvi table(10);
 int main(){
+    table[1]={1,3,7,15,21};
+    table[2]={2,6,14,20};
+    table[3]={3,9,11,15,23,29};
+    table[4]={4,8,12,18};
+    table[5]={};
+    table[6]={6,8,12,20,26};
+    table[7]={7,11,19,25};
+    table[8]={8,14};
+    table[9]={9,17,23};
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
@@ -86,41 +95,41 @@ int main(){
         solve();
     }
 }
-
-bool check(int time,vll &tlist){
-    int n=tlist.size();
-    n--;
-    ll left=0,help=0;
-    ff(i,1,n){
-        if(time<tlist[i]){
-            left+=(tlist[i]-time);
-        }
-        else if(time>tlist[i]){
-            help+=(time-tlist[i])/2;
-        }
+bool check(int a, int b){
+    if(a==b) return 1;
+    int x=a%10,y=b%10;
+    if(x==0) return 0;
+    if(x==5){
+        if((b-a)==5) return 1;
+        return 0;
     }
-    if(help>=left) return true;
-    return false;
+    if(y==5||y==0) return 0;
+    vi isvalid={0,2,6,14};
+    // if(x!=2){
+        // ffa(i,table[a]){
+        //     if(b == (a+i)){
+        //         return 1;
+        //     }
+        // }
+        a=a+table[x][table[x].size()-1];
+        // trace(a);
+        b=b+table[y][table[y].size()-1];
+        // trace(b);        
+    // }
+    // if(y!=2)
+    // if()
+    if(binary_search(all(isvalid),(b-a)%20)){
+        return 1;
+    }
+    return 0;
 }
-
 void solve(){
-    ini(n) ini(m)
-    invll(v,m)
-    vll tlist(n+1);
-    ff(i,0,m-1){
-        tlist[v[i]]++;
+    ini(n)
+    invi(v,n);
+    sort(all(v));
+    ff(i,1,n-1){
+        if(!check(v[i-1],v[i])){no;return;}
+
     }
-    int l=1,r=2*m;
-    int ans=INT32_MAX;
-    while(l<=r){
-        int time=(l+ r)/2;
-        if(check(time,tlist)){
-            ans=min(time,ans);
-            r=time-1;
-        }
-        else{
-            l=time+1;
-        }
-    }
-    cout<<ans<<"\n";
+    yes;
 }

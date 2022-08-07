@@ -8,6 +8,7 @@ typedef vector<bool> vb;
 typedef vector<int> vi;
 typedef vector<long long> vll;
 typedef vector<string> vs;
+typedef vector<pair<string,int>> vpsi;
 typedef vector<pair<int,int>> vpii;
 typedef vector<pair<char,int>> vpci;
 typedef vector<pair<long long,long long>> vpll;
@@ -17,7 +18,6 @@ typedef vector<vector<long long>> vvll;
 typedef vector<vector<pair<int,int>>> vvpii;
 typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
-typedef queue<long long> qll;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
 typedef queue<pair<int,int>> qpii;
@@ -87,40 +87,86 @@ int main(){
     }
 }
 
-bool check(int time,vll &tlist){
-    int n=tlist.size();
-    n--;
-    ll left=0,help=0;
-    ff(i,1,n){
-        if(time<tlist[i]){
-            left+=(tlist[i]-time);
-        }
-        else if(time>tlist[i]){
-            help+=(time-tlist[i])/2;
-        }
+string cusstr(int l,int r,string str){
+    string s="";
+    ff(i,l,r){
+        s+=str[i];
     }
-    if(help>=left) return true;
-    return false;
+    return s;
+}
+
+int bsearch(vpsi vec,string str){
+    int n=vec.size();
+    auto it =lb(all(vec),mp(str,0));
+    if((*it).fi==str){
+        return (*it).se;
+    }
+    return -1;
 }
 
 void solve(){
-    ini(n) ini(m)
-    invll(v,m)
-    vll tlist(n+1);
-    ff(i,0,m-1){
-        tlist[v[i]]++;
+    ins(s)
+    ini(n)
+    vpsi vec(n);
+    ff(i,0,n-1){
+        cin>>vec[i].fi;
+        vec[i].se=i;
     }
-    int l=1,r=2*m;
-    int ans=INT32_MAX;
-    while(l<=r){
-        int time=(l+ r)/2;
-        if(check(time,tlist)){
-            ans=min(time,ans);
-            r=time-1;
+    sort(all(vec));
+    int ans=0;
+    int p=s.size();
+    vpii ranges;
+    //index of the last element in the maximum range including index 0
+    int x=0;
+
+    bool ok=0;
+    // first section
+    fb(i,p-1,0){
+        x=i;
+        string str = cusstr(0, i, s);
+        int idx=bsearch(vec,str);
+        if (idx!=-1)
+        {
+            ranges.eb(idx+1, 1);
+            ans++;
+            ok=1;
+            break;
         }
-        else{
-            l=time+1;
+    }
+    if(!ok){cout<<-1<<'\n';return;}
+
+    while(x<p-1){
+        ok=false;
+        fb(k,p-1,x+1){
+            string str = cusstr(x + 1, k, s);
+            int id=bsearch(vec,str);
+            if(id!=-1){
+                ranges.eb(id+1, x+2);
+                ans++;
+                ok=1;
+                x=k;
+            }
+            else{
+                fb(i, x, 0)
+                {
+                    str = s[i] + str;
+                    int idx=bsearch(vec,str);
+                    if (idx!=-1)
+                    {
+                        ranges.eb(idx+1, i + 1);
+                        ans++;
+                        ok=1;
+                        x=k;
+                        break;
+                    }
+                }
+            }
+            if(ok) break;
         }
+        if(!ok){cout<<-1<<'\n';return;}
     }
     cout<<ans<<"\n";
+    ff(i,0,int(ranges.size())-1){
+        cout<<ranges[i].fi<<" "<<ranges[i].se<<"\n";
+    }
 }

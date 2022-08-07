@@ -17,7 +17,6 @@ typedef vector<vector<long long>> vvll;
 typedef vector<vector<pair<int,int>>> vvpii;
 typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
-typedef queue<long long> qll;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
 typedef queue<pair<int,int>> qpii;
@@ -86,41 +85,32 @@ int main(){
         solve();
     }
 }
-
-bool check(int time,vll &tlist){
-    int n=tlist.size();
-    n--;
-    ll left=0,help=0;
-    ff(i,1,n){
-        if(time<tlist[i]){
-            left+=(tlist[i]-time);
-        }
-        else if(time>tlist[i]){
-            help+=(time-tlist[i])/2;
-        }
-    }
-    if(help>=left) return true;
-    return false;
-}
-
 void solve(){
-    ini(n) ini(m)
-    invll(v,m)
-    vll tlist(n+1);
-    ff(i,0,m-1){
-        tlist[v[i]]++;
-    }
-    int l=1,r=2*m;
-    int ans=INT32_MAX;
-    while(l<=r){
-        int time=(l+ r)/2;
-        if(check(time,tlist)){
-            ans=min(time,ans);
-            r=time-1;
+    ini(n)
+    invi(v,n)
+    if(n<=2){yes;return;}
+    // ff(i,1,n-2){
+    //     if(v[i-1]>v[i]&&v[i]<v[i+1]){
+    //         if(v[i+1]!=v[i-1]){no;return;}
+    //         fb(j,i-1,0){
+    //             if(v[j]!=v[i-1]){no;return;}
+    //         }
+    //         ff(j,i+1,n-1){
+    //             if(v[j]!=v[i+1]){no;return;}
+    //         }
+    //     }
+    // }
+    bool down=0;
+    ff(i,0,n-2){
+        if(v[i]==v[i+1]) continue;
+        else if(v[i]<v[i+1]){
+            if(down){
+                no;return;
+            }
         }
         else{
-            l=time+1;
+            down=1;
         }
     }
-    cout<<ans<<"\n";
+    yes;
 }

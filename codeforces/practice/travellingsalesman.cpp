@@ -17,7 +17,6 @@ typedef vector<vector<long long>> vvll;
 typedef vector<vector<pair<int,int>>> vvpii;
 typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
-typedef queue<long long> qll;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
 typedef queue<pair<int,int>> qpii;
@@ -86,41 +85,29 @@ int main(){
         solve();
     }
 }
-
-bool check(int time,vll &tlist){
-    int n=tlist.size();
-    n--;
-    ll left=0,help=0;
-    ff(i,1,n){
-        if(time<tlist[i]){
-            left+=(tlist[i]-time);
-        }
-        else if(time>tlist[i]){
-            help+=(time-tlist[i])/2;
-        }
-    }
-    if(help>=left) return true;
-    return false;
-}
-
 void solve(){
-    ini(n) ini(m)
-    invll(v,m)
-    vll tlist(n+1);
-    ff(i,0,m-1){
-        tlist[v[i]]++;
-    }
-    int l=1,r=2*m;
-    int ans=INT32_MAX;
-    while(l<=r){
-        int time=(l+ r)/2;
-        if(check(time,tlist)){
-            ans=min(time,ans);
-            r=time-1;
+    ini(n)
+    vpii vec(n);
+    int maxnegx=0,maxposx=0,maxnegy=0,maxposy=0;
+    ff(i,0,n-1){
+        cin>>vec[i].fi;
+        cin>>vec[i].se;
+        if(vec[i].fi==0){
+            if(vec[i].se>0){
+                maxposy=max(maxposy,abs(vec[i].se));
+            }
+            else{
+                maxnegy=max(maxnegy,abs(vec[i].se));
+            }
         }
         else{
-            l=time+1;
+            if(vec[i].fi>0){
+                maxposx=max(maxposx,abs(vec[i].fi));
+            }
+            else{
+                maxnegx=max(maxnegx,abs(vec[i].fi));
+            }
         }
     }
-    cout<<ans<<"\n";
+    cout<<(maxnegx+maxnegy+maxposx+maxposy)*2<<"\n";
 }
