@@ -72,40 +72,15 @@ int main(){
     while(t--){
         ini(n)
         invi(v,n)
-        sort(v.begin(),v.end());
-        vi a,b;
+        mii m;
         ff(i,0,n-1){
-            if(!(i&1))
-                a.eb(v[i]);
-            else
-                b.eb(v[i]);
+            m[v[i]]++;
         }
-        vi x;
-        ff(i,0,a.size()-1){
-            x.eb(a[i]);
+        int sgle=0,dbl=0;
+        ffa(i,m){
+            if(i.se==1) sgle++;
+            else dbl++;
         }
-        fb(i,b.size()-1,0){
-            x.eb(b[i]);
-        }
-        int lis1=0;
-        int tmp=INT32_MIN;
-        ff(i,0,n-1){
-            if(x[i]>tmp){
-                tmp=x[i];
-                lis1++;
-            }
-        }
-        tmp=INT32_MIN;
-        int lis2=0;
-        fb(i,n-1,0){
-            if(x[i]>tmp){
-                tmp=x[i];
-                lis2++;
-            }
-        }
-        // trace1d(x,x.size()-1);
-        // trace1d(a,a.size()-1);
-        // trace1d(a,a.size()-1);
-        cout<<min(lis1,lis2)<<"\n";
+        cout<<(dbl+(sgle+1)/2)<<"\n";
     }
 }

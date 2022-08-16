@@ -84,7 +84,37 @@ int main(){
     }
 }
 void solve(){
-    ini(n) ini(k)
-    invi(v,n)
-    
+    inll(n) inll(k)
+    invll(v,n)
+    ll dp[n+1][31],mx=0;
+    ff(i,0,n-1){
+        ll x=v[i],cnt=0;
+        for(;x;x >>= 1)++ cnt;
+		mx = max(mx , cnt);
+    }
+    ff(i,0,n){
+        ff(j,0,30){
+            dp[i][j]=0;
+        }
+    }
+    if(mx == 0) {
+		puts("0");
+		return ;
+	}
+    // ff(i,0,30){
+    //     dp[0][i]=0;
+    // }
+    ll ans=0;
+    for(ll i = 1;i <= n;++ i) {
+		dp[i][0] = dp[i - 1][0] + v[i-1] - k;
+		for(ll j = 1;j <= min(i , mx);++ j) {
+			dp[i][j] = max(dp[i - 1][j] + (v[i-1] >> j) - k , dp[i - 1][j - 1] + (v[i-1] >> j));
+		}
+		ans = max(ans , dp[i][mx]);
+	}
+
+    // ff(i,0,30){
+    //     ans=max(ans,dp[n][i]);
+    // }
+    cout<<ans<<"\n";
 }

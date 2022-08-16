@@ -101,57 +101,21 @@ void solve(){
     vb mark(n);
     ll ans=0;
     vpll vec(n);
-    fb(i,n-1,0){
-        if(!mark[i]){
-            ll idx=i;
-            bool begin=0;
-            ll before=0,after=0,curr=-1;
-            while(idx>=0){
-                mark[idx]=1;
-                if(!begin){
-                    if(v[idx]==1){
-                        before+=1;
-                    }
-                    else{
-                        if(is_prime[v[idx]]){
-                            begin=1;
-                            curr=idx;
-                        }
-                        else{
-                            break;
-                        }
-                    }
-                }
-                else{
-                    if(v[idx]==1){
-                        after+=1;
-                        if(idx==0){
-                            vec[curr]=mp(before,after);
-                        }
-                    }
-                    else{
-                        // agar 2 or more prime hai then
-                        if(is_prime[v[idx]]){
-                            vec[curr]=mp(before,after);
-                            before=after;
-                            after=0;
-                            curr=idx;
-
-                        }
-                        else if(idx==0){
-                            vec[curr]=mp(before,after);
-                        }
-                        else{
-                            break;
-                        }
-                    }
-                }
-                idx-=e;
-                if(idx<0){
-                    if(curr!=-1)
-                        vec[curr]=mp(before,after);
-                }
+    ff(i,0,n-1){
+        if(is_prime[v[i]]){
+            ll idx1=i+e,idx2=i-e;
+            ll before=0,after=0;
+            while(idx1<n){
+                if(v[idx1]==1) after++;
+                else break;
+                idx1+=e;
             }
+            while(idx2>=0){
+                if(v[idx2]==1) before++;
+                else break;
+                idx2-=e;
+            }
+            vec[i]=mp(before,after);
         }
     }
     ffa(i,vec){
