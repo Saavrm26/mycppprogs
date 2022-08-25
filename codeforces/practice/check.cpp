@@ -84,8 +84,14 @@ int main(){
     solve();
 }
 void solve(){
-    int x=1<<29;
-    int y=1e9;
-    if(x>y) yes;
-    else no;
+    // ll x=881854503;
+    // ll y=1e9;
+    // if(x>y) yes;
+    // else no;
+    ll hi=1e6;
+    vll vec(hi+1);
+    ff(i,1,hi){
+        vec[i]+=vec[i-1]+i;
+    }
+    cout<<vec[hi]<<"\n";
 }

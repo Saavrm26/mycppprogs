@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -79,6 +78,17 @@ template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_or
 // Competition is with yourself
 
 void solve();
+ll N=1e3+1;
+int n,m;
+
+
+
+bool is_valid(int i,int j){
+    if(i<0||i>n) return 0;
+    if(j<0||j>m) return 0;
+    return 1;
+}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -89,12 +99,77 @@ int main(){
     while(t--){
         solve();
     }
-
 }
-
 void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    cin>>n>>m;
+    vvll mat(n+1,vll(m+1));
+    ll ri=(n+1)/2;
+    ll rj=(m+1)/2;
+    ll z=n-ri+m-rj;
+    vpll vec;
+
+    if(n&1){
+        mat[ri][rj]=z;
+        vec.eb(mp(ri,rj));
+        if(m&1){
+            mat[ri][rj]=z;
+        }
+        else{
+            mat[ri][rj]=z;
+            mat[ri][rj+1]=z;
+            vec.eb(mp(ri,rj+1));
+        }
+    }
+    else{
+        mat[ri][rj]=z;
+        mat[ri+1][rj]=z;
+        vec.eb(mp(ri,rj));
+        vec.eb(mp(ri+1,rj));
+        if(m&1){
+            mat[ri][rj]=z;
+        }
+        else{
+            mat[ri][rj+1]=z;
+            mat[ri+1][rj+1]=z;
+            vec.eb(mp(ri,rj+1));
+            vec.eb(mp(ri+1,rj+1));
+        }
+    }
+    vpii moves={mp(1,0),mp(0,1),mp(-1,0),mp(0,-1)};
+    ll ctr=0;
+    while(vec.size()!=0){
+        vpll vec2;
+        ffa(y,vec){
+            int i=y.fi;
+            int j=y.se;
+            ffa(x,moves){
+                int ii=y.fi+x.fi;
+                int jj=y.se+x.se;
+                if(is_valid(ii,jj)){
+                    if(mat[ii][jj]!=0){
+                        if(mat[ii][jj]>mat[i][j]+1){
+                            mat[ii][jj]=mat[i][j]+1;
+                            vec2.eb(mp(ii,jj));
+                        }
+                    }
+                    else{
+                        mat[ii][jj]=mat[i][j]+1;
+                        vec2.eb(mp(ii,jj));
+                    };
+                }
+            }
+        }
+        vec=vec2;
+    }
+    vll ans;
+    ff(i,1,n){
+        ff(j,1,m){
+                ans.eb(mat[i][j]);
+        }
+    }
+    sort(all(ans));
+    ff(i,0,int(ans.size())-1){
+        cout<<ans[i]<<" ";
+    }
+    cout<<"\n";
 }

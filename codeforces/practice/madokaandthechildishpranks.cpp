@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -89,12 +88,37 @@ int main(){
     while(t--){
         solve();
     }
-
 }
-
 void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    ini(n) ini(m)
+    vvi ans;
+    vvi mat(n,vi(m));
+    ff(i,0,n-1){
+        ins(s)
+        ff(j,0,m-1){
+            mat[i][j]=s[j]-'0';
+        }
+
+    }
+    if(mat[0][0]==1){
+        cout<<-1<<"\n";return;
+    }
+    fb(i,n-1,0){
+        fb(j,m-1,1){
+            if(mat[i][j]){
+                vi temp={i+1,j,i+1,j+1};
+                ans.eb(temp);
+            }
+        }
+    }
+    fb(i,n-1,1){
+        if(mat[i][0]){
+            vi temp={i,1,i+1,1};
+            ans.eb(temp);
+        }
+    }
+    cout<<ans.size()<<"\n";
+    ffa(i,ans){
+        cout<<i[0]<<" "<<i[1]<<" "<<i[2]<<" "<<i[3]<<"\n";
+    }
 }

@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -79,22 +78,40 @@ template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_or
 // Competition is with yourself
 
 void solve();
+int n;
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
-    fastIO;
-    int t;
-    cin>>t;
-    while(t--){
-        solve();
-    }
-
+    // fastIO;
+    solve();
 }
-
+ll query(ll mid){
+    if(1<=mid&&mid<=n){
+        cout<<"? "<<mid<<"\n";
+        cout.flush();
+        ll x;
+        cin>>x;
+        return x;
+    }
+}
 void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    cin>>n;
+    int l=1,r=n;
+    vll a(n+2);
+    a[0]=1e17;
+    a[n+1]=1e17;
+    // 
+    while(l<r){
+        int mid=(l+r)/2;
+        a[mid]=query(mid);
+        a[mid+1]=query(mid+1);
+        if(a[mid]<a[mid+1]){
+            r=mid;
+        }
+        else{
+            l=mid+1;
+        }
+    }
+    cout<<"! "<<l<<"\n";
 }

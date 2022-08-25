@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -78,7 +77,7 @@ template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_or
 // Remember:
 // Competition is with yourself
 
-void solve();
+void solve(int tc);
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -86,15 +85,44 @@ int main(){
     fastIO;
     int t;
     cin>>t;
+    int tc=1;
     while(t--){
-        solve();
+        solve(tc);
+        tc++;
     }
-
 }
-
-void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+void solve(int tc){
+    inll(n) invll(v,n)
+    auto vec=v;
+    sort(all(vec));
+    vll ans(n);
+    int N=1e6+1;
+    vll mm(N);
+    ff(i,0,n-1){
+        mm[v[i]]++;
+    }
+    ff(i,0,n-1){
+        auto it=ub(all(vec),2*v[i]);
+        if(*(--it)<=2*v[i]){
+            ans[i]=*it;
+            if((*it)==v[i]){
+                if(mm[v[i]]==1){
+                    if(it!=vec.begin()){
+                        ans[i]=*(--it);
+                    }
+                    else{
+                        ans[i]=-1;
+                    }
+                }
+            }
+        }
+        else{
+            ans[i]=-1;
+        }
+    }
+    cout<<"Case #"<<tc<<": ";
+    ff(i,0,n-1){
+        cout<<ans[i]<<" ";
+    }
+    cout<<"\n";
 }

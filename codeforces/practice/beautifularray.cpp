@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -89,12 +88,52 @@ int main(){
     while(t--){
         solve();
     }
-
 }
-
 void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    inll(n) inll(k) inll(b) inll(s)
+    ll curr=s/k;
+    if(curr==b){
+        ff(i,0,n-2){
+            cout<<0<<" ";
+        }
+        cout<<s<<"\n";
+    }
+    else if(curr<b){
+        cout<<-1<<"\n";
+    }
+    else{
+        if(k==1){
+            cout<<-1<<"\n";return;
+        }
+        ll temp=b*k+k-1;
+        ll diff=s-temp;
+        ll required = (diff)/(k-1);
+        if(diff%(k-1)!=0){required+=1;}
+        vll requiredarr;
+
+        if(required>n-1){
+            cout<<-1<<"\n";
+        }
+        else{
+            ll d=diff;
+            ff(i,1,required){
+                if(d>=k-1){
+                    requiredarr.eb(k-1);
+                }
+                else{
+                    requiredarr.eb(d);
+                }
+                d-=k-1;
+            }
+            cout<<temp<<" ";
+            ff(i,1,required){
+                cout<<requiredarr[i-1]<<' ';
+            }
+            ff(i,1,n-required-1){
+                cout<<0<<" ";
+            }
+            cout<<"\n";
+        }
+    }
+
 }

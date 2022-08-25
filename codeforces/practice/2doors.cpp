@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -20,6 +20,7 @@ typedef vector<vector<long long>> vvll;
 typedef vector<vector<pair<int,int>>> vvpii;
 typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
+typedef queue<long long> qll;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
 typedef queue<pair<int,int>> qpii;
@@ -67,7 +68,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -84,17 +84,36 @@ int main(){
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    int t;
-    cin>>t;
-    while(t--){
-        solve();
-    }
-
+    solve();
 }
-
 void solve(){
     ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
+    ini(q)
+    ll x=(1<<30)-1;
+    vi mark(n,0);
+    vvi adj(n+1);
+    ff(i,0,q-1){
+        ini(u)
+        ini(v)
+        adj[v].eb(v);
+    }
     
+    vll ans(n+1,0);
+    ff(i,1,n){
+        if(mark[i]){
+            if(adj[i].size()!=0){
+                qll q;
+                q.push(i);
+                while(!(q.empty())){
+                    ll fr=q.front();
+                    q.pop();
+                    ffa(j,adj[i]){
+
+                    }
+                }
+
+            }
+        }
+
+    }
 }

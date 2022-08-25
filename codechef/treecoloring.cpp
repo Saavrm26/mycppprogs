@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -20,6 +20,7 @@ typedef vector<vector<long long>> vvll;
 typedef vector<vector<pair<int,int>>> vvpii;
 typedef vector<vector<pair<long long,long long>>> vvpll;
 typedef queue<int> qi;
+typedef queue<long long> qll;
 typedef deque<int> dqi;
 typedef deque<long long> dqll;
 typedef queue<pair<int,int>> qpii;
@@ -67,7 +68,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -85,16 +85,42 @@ int main(){
     #endif
     fastIO;
     int t;
-    cin>>t;
-    while(t--){
-        solve();
-    }
-
+    solve();
 }
-
 void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    ini(n) inll(m)
+    vvi adj(n+1);
+    vi par(n+1,-1);
+    int root=-1;
+    ll mod=1e9+7;
+    ff(i,1,n-1){
+        ini(u) ini(v)
+        adj[u].eb(v);
+        root=v;
+        par[v]=u;
+    }
+    while(par[root]!=-1){
+        root=par[root];
+    }
+    // cout<<root<<"\n";
+    ll ans=m;
+    qll q1,q2;
+    q2.push(m);
+    q1.push(root);
+    vi lev(n+1,0);
+    while(!(q1.empty())){
+        ll fr1=q1.front();
+        q1.pop();
+        ll temp=m-1;
+        if(fr1==root){
+            temp=m;
+        }
+        ll ctr=1;
+        ffa(i,adj[fr1]){
+            q1.push(i);
+            ans=((ans%mod)*(temp-ctr))%mod;
+            ctr++;
+        }
+    }
+    cout<<ans<<"\n";
 }

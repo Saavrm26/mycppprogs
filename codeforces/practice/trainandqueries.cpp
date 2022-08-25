@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -55,7 +55,7 @@ typedef map<int,pair<int,int>> mipii;
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
 #define ffit(it,x) for(auto it=x.begin();it!=x.end();it++)
 #define ffa(it,x) for(auto it:x)
-//bit snippets
+//bi init snippets
 #define popcnt __builtin_popcount
 //function snippets
 ll minimum(ll a,ll b){if(a<b) return a;else return b;}
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -89,12 +88,31 @@ int main(){
     while(t--){
         solve();
     }
-
 }
-
 void solve(){
-    ini(n)
+    ini(n) ini(m)
     invi(v,n)
-    omap<ll,ll> o;
-    
+    mipii mm;
+    ff(i,0,n-1){
+        if(mm.find(v[i])==mm.end()){
+            mm[v[i]]=mp(i,i);
+        }
+        else{
+            mm[v[i]].se=i;
+        }
+    }
+
+    while(m--){
+        ini(l) ini(r)
+        if ((mm.find(l) !=mm.end())  && (mm.find(r)!=mm.end())){
+
+            if((mm[l]).fi<(mm[r]).se){
+                yes;
+            }
+            else{
+                no;
+            }
+        }
+        else no;
+    }
 }

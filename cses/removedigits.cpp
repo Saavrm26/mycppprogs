@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 
 //datatype snippets
 typedef long long ll;
@@ -68,8 +65,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
 
-template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 // Questions to ask before submitting any code on OJ
 // Q1. Is my approach handling all the cases ? Think of some edge cases
@@ -85,16 +80,25 @@ int main(){
     #endif
     fastIO;
     int t;
-    cin>>t;
-    while(t--){
-        solve();
-    }
-
+    solve();
 }
-
 void solve(){
     ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    vi dp(n+1);
+    ff(i,0,n){
+        dp[i]=INT32_MAX;
+    }
+    dp[n]=0;
+    fb(i,n,1){
+        if(dp[i]==INT32_MAX) continue;
+        int dig=i;
+        while(dig>0){
+            int rem=dig%10;
+            dig/=10;
+            if(i-rem>=0)
+                dp[i-rem]=min(dp[i-rem],dp[i]+1);
+        }
+    }
+    cout<<dp[0]<<"\n";
+
 }

@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -79,6 +78,11 @@ template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_or
 // Competition is with yourself
 
 void solve();
+int N=1e5+1;
+vvi vec;
+vvi ans;
+vi curr;
+vb mark;
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -86,15 +90,53 @@ int main(){
     fastIO;
     int t;
     cin>>t;
+    int tc=1;
     while(t--){
+        // cout<<"tc :"<<tc<<"\n";
         solve();
+        mark.clear();
+        vec.clear();
+        ans.clear();
+        // tc++;
     }
-
 }
 
+void dfs(int root){
+    mark[root]=1;
+    curr.eb(root);
+    ffa(i,vec[root]){
+        if(!mark[i])
+        dfs(i);
+    }
+    if(curr.size()!=0){
+        ans.eb(curr);
+        curr.clear();
+    }
+}
 void solve(){
     ini(n)
     invi(v,n)
-    omap<ll,ll> o;
-    
+    vec.resize(n+1);
+    mark.resize(n+1);
+    int root =-1;
+    ff(i,0,n-1){
+        if(v[i]==i+1){
+            root=v[i];
+        }
+        else{
+            vec[v[i]].eb(i+1);
+        }
+    }
+    dfs(root);
+    cout<<ans.size()<<"\n";
+    ffa(i,ans){
+        if(i.size()!=0){
+            cout<<i.size()<<'\n';
+            ffa(j,i){
+                cout<<j<<" ";
+            }
+            cout<<"\n";
+        }
+    }
+    cout<<"\n";
 }

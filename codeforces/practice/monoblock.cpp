@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -89,12 +88,32 @@ int main(){
     while(t--){
         solve();
     }
-
 }
 
 void solve(){
-    ini(n)
+    ini(n) ini(m)
     invi(v,n)
-    omap<ll,ll> o;
-    
+    vi vec;
+    vec.eb(v[0]);
+    vec[0]=1;
+    ff(i,1,n-1){
+        if(v[i]!=v[i-1]) vec.eb(v[i]);
+        else{
+            vec[v[i]]++;
+        }
+    }
+    int n2=vec.size();
+    vll pre(n2);
+    pre[0]=vec[0];
+    ff(i,1,n-1){
+        pre[i]+=pre[i-1]+vec[i];
+    }
+    vll suff(n2);
+    suff[n2-1]=vec[n2-1];
+    fb(i,n2-2,0){
+        suff[i]=suff[i+1]+vec[i];
+    }
+    while(m--){
+        
+    }
 }

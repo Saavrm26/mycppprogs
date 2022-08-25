@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -89,12 +88,80 @@ int main(){
     while(t--){
         solve();
     }
-
 }
-
 void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    ini(n) ini(k)
+    ins(s)
+    vi zeros,ones;
+    ff(i,0,n-1){
+        if(s[i]=='0') zeros.eb(i);
+        else ones.eb(i);
+    }
+    // if(k&1){
+
+    // }
+    // else{
+    //     if(zeros&1){
+
+    //     }
+    //     else{
+    //         ff(i,0,n-1){
+    //             cout<<'1';
+    //         }
+    //         cout<<"\n";
+    //         ff(i,0,n-1){
+    //             if(s[i]=='0')
+    //                 cout<<1<<" ";
+    //             else
+    //                 cout<<0<<" ";
+    //         }
+    //         cout<<"\n";
+    //     }
+    // }
+    int N=zeros.size();
+    vi ans(n);
+    int K=k;
+    if(k&1){
+        ff(i,0,n-1){
+            if(k>0){
+                if(s[i]=='1'){
+                    ans[i]=1;
+                    k--;
+                }
+                else{
+
+                }
+
+            }
+        }
+    }
+    else{
+        ff(i,0,n-1){
+            if(k>0){
+                if(s[i]=='0'){
+                    ans[i]=1;
+
+                    k--;
+                }
+                else{
+
+                }
+            }
+
+        }
+    }
+    if(k>0){
+        ans[n-1]+=k;
+    }
+    ff(i,0,n-1){
+        if((K-ans[i])&1){
+            if(s[i]=='1') s[i]='0';
+            else s[i]='1';
+        }
+    }
+    cout<<s<<"\n";
+    ff(i,0,n-1){
+        cout<<ans[i]<<" ";
+    }
+    cout<<"\n";
 }

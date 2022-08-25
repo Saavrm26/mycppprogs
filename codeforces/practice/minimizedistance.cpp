@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,9 +67,11 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+template <class T> using ordered_multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
+#define ook order_of_key
+#define fbo find_by_order
 
 // Questions to ask before submitting any code on OJ
 // Q1. Is my approach handling all the cases ? Think of some edge cases
@@ -89,12 +91,56 @@ int main(){
     while(t--){
         solve();
     }
-
 }
-
 void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    inll(n) inll(k)
+    invll(v,n);
+    vll v1,v2;
+    ffa(i,v){
+        if(i>0){
+            v1.eb(i);
+        }
+        else if(i<0){
+            v2.eb(abs(i));
+        }
+    }
+    ll n1=v1.size();
+    ll n2=v2.size();
+
+        if(n1>0&&n2>0&&(v2[n2-1]<v1[n1-1])){
+            auto temp=v1;
+            v1=v2;
+            v2=temp;
+            swap(n2,n1);
+        }
+        else if(n1==0){
+
+        }
+        else if(n2==0){
+            v2=v1;
+            v1.clear();
+        }
+    n1=v1.size();
+    n2=v2.size();
+    sort(all(v1));
+    sort(all(v2));
+    v1.insert(v1.begin(),0);
+    v2.insert(v2.begin(),0);
+    //v1 smaller v2 larger
+    ll curr1=n1,rem1=n1;
+    ll ans=0;
+    while(rem1>0){
+        int temp=min(k,rem1);
+        ans+=v1[curr1]*2;
+        rem1-=temp;
+        curr1-=temp;
+    }
+    ll curr2=n2,rem2=n2;
+    while(rem2>0){
+        int temp=min(k,rem2);
+        ans+=v2[curr2]*2;
+        rem2-=temp;
+        curr2-=temp;
+    }
+    cout<<ans-max(v1[n1],v2[n2])<<"\n";
 }

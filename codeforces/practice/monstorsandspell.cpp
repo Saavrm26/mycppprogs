@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 using namespace __gnu_pbds;
-
 //datatype snippets
 typedef long long ll;
 //stl snippets
@@ -67,7 +67,6 @@ ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a 
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
-
 template <class T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
@@ -77,7 +76,10 @@ template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_or
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-
+// vll vec;
+ll vec(ll n){
+    return (n*(n+1))/2;
+}
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
@@ -86,15 +88,55 @@ int main(){
     fastIO;
     int t;
     cin>>t;
+    ll sum=0,n=1;
+    ll hi=1e6;
+    // vec.resize(hi+1);
+    // while(sum<=hi){
+    //     vec.eb(sum);
+    //     sum+=n;
+    //     n++;
+    // }
+    // ff(i,1,hi){
+    //     vec[i]+=vec[i-1]+i;
+    // }
     while(t--){
         solve();
     }
-
 }
-
 void solve(){
-    ini(n)
-    invi(v,n)
-    omap<ll,ll> o;
-    
+    inll(n)
+    invll(k,n)
+    invll(h,n)
+    vpll tr(n);
+    ll ans=0;
+    fb(i,n-1,0){
+        ll req=h[i]-1;
+        tr[i]=mp(k[i],k[i]-req);
+    }
+    ll entry_time=tr[n-1].se,exit_time=tr[n-1].fi;
+    if(n==1){
+        cout<<vec(exit_time-(entry_time-1))<<"\n";
+        return;
+    }
+    fb(i,n-2,0){
+        if(tr[i].se<=entry_time&&entry_time<=tr[i].fi){
+            if(i==0)
+                ans+=vec(exit_time-(tr[i].se-1));
+            entry_time=tr[i].se;
+        }
+        else if(entry_time<tr[i].se){
+            if(i==0){
+                ans+=vec(exit_time-entry_time+1);
+            }
+        }
+        else if(entry_time>tr[i].se){
+            ans+=vec(exit_time-entry_time+1);
+            entry_time=tr[i].se;
+            exit_time=tr[i].fi;
+            if(i==0){
+                ans+=vec(exit_time-entry_time+1);
+            }
+        }
+    }
+    cout<<ans<<"\n";
 }
