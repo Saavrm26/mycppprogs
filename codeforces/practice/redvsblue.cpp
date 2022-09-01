@@ -33,31 +33,19 @@ ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 
 int main(){
-    // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    // #endif
+    #ifndef ONLINE_JUDGE
+        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    #endif
     fastIO;
     int t;
     cin>>t;
     while(t--){
         int n,r,b;
         cin>>n>>r>>b;
-        int x=(r+1)/(b+1);
-        int y=
-        string s="";
-        string in_between="";
-        for(int i=0;i<x;i++){
-            in_between+="r";
-        }
-        string ending="";
-        for(int i=0;i<y;i++){
-            ending+='r';
-        }
-        for(int i=0;i<b;i++){
-            s.append(in_between);
-            s.append("b");
-        }
-        s.append(ending);
-        cout<<s<<"\n";
+        int p=r/(b+1),q=r%(b+1);
+        for(int i=0;i<q;i++)    cout<<string(p+1,'R')<<'B';
+        for(int i=q;i<b;i++)    cout<<string(p,'R')<<'B';
+        cout<<string(p,'R');
+        cout<<"\n";
     }
 }
