@@ -1,2 +1,2 @@
-
-    // trace1d(v4,int(v4.size()-1));
+<<i2<<"\n";
+            // cout.flush();

@@ -101,13 +101,13 @@ int main(){
 }
 const int N=1000;
 void solve(){
-    ini(n) ini(q)
+    inll(n) inll(q)
     vpii inp(n);
     vvll grid(N+1,vll(N+1)),pre(N+1,vll(N+1));
     ff(i,0,n-1){
         ini(h)
         ini(w)
-        grid[h][w]=(h*w);
+        grid[h][w]+=(h*w);
     }
     ff(i,1,N){
         ff(j,1,N){

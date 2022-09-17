@@ -1,5 +1,7 @@
 {
     "files.associations": {
+        "*.excalidraw": "json",
+        "*.excalidrawlib": "json",
         "iostream": "cpp",
         "ostream": "cpp",
         "array": "cpp",
@@ -34,6 +36,9 @@
         "sstream": "cpp",
         "stacktrace": "cpp",
         "system_error": "cpp",
-        "utility": "cpp"
-    }
+        "utility": "cpp",
+        "compare": "cpp",
+        "memory_resource": "cpp"
+    },
+    "cmake.configureOnOpen": false
 }

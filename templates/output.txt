@@ -1,0 +1,13 @@
+Case #1 : 
+stree.gArr
+1 2 3 4 5 0 
+stree.Tree
+5 3 5 2 3 4 5 1 2 0 0 0 0 0 0 0 0 0 0 0 0 
+2
+stree.gArr
+1 4 3 4 5 
+stree.Tree
+5 3 5 2 3 4 5 1 2 0 0 0 0 0 0 0 0 0 0 0 
+5
+4
+4
