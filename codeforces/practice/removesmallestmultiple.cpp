@@ -50,10 +50,10 @@ typedef map<int,pair<int,int>> mipii;
 #define invi(x,n) vi x(n);ff(i,0,n-1) cin>>x[i];
 #define invll(x,n) vll x(n);ff(i,0,n-1) cin>>x[i];
 // loop snippets
-#define ff(i,init,fin) for(int i=init;i<=fin;i++)
-#define fb(i,init,fin) for(int i=init;i>=fin;i--)
-#define ffs(i,init,fin,step) for(int i=init;i<=fin;i=i+step)
-#define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
+#define ff(i,init,fin) for(ll i=init;i<=fin;i++)
+#define fb(i,init,fin) for(ll i=init;i>=fin;i--)
+#define ffs(i,init,fin,step) for(ll i=init;i<=fin;i=i+step)
+#define fbs(i,init,fin,step) for(ll i=init;i>=fin;i=i-step)
 #define ffit(it,x) for(auto it=x.begin();it!=x.end();it++)
 #define ffa(it,x) for(auto it:x)
 //bit snippets
@@ -67,9 +67,9 @@ typedef map<int,pair<int,int>> mipii;
 // ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
 template<typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
-#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
-#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
-#define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
+#define trace1d(arr,n) cout<<#arr<<"\n";for(ll i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
+#define trace1d(arr,n) cout<<#arr<<"\n";for(ll i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
+#define trace2d(arr,n,m) cout<<#arr<<"\n";for(ll i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
 #define init1d(val,arr,n) for(int i=0;i<=n;i++){arr[i]=val;}
 #define init2d(val,arr,n,m) for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){arr[i][j]=val;}}
@@ -91,7 +91,7 @@ void deb(F&& lamda){
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-
+const int N=1e6;
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
@@ -112,20 +112,28 @@ int main(){
         solve();
     }
 }
-const int N=1e6;
+
 void solve(){
     ini(n)
     ins(s)
-    vi mark(n+1,N);
-    vi to_remove;
+    vll mark(n+1,N);
+    vvll divisors(n+1);
+    vll to_remove;
     ff(i,0,n-1){
         if(!(s[i]-'0'))
             to_remove.eb(i+1);
     }
     ffa(i,to_remove){
-        mark[i]=min(mark[i],i);
-        if(2*i<=N)
-            mark[2*i]=min(mark[2*i],i);
+        divisors[i].eb(i);
+        // mark[i]=min(mark[i],i);
+        ffa(j,divisors[i]){
+            mark[i]=min(mark[i],j);
+        }
+        ffa(j,divisors[i]){
+            if(i+j<=n){
+                divisors[i+j].eb(j);
+            }
+        }
     }
     ll ans=0;
     ffa(i,to_remove){

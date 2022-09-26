@@ -91,7 +91,10 @@ void deb(F&& lamda){
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-
+typedef long double ld;
+ld ans=1e8+10;
+int n;
+vll x,T;
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
@@ -110,26 +113,61 @@ int main(){
             }
         );
         solve();
+        ans=1e8+10;
+        x.clear();
+        T.clear();
     }
 }
-const int N=1e6;
+ld mindiff=1e-7;
+ld mindiff2=1e-6;
+bool check(ld time){
+    ld up = x[0] + time - T[0];
+    ld lo = x[0] - (time - T[0]);
+    ff(i,1,n-1){
+        if(time<T[i]){
+            return 0;
+        }
+        ld u=x[i] + time -T[i];
+        ld l = x[i] - (time - T[i]);
+
+        if(((0 <= l-up) && (l-up<=mindiff2)) || ((0 <= lo-u) && (lo-u<=mindiff2)) ){
+
+        }
+        else if(l>up||lo>u){
+            return 0;
+        }
+        up = min(up,u);
+        lo= max(lo,l);
+    }
+    if(up>=lo){
+        ans=lo;
+        return 1;
+    }
+    return 0;
+}
+
 void solve(){
-    ini(n)
-    ins(s)
-    vi mark(n+1,N);
-    vi to_remove;
+    cin>>n;
+    x.resize(n);T.resize(n);
     ff(i,0,n-1){
-        if(!(s[i]-'0'))
-            to_remove.eb(i+1);
+        cin>>x[i];
     }
-    ffa(i,to_remove){
-        mark[i]=min(mark[i],i);
-        if(2*i<=N)
-            mark[2*i]=min(mark[2*i],i);
+    ff(i,0,n-1){
+        cin>>T[i];
     }
-    ll ans=0;
-    ffa(i,to_remove){
-        ans+=mark[i];
+    if(n==1){
+        cout<<x[0]<<"\n";
+        return;
     }
-    cout<<ans<<"\n";
+    ld l=0,h=1e9;
+    while(l<=h){
+        ld mid = l + (h-l)/2;
+        if(check(mid)){
+            h=mid-mindiff;
+        }
+        else{
+            l=mid+mindiff;
+        }
+    }
+    cout<<fixed<<setprecision(9)<<ans<<"\n";
 }

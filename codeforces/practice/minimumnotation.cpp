@@ -112,24 +112,18 @@ int main(){
         solve();
     }
 }
-const int N=1e6;
 void solve(){
-    ini(n)
     ins(s)
-    vi mark(n+1,N);
-    vi to_remove;
-    ff(i,0,n-1){
-        if(!(s[i]-'0'))
-            to_remove.eb(i+1);
+    auto str=s;
+    int N=s.size();
+    int num=s[N-1]-'0';
+    fb(i,N-1,0){
+        int n=s[i]-'0';
+        num=min(num,n);
+        if(num<n){
+            str[i]=min(int('9'),s[i]+1);
+        }
     }
-    ffa(i,to_remove){
-        mark[i]=min(mark[i],i);
-        if(2*i<=N)
-            mark[2*i]=min(mark[2*i],i);
-    }
-    ll ans=0;
-    ffa(i,to_remove){
-        ans+=mark[i];
-    }
-    cout<<ans<<"\n";
+    sort(all(str));
+    cout<<str<<'\n';
 }

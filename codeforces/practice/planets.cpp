@@ -112,24 +112,23 @@ int main(){
         solve();
     }
 }
-const int N=1e6;
 void solve(){
-    ini(n)
-    ins(s)
-    vi mark(n+1,N);
-    vi to_remove;
+    ini(n) ini(c)
+    invi(v,n);
+    sort(all(v));
+    vi mm(101);
     ff(i,0,n-1){
-        if(!(s[i]-'0'))
-            to_remove.eb(i+1);
-    }
-    ffa(i,to_remove){
-        mark[i]=min(mark[i],i);
-        if(2*i<=N)
-            mark[2*i]=min(mark[2*i],i);
+        mm[v[i]]++;
     }
     ll ans=0;
-    ffa(i,to_remove){
-        ans+=mark[i];
+    ff(i,0,100){
+        if(mm[i]<=c){
+            ans+=mm[i];
+        }
+        else{
+            ans+=c;
+        }
     }
     cout<<ans<<"\n";
+
 }

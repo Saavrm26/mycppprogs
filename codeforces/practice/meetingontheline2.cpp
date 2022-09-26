@@ -112,24 +112,61 @@ int main(){
         solve();
     }
 }
-const int N=1e6;
+typedef long double ld;
 void solve(){
     ini(n)
-    ins(s)
-    vi mark(n+1,N);
-    vi to_remove;
+    invll(x, n);
+    invll(t, n);
+    if(n==1){
+        cout<<x[0]<<"\n";
+        return;
+    }
+    vpll pos_time(n);
     ff(i,0,n-1){
-        if(!(s[i]-'0'))
-            to_remove.eb(i+1);
+        pos_time[i]=mp(x[i],t[i]);
     }
-    ffa(i,to_remove){
-        mark[i]=min(mark[i],i);
-        if(2*i<=N)
-            mark[2*i]=min(mark[2*i],i);
+    sort(all(pos_time));
+    vll pos_sub_time(n), pos_plus_time(n), max_pos_uptil_l(n), max_pos_uptil_r(n);
+
+    //defining pos - time
+    pos_sub_time[0] = pos_time[0].fi - pos_time[0].se;
+    max_pos_uptil_l[0] = pos_sub_time[0];
+    ff(l, 1, n - 1)
+    {
+        pos_sub_time[l] = pos_time[l].fi - pos_time[l].se + pos_sub_time[l - 1];
+        max_pos_uptil_l[l] = min(max_pos_uptil_l[l - 1], pos_time[l].fi - pos_time[l].se);
     }
-    ll ans=0;
-    ffa(i,to_remove){
-        ans+=mark[i];
+    //defining pos + time
+    pos_plus_time[n - 1] = pos_time[n - 1].fi + pos_time[n - 1].se;
+    max_pos_uptil_r[n - 1] = pos_plus_time[n - 1];
+    fb(r, n - 2, 0)
+    {
+        pos_plus_time[r] += pos_plus_time[r + 1] + pos_time[r].fi + pos_time[r].se;
+        max_pos_uptil_r[r] = max(pos_time[r].fi + pos_time[r].se, max_pos_uptil_r[r + 1]);
+    }
+
+    ld ans = INT64_MAX,ans_time=INT64_MAX;
+    ld N = n;
+    ff(l, -1, n-1)
+    {
+        ld mean,maximum_time;
+        if(l==-1){
+            mean=pos_plus_time[0]/N;
+            maximum_time=abs(max_pos_uptil_r[0]-mean);
+        }
+        else if(l==n-1){
+            mean=pos_sub_time[n-1]/N;
+            maximum_time=abs(max_pos_uptil_l[n-1]-mean);
+        }
+        else{
+            mean=(pos_sub_time[l]+pos_plus_time[l+1])/N;
+            maximum_time=max(abs(max_pos_uptil_l[l]-mean),abs(max_pos_uptil_r[l+1]-mean));
+        }
+        if(maximum_time<ans_time){
+            ans=abs(mean);
+            ans_time=maximum_time;
+        }
     }
     cout<<ans<<"\n";
+
 }

@@ -118,7 +118,7 @@ void solve(){
     invi(y,n)
     map<ll,ll> rich,poor;
     int zeros=0;
-    ff(i,0,n-1){
+    ff(i,0,-1){
         ll diff=x[i]-y[i];
         if(diff<0){
             poor[abs(diff)]++;
@@ -150,6 +150,6 @@ void solve(){
                 }
             }
         }
-        
+
     }
 }

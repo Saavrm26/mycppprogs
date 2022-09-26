@@ -112,24 +112,13 @@ int main(){
         solve();
     }
 }
-const int N=1e6;
 void solve(){
     ini(n)
-    ins(s)
-    vi mark(n+1,N);
-    vi to_remove;
-    ff(i,0,n-1){
-        if(!(s[i]-'0'))
-            to_remove.eb(i+1);
+    invi(v,n)
+    sort(all(v));
+    int steps=INT32_MAX;
+    ff(i,0,n-3){
+        steps=min(steps,v[i+1]-v[i]+v[i+2]-v[i+1]);
     }
-    ffa(i,to_remove){
-        mark[i]=min(mark[i],i);
-        if(2*i<=N)
-            mark[2*i]=min(mark[2*i],i);
-    }
-    ll ans=0;
-    ffa(i,to_remove){
-        ans+=mark[i];
-    }
-    cout<<ans<<"\n";
+    cout<<steps<<"\n";
 }

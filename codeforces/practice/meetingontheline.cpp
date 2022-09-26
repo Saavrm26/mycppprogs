@@ -91,7 +91,7 @@ void deb(F&& lamda){
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-
+typedef long double ld;
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
@@ -112,24 +112,52 @@ int main(){
         solve();
     }
 }
-const int N=1e6;
 void solve(){
     ini(n)
-    ins(s)
-    vi mark(n+1,N);
-    vi to_remove;
-    ff(i,0,n-1){
-        if(!(s[i]-'0'))
-            to_remove.eb(i+1);
+    invi(x,n);
+    invi(t,n);
+    ld min_diff=0.0000001;
+    ld h=1e8;
+    ld l=0;
+    // ff(i,0,n-1){
+    //     h=max(h,ld(x[i]));
+    //     l=min(l,ld(x[i]));
+    // }
+    // if(h==l){cout<<0<<"\n";return;}
+    auto cal_time=[&](ld pos){
+        ld time=0;
+        ff(i,0,n-1){
+            time = max(t[i]+abs(x[i]-pos),time);
+        }
+        return time;
+    };
+    ld ans=INT32_MAX;
+    while(h-l>=min_diff){
+        ld mid= l + (h-l)/2;
+        ld mid_time=cal_time(mid);
+        ans=min(ans,mid_time);
+        ld divisor=4;
+        while(1){
+            ld time1=cal_time(mid-(h-l)/divisor);
+            ld time2 =cal_time(mid+(h-l)/divisor);
+            if(time1<time2){
+                l=mid;
+                break;
+            }
+            else if(time1>time2){
+                h=mid;
+                break;
+            }
+            else{
+                divisor*=2;
+                if(time1<=mid_time){
+                    if(time1-mid_time<=min_diff){
+                        cout<<fixed<<setprecision(12)<<ans<<"\n";
+                        return;
+                    }
+                }
+            }
+        }
     }
-    ffa(i,to_remove){
-        mark[i]=min(mark[i],i);
-        if(2*i<=N)
-            mark[2*i]=min(mark[2*i],i);
-    }
-    ll ans=0;
-    ffa(i,to_remove){
-        ans+=mark[i];
-    }
-    cout<<ans<<"\n";
+    cout<<fixed<<setprecision(12)<<ans<<"\n";
 }
