@@ -114,54 +114,31 @@ int main(){
 }
 void solve(){
     ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
+    invi(v,n)
     mii m;
     ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
+        m[v[i]]++;
+    }
+    vll vec;
+    ffa(i,m){
+        if(i.se>1){
+            vec.eb(i.se);
         }
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
+    sort(all(vec));
+    int N=vec.size();
+    if(N==0){
+        cout<<0<<"\n";
+        return;
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+    ll maxi=vec[N-1];
+    ll lev=0,ans=maxi-1,add=0;
+    while(maxi>1){
+        ll new_maxi=maxi/2;
+        if(maxi&1) new_maxi++;
+        add+=1<<lev;
+        ans=min(ans,new_maxi-1+add);
+        maxi=new_maxi;
     }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    cout<<ans<<"\n";
 }

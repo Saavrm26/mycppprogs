@@ -65,9 +65,8 @@ typedef map<int,pair<int,int>> mipii;
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 // ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 // ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
-template<typename T,typename U>
+template <typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
-#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
@@ -98,70 +97,81 @@ int main(){
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    int t;
-    int ctr=1;
-    cin>>t;
-    while(t--){
-        deb(
-            [&]{
-                cout<<"Case #"<<ctr<<" : \n";
-                cout.flush();
-                ctr++;
-            }
-        );
-        solve();
-    }
+    solve();
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
+    ini(n) ini(m)
+    invi(v,n);
+    vi vec(n);
     ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
+        vec[--v[i]]=i;
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
+    ll ans=1;
+    ff(i,0,n-2){
+        if(vec[i]>vec[i+1]){
             ans++;
         }
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+
+    ff(i,0,m-1){
+        ini(n1) ini(n2)
+        int N1=v[--n1],N2=v[--n2];
+        if(N1>N2){
+            swap(N1,N2);
+        }
+        if(abs(N2-N1)==1){
+            if(vec[N1]>vec[N2]){
+                ans--;
+            }
+            if((N2+1<n)&&(vec[N2]>vec[N2+1])){
+                ans--;
+            }
+            if((N1-1>=0)&&(vec[N1-1]>vec[N1])){
+                ans--;
+            }
+            swap(vec[N1],vec[N2]);
+            swap(v[n1],v[n2]);
+            if(vec[N1]>vec[N2]){
+                ans++;
+            }
+            if((N2+1<n)&&(vec[N2]>vec[N2+1])){
+                ans++;
+            }
+            if((N1-1>=0)&&(vec[N1-1]>vec[N1])){
+                ans++;
+            }
+        }
+        else{
+            if((N2+1<n)&&(vec[N2]>vec[N2+1])){
+                ans--;
+            }
+            if((N1-1>=0)&&(vec[N1-1]>vec[N1])){
+                ans--;
+            }
+            if((N1+1<n)&&(vec[N1]>vec[N1+1])){
+                ans--;
+            }
+            if((N2-1>=0)&&(vec[N2-1]>vec[N2])){
+                ans--;
+            }
+
+            swap(vec[N1],vec[N2]);
+            swap(v[n1],v[n2]);
+
+            if((N2+1<n)&&(vec[N2]>vec[N2+1])){
+                ans++;
+            }
+            if((N1-1>=0)&&(vec[N1-1]>vec[N1])){
+                ans++;
+            }
+            if((N1+1<n)&&(vec[N1]>vec[N1+1])){
+                ans++;
+            }
+            if((N2-1>=0)&&(vec[N2-1]>vec[N2])){
+                ans++;
+            }
+        }
+        cout<<ans<<"\n";
     }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+
 }

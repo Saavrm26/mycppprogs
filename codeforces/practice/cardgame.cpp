@@ -65,6 +65,7 @@ typedef map<int,pair<int,int>> mipii;
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 // ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 // ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
+
 template<typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
@@ -92,7 +93,30 @@ void deb(F&& lamda){
 // Remember:
 // Competition is with yourself
 
+
 void solve();
+ll mod=998244353;
+ll ncr(ll n, ll r)
+{
+    ll p = 1, k = 1;
+    if (n - r < r)
+        r = n - r;
+    if (r != 0) {
+        while (r) {
+            p *= n;
+            k *= r;
+            ll m = __gcd(p, k);
+            p /= m;
+            k /= m;
+            n--;
+            r--;
+        }
+    }
+    else
+        p = 1;
+    return p%mod;
+}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -113,55 +137,15 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
+    inll(n)
+    vvll dp(n+1,vll(3));
+    dp[2][0]=1;
+    dp[2][1]=0;
+    dp[2][2]=1;
+    ff(i,4,n){
+        dp[i][0]=(dp[i-2][1]+ncr(i-1,i/2))%mod;
+        dp[i][1]=(dp[i-2][0]+ncr(i-2,i/2))%mod;
+        dp[i][2]=dp[i-2][2];
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
-    }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
-    }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    cout<<dp[n][0]<<" "<<dp[n][1]<<" "<<dp[n][2]<<"\n";
 }

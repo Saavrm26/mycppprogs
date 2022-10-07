@@ -65,9 +65,8 @@ typedef map<int,pair<int,int>> mipii;
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 // ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 // ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
-template<typename T,typename U>
+template <typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
-#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
@@ -93,75 +92,78 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
+int n,m;
+vll v;
+vvll dp;
+ll mod=1e9+7;
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    int t;
-    int ctr=1;
-    cin>>t;
-    while(t--){
-        deb(
-            [&]{
-                cout<<"Case #"<<ctr<<" : \n";
-                cout.flush();
-                ctr++;
-            }
-        );
-        solve();
+    solve();
+}
+ll cal(int i,int j){
+    ll val=dp[i-1][j];
+    val%=mod;
+    if(j-1>=0){
+        val+=dp[i-1][j-1];
+        val%=mod;
     }
+    if(j+1<=m){
+        val+=dp[i-1][j+1];
+        val%=mod;
+    }
+    return val;
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
+    cin>>n>>m;
+    v.resize(n);
     ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
+        cin>>v[i];
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
+    //dp[i][m] represents the number of possiblities of having m as the value in v for the current i
+    dp.resize(n+1);
+    ff(i,0,n){
+        dp[i].resize(m+1);
+    }
 
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
-    }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+    //base case
+    if(v[0]!=0){
+        dp[1][v[0]]=1;
     }
     else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
+        if(v[1]==0||n==1){
+            ff(i,1,m){
+                dp[1][i]=1;
+            }
+        }
+        else{
+            dp[1][v[1]]=1;
+            if(v[1]-1>=1)
+                dp[1][v[1]-1]=1;
+            if(v[1]+1<=m)
+                dp[1][v[1]+1]=1;
+        }
     }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+
+    //dp formation
+    ff(i,2,n){
+        if(v[i-1]!=0){
+            dp[i][v[i-1]]=cal(i,v[i-1]);
+        }
+        else{
+            ff(j,1,m){
+                dp[i][j]=cal(i,j);
+            }
+        }
+    }
+
+    //calculating answer
+    ll ans=0;
+    ff(i,1,m){
+        ans+=dp[n][i];
+        ans%=mod;
+    }
+    cout<<ans<<"\n";
 }

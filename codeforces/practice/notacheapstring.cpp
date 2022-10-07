@@ -113,55 +113,25 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
+    ins(s)
+    ini(p)
+    int n=s.size();
+    vpii cost_idx(n);
+    ll cost=0;
     ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
+        cost_idx[i]=mp(s[i]-96,i);
+        cost+=s[i]-96;
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
+    sort(all(cost_idx));
+    vb mark(n,1);
+    int i=n-1;
+    while(cost>p){
+        cost-=cost_idx[i].fi;
+        mark[cost_idx[i].se]=0;
+        i--;
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+    ff(i,0,n-1){
+        if(mark[i]) cout<<s[i];
     }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    cout<<"\n";
 }

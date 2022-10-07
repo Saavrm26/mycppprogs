@@ -113,55 +113,35 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
+    ini(n) ini(m)
+    if(m==1){
+        yes;
+        ff(i,1,n){
+            cout<<i<<"\n";
         }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
+        return;
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
+    if(n==1){
+        no;return;
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+    if(n&1){
+        no;return;
     }
     else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
+        yes;
+        vvll ans(n+1,vll(m+1));
+        ll k=1;
+        ff(j,1,m){
+            ff(i,1,n){
+                ans[i][j]=k;
+                k++;
+            }
+        }
+        ff(i,1,n){
+            ff(j,1,m){
+                cout<<ans[i][j]<<" ";
+            }
+            cout<<"\n";
+        }
     }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
 }

@@ -111,57 +111,43 @@ int main(){
         );
         solve();
     }
+    #ifndef ONLINE_JUDGE
+		cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
+	#endif
 }
+
 void solve(){
     ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
-    }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
+    ins(s)
+    map<char,char> out,in;
 
+    auto check_cycle =[&](char c){
+        int len=0;
+        char curr=c;
+        while(out.find(curr)!=out.end()){
+            curr=out[curr];
+            len++;
         }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
+
+        return mp(curr,len);
+    };
+
+    ff(i,0,n-1){
+        if(out.find(s[i])!=out.end()){
+            continue;
+        }
+        for (char c = 'a'; c <='z' ; c++)
+            if(in.find(c)==in.end()){
+                auto [clast, len] = check_cycle(c);
+                if (clast != s[i] || len == 25) {
+                        out[s[i]] = c;
+                        in[c] = s[i];
+                        break;
+                }
             }
-            ans++;
-        }
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+    ff(i,0,n-1){
+        cout<<out[s[i]];
     }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    cout<<"\n";
 }

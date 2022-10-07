@@ -93,11 +93,44 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
+const int N=1e5;
+vector<bool> is_prime(N+1, true);
+vector<int> number_of_prime(N+1);
+vector<int> number_of_even(N+1);
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
+    int n;
+    is_prime[0] = is_prime[1] = false;
+    for (int i = 2; i * i <= N; i++) {
+        if (is_prime[i]) {
+            for (int j = i * i; j <=N; j += i)
+                is_prime[j] = false;
+        }
+    }
+    bool f=0;
+    ff(i,1,N){
+        if(is_prime[i]){
+            number_of_prime[i]=number_of_prime[i-1]+1;
+            if((number_of_prime[i]&1)&&(number_of_even[i]==0)){
+                number_of_even[i]=number_of_even[i-1];
+                f=0;
+            }
+            else{
+                f=1;
+                number_of_even[i]=number_of_even[i-1]+1;
+            }
+        }
+        else{
+            number_of_prime[i]=number_of_prime[i-1];
+            if(f)
+                number_of_even[i]=number_of_even[i-1]+1;
+            else
+                number_of_even[i]=number_of_even[i-1];
+        }
+    }
     int t;
     int ctr=1;
     cin>>t;
@@ -113,55 +146,24 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
-    }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
-    }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
-    }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    ini(l) ini(r)
+    int y = number_of_prime[l];
+    int x=number_of_even[r]-number_of_even[l-1];
+    // int diff = number_of_prime[r] - number_of_prime[l];
+    // int left=l;
+    // ff(i,0,diff-1){
+    //     auto it = ub(all(number_of_prime),y+i);
+    //     int temp = *(it-1);
+    //     if((!(temp&1))&&(temp!=0)){
+    //         x+=(it-number_of_prime.begin())- left;
+    //     }
+    //     left = it - number_of_prime.begin();
+    // }
+    // if(!(number_of_prime[r]&1)){
+    //     if((number_of_prime[left]==number_of_prime[r])&&(number_of_prime[r]!=0))
+    //         x+=r - left+1;
+    //     else
+    //         x+=r - left;
+    // }
+    cout<<x<<"\n";
 }

@@ -64,7 +64,7 @@ typedef map<int,pair<int,int>> mipii;
 // ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 // ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
-// ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
+ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
 template<typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
@@ -92,12 +92,37 @@ void deb(F&& lamda){
 // Remember:
 // Competition is with yourself
 
+struct ele{
+    ll idx;
+    ll digs;
+};
+vector<ele> vals;
+const ll N=1e18;
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
+    struct ele x;
+    x.idx=10;
+    x.digs=2;
+    while(x.idx<=1e18){
+        struct ele y;
+        y.idx=x.idx + x.digs-1;
+        y.digs=x.digs;
+        vals.eb(y);
+        x.idx=x.idx+ (binpow(10,x.digs)-binpow(10,x.digs-1))*x.digs;
+        x.digs++;
+
+    }
+    deb(
+        [&]{
+            ff(i,0,int(vals.size())-1){
+                cout<<"idx: "<<vals[i].idx<<" digs: "<<vals[i].digs<<"\n";
+            }
+        }
+    );
     int t;
     int ctr=1;
     cin>>t;
@@ -113,55 +138,42 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
+    inll(k)
+    if(k<=11){
+        if(k<10){
+            cout<<k<<"\n";
         }
         else{
-            m[x[i]-y[i]]++;
-        }
-    }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
+            if(k==10){
+                cout<<1<<"\n";
             }
-            ans++;
+            else{
+                cout<<0<<"\n";
+            }
         }
+        return;
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+    auto it=ub(all(vals),k,[&](ll value,struct ele cval){
+        return value<cval.idx;
+    });
+    --it;
+    auto x=*it;
+    ll lbidx=(x.idx);
+    ll lbnum=binpow(10,x.digs-1);
+    ll clo10 = lbnum + ((k - lbidx) / (x.digs * 10)) * (10 );
+    ll cloidx10 = lbidx + ((k - lbidx) / (x.digs * 10)) * (10 * x.digs);
+    ll final_num=clo10 + ((k - lbidx) % (x.digs * 10))/(x.digs);
+    ll rem=((k - lbidx) % (x.digs * 10))%(x.digs);
+    char ans=' ';
+    string num = to_string( final_num);
+    if(rem){
+        final_num++;
+        num=to_string(final_num);
+        ans=num[rem-1];
     }
     else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
+        ans=num[num.size()-1];
     }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+
+    cout<<ans<<"\n";
 }

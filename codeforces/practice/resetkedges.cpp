@@ -93,6 +93,43 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
+int n, k;
+vector<struct prtree *> adj;
+struct prtree
+{
+    set<pair<int, int>> h;
+    int vertice;
+    int height;
+    vi children;
+};
+
+ll dfs(struct prtree *root)
+{
+    ll r = root->vertice;
+    ll curr_h=0;
+    for (auto c : adj[r]->children)
+    {
+        ll temp_h=dfs(adj[c])+1;
+        curr_h=max(curr_h,temp_h);
+        root->h.insert(mp(temp_h,c));
+    }
+    adj[r]->height = curr_h;
+    return curr_h;
+}
+
+void remove(ll ht, ll child_e)
+{
+    ff(i, 1, ht / 2 - 1)
+    {
+        auto temp_it = --(adj[child_e]->h.end());
+        child_e = (*temp_it).se;
+    }
+    auto torem_it = --(adj[child_e]->h.end());
+    auto toadd_e = (*torem_it).se;
+    adj[child_e]->h.erase(torem_it);
+    adj[1]->h.insert(mp(ht / 2, toadd_e));
+}
+
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -113,55 +150,29 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
+    cin>>n>>k;
+    adj.resize(n+1);
+    //initializer
+    ff(i,0,n){
+        adj[i]=new prtree();
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
+    ff(i,2,n){
+        int v;
+        cin>>v;
+        int u=i;
+        adj[v]->vertice=v;
+        adj[v]->children.eb(u);
+    }
+    dfs(adj[1]);
+    cout<<"";
 
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
+    ff(i,1,k){
+        auto endele_it=--(adj[1]->h.end());
+        ll max_h=(*endele_it).fi;
+        ll endele=(*endele_it).se;
+        remove(max_h,endele);
+        adj[1]->h.erase(mp(max_h,endele));
+        adj[1]->h.insert(mp(max_h - max_h/2,endele));
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
-    }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    cout<<(*(--(adj[1]->h.end()))).fi<<"\n";
 }

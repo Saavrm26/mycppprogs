@@ -1,14 +1,2 @@
 Case #1 : 
-0
-Case #2 : 
-2
-Case #3 : 
-2.5
-Case #4 : 
-2
-Case #5 : 
-1
-Case #6 : 
-3
-Case #7 : 
 6

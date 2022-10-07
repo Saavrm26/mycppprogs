@@ -188,7 +188,7 @@ void solve()
             cout << "Bob\n";
             return;
     }
-    //0 odds
+    //0 odd
     ff(i, 0, e)
     {
         ff(k, 0, 1)
@@ -197,6 +197,7 @@ void solve()
             dp[i][0][1] = 0;
         }
     }
+    //1 odd
     ff(i,0,e){
         dp[i][1][1]=1;
         if(i&1){
@@ -217,12 +218,12 @@ void solve()
                 bool l1=0;
                 //bob takes odd
                 if(j-2>=0){
-                    l1|= dp[i-2][j][k^1];
+                    l1|= (dp[i][j-2][k^1]==0);
                     to=1;
                 }
                 //bob takes even
                 if(i-1>=0){
-                    l1|=dp[i-1][j-1][k^1];
+                    l1|=(dp[i-1][j-1][k^1]==0);
                     to=1;
                 }
 
@@ -230,39 +231,39 @@ void solve()
                 bool l2=0;
                 //bob takes even
                 if(i-2>=0){
-                    l2|=dp[i-2][j][k^1];
+                    l2|=(dp[i-2][j][k]==0);
                     te=1;
                 }
                 //bob take odd
-                if(i-1>=1){
-                    l2|=dp[i-1][j-1][k];
+                if(i-1>=0){
+                    l2|=(dp[i-1][j-1][k]==0);
                     te=1;
                 }
                 bool res;
                 if(to&&te){
-                    res=l1&l2;
+                    res=l1&&l2;
                 }
                 else{
                     res=l1||l2;
                 }
-                dp[i][j][k]=res;
+                dp[i][j][k]=res^1;
             }
         }
     }
-    ff(i, 0, e)
-    {
-        ff(j, 0, o)
-        {
-            cout<<dp[i][j][0]<<"|"<<dp[i][j][1]<<"  ";
-        }
-        cout<<"\n\n";
-    }
+    // ff(i, 0, e)
+    // {
+    //     ff(j, 0, o)
+    //     {
+    //         cout<<dp[i][j][0]<<"|"<<dp[i][j][1]<<"  ";
+    //     }
+    //     cout<<"\n\n";
+    // }
     if (dp[e][o][0])
     {
-        cout << "Bob\n";
+        cout << "Alice\n";
     }
     else
     {
-        cout << "Alice\n";
+        cout << "Bob\n";
     }
 }

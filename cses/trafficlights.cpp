@@ -92,76 +92,46 @@ void deb(F&& lamda){
 // Remember:
 // Competition is with yourself
 
+struct vals{
+    int l,r,val;
+};
+
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    int t;
-    int ctr=1;
-    cin>>t;
-    while(t--){
-        deb(
-            [&]{
-                cout<<"Case #"<<ctr<<" : \n";
-                cout.flush();
-                ctr++;
-            }
-        );
-        solve();
-    }
+    solve();
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
+    ini(x) ini(n)
+    map<int,int> m;
+    si s;
+    s.insert(x);
+    m[x]++;
     ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
-    }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
 
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
+        ini(y)
+
+        // immediate lower and higher value of x
+        auto it=s.ub(y);
+        int U=*it,L;
+        if(it!=s.begin())
+            L=*(--it);
+        else
+            L=0;
+
+        //removal of old lenght and adding new length
+        int old_len = U-L;
+        m[old_len]--;
+        if(!m[old_len]) m.erase(old_len);
+        s.insert(y);
+        m[y-L]++;
+        m[U-y]++;
+
+        //final element
+        cout<<(*(--m.end())).first<<" ";
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
-    }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+
 }

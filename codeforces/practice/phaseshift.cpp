@@ -92,6 +92,10 @@ void deb(F&& lamda){
 // Remember:
 // Competition is with yourself
 
+vector<char> par,child;
+string s;
+vector<bool> vis;
+int vis_cnt=0;
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
@@ -110,58 +114,99 @@ int main(){
             }
         );
         solve();
+        par.clear();child.clear();
+        vis.clear();
     }
 }
+
+int find_idx(char c){
+    return c-97;
+}
+
+char left_over='|';
+//check if left_over cannot be used
+bool left_over_check(){
+    if(left_over=='|') return 1;
+    else return 0;
+}
+
+// check if child is actually parent of the supposed parent return true if it is
+bool supposed_par_check(char supposed_par,char child){
+    return (vis[child-97]||(par[supposed_par-97]==child))&&(vis_cnt!=25);
+}
+void increment(char& c){
+    if(c=='z') c= 'a';
+    else ++c;
+
+}
+void assignval(char par_ele,char child_ele){
+    child[par_ele-97]=child_ele;
+    par[child_ele-97]=par_ele;
+}
+
 void solve(){
     ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
-    }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
-    }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+    cin>>s;
+    par.resize(26);
+    child.resize(26);
+    vis.resize(26);
+    char curr='a';
+    if(s[0]=='a'){
+        left_over='a';
+        assignval(s[0],'b');
+        vis[find_idx('a')]=1;
+        vis[find_idx('b')]=1;
+        curr='c';
     }
     else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
+        assignval(s[0],'a');
+        vis[find_idx(s[0])]=1;
+        vis[find_idx('a')]=1;
+        increment(curr);
     }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    vis_cnt++;
+    ff(i,1,n-1){
+        if(child[find_idx(s[i])]!='\0'){
+            continue;
+        }
+        char supposed_par = s[i];
+        if(s[i]==curr){
+            if(left_over_check() || supposed_par_check(supposed_par,left_over)){
+                // we can't use left_over
+                // left_over is maintained
+                increment(curr);
+                assignval(s[i],curr);
+                vis[find_idx(curr)]=1;
+            }
+            else{
+                //left over resets
+                assignval(s[i],left_over);
+                vis[find_idx(left_over)]=1;
+                left_over='|';
+            }
+        }
+        else{
+            if(left_over_check()||supposed_par_check(supposed_par,left_over)){
+                if(supposed_par_check(supposed_par,curr)){
+                    increment(curr);
+                    assignval(s[i],curr);
+                }
+                else
+                    assignval(s[i],curr);
+                vis[find_idx(curr)]=1;
+            }
+            else {
+                assignval(s[i],left_over);
+                vis[find_idx(left_over)]=1;
+                left_over='|';
+            }
+        }
+        // vis[find_idx(supposed_par)]=1;
+        vis_cnt++;
+        increment(curr);
+    }
+    ff(i,0,n-1){
+        cout<<child[s[i]-97];
+    }
+    cout<<"\n";
 }

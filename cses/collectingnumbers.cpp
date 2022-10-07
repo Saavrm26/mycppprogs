@@ -102,19 +102,16 @@ int main(){
 void solve(){
     ini(n)
     invi(v,n);
-    set<int> s;
+    vi vec(n);
     ff(i,0,n-1){
-        s.insert(v[i]);
+        vec[--v[i]]=i;
     }
-    auto itr=--s.end();
-    ll ans=0;
-    ff(i,0,n-1){
-        if(v[i]<=(*itr)){
+    ll ans=1;
+    ff(i,0,n-2){
+        if(vec[i]>vec[i+1]){
             ans++;
-            auto temp=s.find(v[i]);
-            if(temp==s.begin()) break;
-            itr=--(temp);
         }
     }
+
     cout<<ans<<'\n';
 }

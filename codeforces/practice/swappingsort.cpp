@@ -93,6 +93,7 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
+vi v;
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -112,56 +113,66 @@ int main(){
         solve();
     }
 }
+int merge(int L,int M,int R){
+    int Ll=L,Lr=M,Rl=M+1,Rr=R;
+    int sz = R-L+1;
+    vi arr;
+    int ans=0;
+    while(Ll<=Lr&&Rl<=Rr){
+        if(v[Ll]<=v[Rl]){
+            arr.eb(v[Ll]);
+            Ll++;
+        }
+        else{
+            arr.eb(v[Rl]);
+            Rl++;
+            ans+=Lr-Ll+1;
+        }
+    }
+    while(Ll<=Lr){
+        arr.eb(v[Ll]);
+        Ll++;
+    }
+    while(Rl<=Rr){
+        arr.eb(v[Rl]);
+        Rl++;
+    }
+    int ctr=0;
+    ff(i,L,R){
+        v[i]=arr[ctr++];
+    }
+    return ans;
+}
+int merge_sort(int l,int r){
+    if(r<=l){
+        return 0;
+    }
+    int mid = (l + r)/2;
+    int ans=merge_sort(l,mid);
+    ans+=merge_sort(mid+1,r);
+    ans+=merge(l,mid,r);
+    return ans;
+}
 void solve(){
     ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
-    }
-    int reme=e.size();
+    invi(V,n);
     ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
+    ff(i,0,n-1){
+        if((V[i]-1-i)&1){
+            cout<<-1<<"\n";
+            return;
         }
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+    vi even,odd;
+    ff(i,0,n-1){
+        if(i&1){
+            even.eb(V[i]);
+        }
+        else odd.eb(V[i]);
     }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    v=even;
+    ans= merge_sort(0,(even.size()-1));
+    v=odd;
+    ans+=merge_sort(0,(odd.size()-1));
+    cout<<ans<<"\n";
 }

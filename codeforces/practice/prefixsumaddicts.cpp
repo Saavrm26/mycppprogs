@@ -113,55 +113,72 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
+    ini(n) ini(k)
+    invll(s,k);
+    if(n<=2){
+        if(n==1){
+            yes;
         }
         else{
-            m[x[i]-y[i]]++;
-        }
-    }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
+            if(k==1){
+                yes;
             }
-            ans++;
+            else{
+                if(s[0]>s[1]-s[0]){
+                    no;
+                }
+                else{
+                    yes;
+                }
+            }
+        }
+        return;
+    }
+    if(k==1){
+        yes;return;
+    }
+    vi v(n,INT32_MIN);
+    int ctr=1;
+    int j=n-1,l=k-1;
+    while(ctr<=k-1){
+        v[j]=s[l]-s[l-1];
+        ctr++;
+        l--;
+        j--;
+    }
+    ff(i,0,n-2){
+        if(!(v[i]<=v[i+1])){
+            no;return;
         }
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+
+    int filler=s[0]/(j+1);
+    deb([&]{
+        trace(j);
+        trace(v[j+1]);
+        trace(filler);
+        int remaider=s[0]%(j+1);
+        trace(remaider);
+        cout<<"\n";
+    });
+    if((s[0] % (j + 1) != 0 )){
+        if(s[0]>=0)
+            filler++;
+        // else{
+        //     filler--;
+        // }
+
     }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
+    if(filler>v[j+1]){
+        no;return;
     }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    // if(s[0]>=0){
+
+    //     if () && filler != 0)
+    //     {
+    //         no;return;
+    //     }
+    // }
+    yes;
+    deb([&]{cout<<"\n";});
 }

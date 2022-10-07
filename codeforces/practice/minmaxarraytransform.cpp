@@ -65,6 +65,9 @@ typedef map<int,pair<int,int>> mipii;
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 // ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
 // ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
+template<typename T,typename U>
+U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
+#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
@@ -75,6 +78,12 @@ template <class T,class U> using omap = tree<T, U, less<T>, rb_tree_tag, tree_or
 template <class T> using omm = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
 #define ook order_of_key
 #define fbo find_by_order
+template <typename F>
+void deb(F&& lamda){
+    #ifndef ONLINE_JUDGE
+        lamda();
+    #endif
+}
 
 // Questions to ask before submitting any code on OJ
 // Q1. Is my approach handling all the cases ? Think of some edge cases
@@ -90,52 +99,51 @@ int main(){
     #endif
     fastIO;
     int t;
+    int ctr=1;
     cin>>t;
     while(t--){
+        deb(
+            [&]{
+                cout<<"Case #"<<ctr<<" : \n";
+                cout.flush();
+                ctr++;
+            }
+        );
         solve();
     }
 }
-vi a,b;
-bool check(int mid,int i){
-    int n=a.size();
-    if(i==n-1){
-        if(mid!=n-1){
-            return 0;
-        }
-        else{
-            return 1;
-        }
-    }
-    if(a[i+1]<)
-}
 void solve(){
     ini(n)
-    a.resize(n);
-    b.resize(n);
+    invi(a,n)
+    invi(b,n)
+    vi dmin(n),dmax(n);
+    //for dmin
     ff(i,0,n-1){
-        cin>>a[i];
-    }
-    ff(i,0,n-1){
-        cin>>b[i];
-    }
-    vi ansmin(n);
-    ff(i,0,n-1){
-        ansmin[i]=b[i]-a[i];
-    }
-    vi ansmax(n);
-    ff(i,0,n-1){
-        int l=0,r=n-1;
-        int ans1=INT32_MIN;
-        while (l<=r){
-            int mid=(l+r)/2;
-            if(check(mid,i)){
-                ans1=b[mid];
-                l=mid+1;
-            }
-            else{
-                r=mid-1;
-            }
+        auto it=lb(all(b),a[i]);
+        if(it==b.end()){
+            --it;
         }
+        dmin[i]= *it - a[i];
     }
-
+    //for dmax
+    // ff(i,0,n-1){
+    //     auto it = --ub(all(a),b[i]);
+    //     dmax[i]= b[it-a.begin()] - a[i];
+    // }
+    int curr=n-1;
+    dmax[n-1]=b[n-1]-a[n-1];
+    fb(i,n-2,0){
+        if(a[i+1]>b[i]){
+            curr=i;
+        }
+        dmax[i]=b[curr]-a[i];
+    }
+    ff(i,0,n-1){
+        cout<<dmin[i]<<" ";
+    }
+    cout<<"\n";
+    ff(i,0,n-1){
+        cout<<dmax[i]<<" ";
+    }
+    cout<<"\n";
 }

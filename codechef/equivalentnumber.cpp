@@ -64,7 +64,7 @@ typedef map<int,pair<int,int>> mipii;
 // ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
 // ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
-// ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
+ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
 template<typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
@@ -91,8 +91,24 @@ void deb(F&& lamda){
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
+ll countFactors(ll n, ll p)
+{
+    ll pwr = 0,ctr=1,init=p;
+    while (n > 0 && n % p == 0) {
+        n /= p;
+        pwr+=ctr;
+        p*=p;
+        ctr*=2;
+        if(n%p!=0){
+            p=init;
+            ctr=1;
+        }
+    }
 
+    return pwr;
+}
 void solve();
+vector<bool> is_prime;
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -101,6 +117,18 @@ int main(){
     int t;
     int ctr=1;
     cin>>t;
+    int n=1e6+1;
+    is_prime.resize(n);
+    ff(i,0,n){
+        is_prime[i]=1;
+    }
+    is_prime[0] = is_prime[1] = false;
+    for (int i = 2; i * i <= n; i++) {
+        if (is_prime[i]) {
+            for (int j = i * i; j <= n; j += i)
+                is_prime[j] = false;
+        }
+    }
     while(t--){
         deb(
             [&]{
@@ -113,55 +141,66 @@ int main(){
     }
 }
 void solve(){
-    ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
+    ini(a) ini(b)
+    if(a==b){
+        yes;return;
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
+    if(((a&1)&&(!(b&1)))||((b&1)&&(!(a&1)))){
+        no;
+        return;
+    }
+    if(b<a){
+        swap(a,b);
+    }
+    // vpll ap,bp;
+    // ff(i,2,a){
+    //     if((is_prime[i])&&(a%i==0)){
+    //         pair<ll,ll> x;
+    //         x.fi=i;
+    //         x.se=countFactors(a,i);
+    //         ap.eb(x);
+    //     }
+    // }
+    // ff(i,2,b){
+    //     if(is_prime[i]&&(b%i==0)){
+    //         pair<ll,ll> x;
+    //         x.fi=i;
+    //         x.se=countFactors(b,i);
+    //         bp.eb(x);
+    //     }
+    // }
+    // int an=ap.size(),bn=bp.size();
+    // if(an!=bn){no;return;}
+    // ff(i,0,an-1){
+    //     if(ap[i].fi!=bp[i].fi){
+    //         no;return;
+    //     }
+    // }
+    // ll CM=1;
+    // ff(i,0,an-1){
+    //     CM*=ap[i].se*bp[i].se;
+    // }
+    // ll x=CM/ap[0].se,y=CM/bp[0].se;
+    // ff(i,0,an-1){
+    //     if((ap[i].se*x)!=(bp[i].se*y)){
+    //         no;return;
+    //     }
+    // }
+    if(b%a!=0){
+        no;return;
+    }
+    while(1){
+        ll t=b/a;
+        b=t;
+        if(b<a){
+            swap(a,b);
+        }
+        if(b%a!=0){
+            no;return;
+        }
+        if(a==b){
+            yes;
             break;
         }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
-    }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
 }

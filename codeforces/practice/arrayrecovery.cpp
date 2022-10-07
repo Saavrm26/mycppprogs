@@ -114,54 +114,22 @@ int main(){
 }
 void solve(){
     ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
-    ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
+    invi(v,n)
+    int curr=v[0];
+    vi ans;
+    ans.eb(curr);
+    ff(i,1,n-1){
+        if(curr<v[i]||v[i]==0){
+            curr+=v[i];
+            ans.eb(curr);
         }
         else{
-            m[x[i]-y[i]]++;
+            cout<<-1<<"\n";
+            return;
         }
     }
-    int reme=e.size();
-    ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
-        }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
+    ffa(i,ans){
+        cout<<i<<" ";
     }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
-    }
-    else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
-    }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    cout<<"\n";
 }

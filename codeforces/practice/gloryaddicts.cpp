@@ -114,54 +114,44 @@ int main(){
 }
 void solve(){
     ini(n)
-    invi(x,n)
-    invi(y,n)
-    int s=0;
-    vi e;
-    mii m;
+    invi(a,n)
+    invll(b,n)
+    int zero=0,one=0;
+    vi ones,zeros;
     ff(i,0,n-1){
-        if(x[i]<y[i]){
-            e.eb(y[i]-x[i]);
-        }
-        else if(x[i]==y[i]){
-            s++;
-        }
-        else{
-            m[x[i]-y[i]]++;
-        }
+        if(a[i]){ one++;ones.eb(b[i]);}
+        else {zero++;zeros.eb(b[i]);}
     }
-    int reme=e.size();
+    sort(all(b));
     ll ans=0;
-    // todo : check if m is empty or not???
-    ffa(i,e){
-        if(m.empty()){
-            break;
+    if(one==zero)
+    {
+        ff(i,0,n-1){
+            ans+=b[i]*2;
         }
-        auto it=m.ub(i);
-        if(it==m.begin()){
-
-        }
-        else{
-            reme--;
-            --it;
-            auto ll=(*it).fi;
-            m[ll]--;
-            if(m[ll]==0){
-                m.erase(ll);
-            }
-            ans++;
-        }
-    }
-    if(reme>=s){
-        reme-=s;
-        ans+=s;
-        s=0;
+        ans-=b[0];
     }
     else{
-        s-=reme;
-        ans+=reme;
-        reme=0;
+        int k=1;
+        int l=one;
+        int i=ones.size()-1;
+        int j=zeros.size()-1;
+        sort(all(ones));
+        sort(all(zeros));
+        if(one>zero){
+            l=zero;
+        }
+        while(k<=l){
+            ans+=ones[i]+zeros[j];
+            k++;
+            i--;
+            j--;
+        }
+
+        ff(k,0,n-1){
+            ans+=b[k];
+        }
+
     }
-    ans+=reme/2+s/2;
-    cout<<ans<<'\n';
+    cout<<ans<<"\n";
 }
