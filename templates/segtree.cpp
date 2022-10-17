@@ -192,6 +192,6 @@ void solve(){
             trace1d(stree.gArr,n-1);
             trace1d(stree.Tree,4*n-1);
         };
-        fasd
+        
     }
 }

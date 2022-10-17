@@ -38,7 +38,10 @@
         "system_error": "cpp",
         "utility": "cpp",
         "compare": "cpp",
-        "memory_resource": "cpp"
+        "memory_resource": "cpp",
+        "mutex": "cpp",
+        "tuple": "cpp",
+        "variant": "cpp"
     },
     "cmake.configureOnOpen": false
 }
