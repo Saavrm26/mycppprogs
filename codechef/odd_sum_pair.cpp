@@ -68,11 +68,7 @@ typedef map<int,pair<int,int>> mipii;
 // ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
 // ll power_of_2(ll n,ll curr){ ll val = 1<<curr; if(n%val==0) return curr + power_of_2(n/val,curr+1); else{ if(n%2==0){ return 1+power_of_2(n/2,2); } return 0; } }
 // ld prec = 1e-7;
-// bool iseq(ld v1,ld v2){ return abs(v2 - v1)<= prec; }
-// bool islt(ld v1,ld v2){if(iseq(v1,v2)) return 0; return v1<v2;}
-// bool isgt(ld v1,ld v2){if(iseq(v1,v2)) return 0; return v1>v2;}
-// bool isgte(ld v1,ld v2){if(iseq(v1,v2)) return 1; return v1>v2;}
-// bool islte(ld v1,ld v2){if(iseq(v1,v2)) return 1; return v1<v2;}
+// bool check_equal(ld v1,ld v2){ return abs(v2 - v1)<= prec; }
 template<typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
@@ -101,25 +97,6 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
-int ans=0;
-vvll adj;
-vll L,R;
-ll dfs(ll v){
-    if(adj[v].empty()){
-        ans++;
-        return R[v];
-    }
-    ll sum = 0;
-    ffa(u,adj[v]){
-        sum+=dfs(u);
-    }
-    if(L[v]>sum){
-        ans++;
-        return R[v];
-    }
-    return min(R[v],sum);
-
-}
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -137,24 +114,18 @@ int main(){
             }
         );
         solve();
-        ans=0;adj.clear();L.clear(),R.clear();
     }
     deb([]{
         cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
     });
 }
-
 void solve(){
-    ini(n)
-    adj.resize(n+1);
-    L.resize(n+1);R.resize(n+1);
-    ff(u,2,n){
-        int v;cin>>v;
-        adj[v].eb(u);
-    }
-    ff(i,1,n){
-        cin>>L[i]>>R[i];
-    }
-    dfs(1);
-    cout<<ans<<"\n";
+    ini(a) ini(b) ini(c)
+    int s1= a+b,s2=b+c,s3=a+c;
+    int ctr=0;
+    if(s1&1) ctr++;
+    if(s2&1) ctr++;
+    if(s3&1) ctr++;
+    if(ctr == 2) yes;
+    else no;
 }

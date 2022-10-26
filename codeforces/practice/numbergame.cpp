@@ -101,25 +101,6 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
-int ans=0;
-vvll adj;
-vll L,R;
-ll dfs(ll v){
-    if(adj[v].empty()){
-        ans++;
-        return R[v];
-    }
-    ll sum = 0;
-    ffa(u,adj[v]){
-        sum+=dfs(u);
-    }
-    if(L[v]>sum){
-        ans++;
-        return R[v];
-    }
-    return min(R[v],sum);
-
-}
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -137,24 +118,61 @@ int main(){
             }
         );
         solve();
-        ans=0;adj.clear();L.clear(),R.clear();
     }
     deb([]{
         cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
     });
 }
-
+bool check(int k,vi &v){
+    mii m;
+    int n =v.size();
+    ff(i,0,n-1){
+        if(v[i]>k) break;
+        else m[v[i]]++;
+    }
+    ff(i,1,k-1){
+        if (m.size())
+        {
+            auto it = m.ub(k - i + 1);
+            if(it==m.begin()) return 0;
+            --it;
+            int to_rem = (*it).first;
+            m[to_rem]--;
+            if (m[to_rem] == 0)
+                m.erase(to_rem);
+            if (m.empty())
+                return 0;
+            int ele = (*m.begin()).first;
+            m[ele]--;
+            ll to_add = k-i+1;
+            if (m[ele] == 0)
+            {
+                m.erase(ele);
+            }
+            // if(m.find(to_rem)!=m.end()) m.erase(to_rem);
+            m[ele+to_add]++;
+        }
+        else
+            return 0;
+    }
+    if(m.find(1)==m.end()) return 0;
+    else return 1;
+}
 void solve(){
     ini(n)
-    adj.resize(n+1);
-    L.resize(n+1);R.resize(n+1);
-    ff(u,2,n){
-        int v;cin>>v;
-        adj[v].eb(u);
+    invi(v,n);
+    sort(all(v));
+    int l=0,r= n;
+    while(r-l>1){
+        int k = (l+r)/2;
+        if(check(k,v)){
+            l = k;
+        }
+        else{
+            r = k;
+        }
     }
-    ff(i,1,n){
-        cin>>L[i]>>R[i];
-    }
-    dfs(1);
-    cout<<ans<<"\n";
+    if(check(r,v)){
+        cout<<r<<"\n";
+    }else cout<<l<<"\n";
 }

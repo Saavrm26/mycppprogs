@@ -42,8 +42,8 @@ typedef map<int,pair<int,int>> mipii;
 #define fi first
 #define se second
 //io snippets
-#define yes cout<<"YES\n"
-#define no cout<<"NO\n"
+#define yes cout<<"Yes\n"
+#define no cout<<"No\n"
 #define fastIO ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL)
 #define ini(x) int x;cin>>x;
 #define inll(x) ll x;cin>>x;
@@ -101,25 +101,6 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
-int ans=0;
-vvll adj;
-vll L,R;
-ll dfs(ll v){
-    if(adj[v].empty()){
-        ans++;
-        return R[v];
-    }
-    ll sum = 0;
-    ffa(u,adj[v]){
-        sum+=dfs(u);
-    }
-    if(L[v]>sum){
-        ans++;
-        return R[v];
-    }
-    return min(R[v],sum);
-
-}
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -137,24 +118,38 @@ int main(){
             }
         );
         solve();
-        ans=0;adj.clear();L.clear(),R.clear();
     }
     deb([]{
         cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
     });
 }
-
 void solve(){
     ini(n)
-    adj.resize(n+1);
-    L.resize(n+1);R.resize(n+1);
-    ff(u,2,n){
-        int v;cin>>v;
-        adj[v].eb(u);
+    ins(s)
+    if(s[0]=='A'){
+        no;
+        return;
     }
-    ff(i,1,n){
-        cin>>L[i]>>R[i];
+    int q = 0,a = 0;
+    ff(i,0,n-1){
+        if(s[i]=='Q') q++;
+        else a++;
     }
-    dfs(1);
-    cout<<ans<<"\n";
+    // if(q>a){
+    //     no;return;
+    // }
+    stack<char> st;
+    ff(i,0,n-1){
+        if(s[i]=='Q') st.push('Q');
+        else{
+            if(!st.empty()){
+                if(st.top()=='Q') st.pop();
+            }
+        }
+    }
+    if(st.size()){
+        no;return;
+    }
+    yes;
+
 }

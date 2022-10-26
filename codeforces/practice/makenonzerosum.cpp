@@ -88,9 +88,9 @@ template <class T> using omm = tree<T, null_type, less_equal<T>, rb_tree_tag, tr
 #define fbo find_by_order
 template <typename F>
 void deb(F&& lamda){
-    #ifndef ONLINE_JUDGE
-        lamda();
-    #endif
+	#ifndef ONLINE_JUDGE
+		lamda();
+	#endif
 }
 
 // Questions to ask before submitting any code on OJ
@@ -101,60 +101,60 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
-int ans=0;
-vvll adj;
-vll L,R;
-ll dfs(ll v){
-    if(adj[v].empty()){
-        ans++;
-        return R[v];
-    }
-    ll sum = 0;
-    ffa(u,adj[v]){
-        sum+=dfs(u);
-    }
-    if(L[v]>sum){
-        ans++;
-        return R[v];
-    }
-    return min(R[v],sum);
-
-}
 int main(){
-    #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    #endif
-    fastIO;
-    int t;
-    int ctr=1;
-    cin>>t;
-    while(t--){
-        deb(
-            [&]{
-                cout<<"Case #"<<ctr<<" : \n";
-                cout.flush();
-                ctr++;
-            }
-        );
-        solve();
-        ans=0;adj.clear();L.clear(),R.clear();
-    }
-    deb([]{
-        cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
-    });
+	#ifndef ONLINE_JUDGE
+		freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+	#endif
+	fastIO;
+	int t;
+	int ctr=1;
+	cin>>t;
+	while(t--){
+		deb(
+			[&]{
+				cout<<"Case #"<<ctr<<" : \n";
+				cout.flush();
+				ctr++;
+			}
+		);
+		solve();
+	}
+	deb([]{
+		cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
+	});
 }
-
 void solve(){
-    ini(n)
-    adj.resize(n+1);
-    L.resize(n+1);R.resize(n+1);
-    ff(u,2,n){
-        int v;cin>>v;
-        adj[v].eb(u);
-    }
-    ff(i,1,n){
-        cin>>L[i]>>R[i];
-    }
-    dfs(1);
-    cout<<ans<<"\n";
+	ini(n)
+	invi(v,n)
+	vi vec ;
+	vpii ans;
+	int prev = 1,val = 0,ctr = 0;
+
+	ff(i,0,n-1){
+		if( i+1<=n-1 &&v[i+1]==v[i]*-1){
+			vec.eb(val);
+			ctr = 0;val=0;
+			if(i>=prev) ans.eb(prev,i);
+			ans.eb(mp(i+1,i+1));
+			ans.eb(mp(i+2,i+2));
+			if(i+3<=n){
+				prev = i+3;
+			}
+			i++;continue;
+		}
+		if(ctr&1) val+=-v[i];
+		else val+=v[i];
+		ctr++;
+	}
+	if(ans.empty() || ans.back().se!=n){ ans.eb(mp(prev,n));vec.eb(val);}
+	int nn=vec.size();
+	int sum =0;
+	ffa(i,vec) sum+=i;
+	if(sum!=0){
+		cout<<-1<<"\n";return;
+	}
+	cout<<ans.size()<<"\n";
+	ffa(i,ans){
+		cout<<i.fi<<" "<<i.se<<"\n";
+	}
 }

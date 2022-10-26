@@ -101,25 +101,6 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
-int ans=0;
-vvll adj;
-vll L,R;
-ll dfs(ll v){
-    if(adj[v].empty()){
-        ans++;
-        return R[v];
-    }
-    ll sum = 0;
-    ffa(u,adj[v]){
-        sum+=dfs(u);
-    }
-    if(L[v]>sum){
-        ans++;
-        return R[v];
-    }
-    return min(R[v],sum);
-
-}
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
@@ -137,24 +118,33 @@ int main(){
             }
         );
         solve();
-        ans=0;adj.clear();L.clear(),R.clear();
     }
     deb([]{
         cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
     });
 }
 
-void solve(){
-    ini(n)
-    adj.resize(n+1);
-    L.resize(n+1);R.resize(n+1);
-    ff(u,2,n){
-        int v;cin>>v;
-        adj[v].eb(u);
+void solve()
+{
+    ini(n) invi(a, n)
+    vi dp(n);
+    ff(i,0,n-1){
+        ff(j,0,n+512){
+            int bp = i, bp1 = j ^ a[bp];
+            if ( bp<bp1 && bp1<n)
+            {
+                int k = (a[bp1] ^ bp);
+                if(j < k)
+                    dp[bp1] = max(dp[bp1],dp[bp]+1);
+            }
+        }
     }
-    ff(i,1,n){
-        cin>>L[i]>>R[i];
-    }
-    dfs(1);
-    cout<<ans<<"\n";
+    int ans = *max_element(all(dp));
+    deb(
+        [&]
+        {
+            trace1d(dp,n-1);
+        }
+    );
+    cout<<ans+1<<"\n";
 }

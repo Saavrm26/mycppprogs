@@ -73,9 +73,8 @@ typedef map<int,pair<int,int>> mipii;
 // bool isgt(ld v1,ld v2){if(iseq(v1,v2)) return 0; return v1>v2;}
 // bool isgte(ld v1,ld v2){if(iseq(v1,v2)) return 1; return v1>v2;}
 // bool islte(ld v1,ld v2){if(iseq(v1,v2)) return 1; return v1<v2;}
-template<typename T,typename U>
+template <typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
-#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
@@ -101,60 +100,66 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
-int ans=0;
-vvll adj;
-vll L,R;
-ll dfs(ll v){
-    if(adj[v].empty()){
-        ans++;
-        return R[v];
-    }
-    ll sum = 0;
-    ffa(u,adj[v]){
-        sum+=dfs(u);
-    }
-    if(L[v]>sum){
-        ans++;
-        return R[v];
-    }
-    return min(R[v],sum);
-
-}
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    int t;
-    int ctr=1;
-    cin>>t;
-    while(t--){
-        deb(
-            [&]{
-                cout<<"Case #"<<ctr<<" : \n";
-                cout.flush();
-                ctr++;
-            }
-        );
-        solve();
-        ans=0;adj.clear();L.clear(),R.clear();
-    }
+    solve();
     deb([]{
         cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
     });
 }
-
+bool check(int offset,int j,vi &zeros,string &s){
+    int n = zeros.size();
+    for(int i = 0; i <= j; i++){
+        if( s[zeros[i] - offset]!='1') {
+            return 0;
+        }
+    }
+    return 1;
+}
 void solve(){
     ini(n)
-    adj.resize(n+1);
-    L.resize(n+1);R.resize(n+1);
-    ff(u,2,n){
-        int v;cin>>v;
-        adj[v].eb(u);
+    ins(s)
+    int start = n;
+    ff(i,0,n-1){
+        if(s[i]=='1'){start = i;break;}
     }
-    ff(i,1,n){
-        cin>>L[i]>>R[i];
+    int maxi = 0;
+    ff(i,start,n-1){
+        if(s[i]!='0'){
+            maxi++;
+        }
+        else{
+            break;
+        }
     }
-    dfs(1);
-    cout<<ans<<"\n";
+    string str = s.substr(start);
+    int  N = str.size();
+    vi zeros;
+    ff(i,0,N-1){
+        if(str[i]=='0'){
+            zeros.eb(i);
+        }
+    }
+    int nn = zeros.size();
+    int curr =1;
+    string ans=str;
+    while (curr<=maxi)
+    {
+        string st = str;
+        ff(i,0,nn-1)
+        {
+            st[zeros[i]] = '0' + 0|(str[zeros[i]-curr]-'0');
+        }
+        if(lexicographical_compare(ans.begin(),ans.end(),st.begin(),st.end()))
+        {
+            ans = st;
+        }
+        curr++;
+    }
+
+    if(ans=="") ans="0";
+    cout<<ans<<'\n';
 }

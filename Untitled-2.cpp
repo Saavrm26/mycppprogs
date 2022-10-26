@@ -73,9 +73,8 @@ typedef map<int,pair<int,int>> mipii;
 // bool isgt(ld v1,ld v2){if(iseq(v1,v2)) return 0; return v1>v2;}
 // bool isgte(ld v1,ld v2){if(iseq(v1,v2)) return 1; return v1>v2;}
 // bool islte(ld v1,ld v2){if(iseq(v1,v2)) return 1; return v1<v2;}
-template<typename T,typename U>
+template <typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
-#define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
 #define trace2d(arr,n,m) cout<<#arr<<"\n";for(int i=0;i<=n;i++){for(int j=0;j<=m;j++){cout<<(arr[i][j])<<" ";}cout<<"\n";}
 #define trace(x) cout<<#x<<" "<<x<<"\n";
@@ -101,60 +100,16 @@ void deb(F&& lamda){
 // Competition is with yourself
 
 void solve();
-int ans=0;
-vvll adj;
-vll L,R;
-ll dfs(ll v){
-    if(adj[v].empty()){
-        ans++;
-        return R[v];
-    }
-    ll sum = 0;
-    ffa(u,adj[v]){
-        sum+=dfs(u);
-    }
-    if(L[v]>sum){
-        ans++;
-        return R[v];
-    }
-    return min(R[v],sum);
-
-}
 int main(){
     #ifndef ONLINE_JUDGE
         freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    int t;
-    int ctr=1;
-    cin>>t;
-    while(t--){
-        deb(
-            [&]{
-                cout<<"Case #"<<ctr<<" : \n";
-                cout.flush();
-                ctr++;
-            }
-        );
-        solve();
-        ans=0;adj.clear();L.clear(),R.clear();
-    }
+    solve();
     deb([]{
         cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
     });
 }
-
 void solve(){
-    ini(n)
-    adj.resize(n+1);
-    L.resize(n+1);R.resize(n+1);
-    ff(u,2,n){
-        int v;cin>>v;
-        adj[v].eb(u);
-    }
-    ff(i,1,n){
-        cin>>L[i]>>R[i];
-    }
-    dfs(1);
-    cout<<ans<<"\n";
+
 }

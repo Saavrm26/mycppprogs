@@ -30,6 +30,8 @@
         "typeinfo": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "iostream": "cpp"
-    }
+        "iostream": "cpp",
+        "bit": "cpp"
+    },
+    "cmake.configureOnOpen": false
 }
