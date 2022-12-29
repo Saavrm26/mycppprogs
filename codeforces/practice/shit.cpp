@@ -29,6 +29,7 @@ typedef queue<pair<long long,long long>> qpll;
 typedef deque<pair<int,int>> dqpii;
 typedef deque<pair<long long,long long>> dqpll;
 typedef pair<int,int> pii;
+typedef pair<ll,ll> pll;
 typedef set<int> si;
 typedef set<ll> sll;
 typedef map<int,int> mii;
@@ -64,7 +65,7 @@ typedef map<int,pair<int,int>> mipii;
 // ll maximum(ll a,ll b){if(a>b) return a;else return b;}
 // ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
-ll mod = 1e9+7;
+ll mod = 998244353;
 ll binpow(ll x, ll y,ll M)
 {
     if (y == 0)
@@ -106,7 +107,7 @@ void deb(F&& lamda){
 		lamda();
 	#endif
 }
-
+#define OJ ONLINE_JUDGE
 // Questions to ask before submitting any code on OJ
 // Q1. Is my approach handling all the cases ? Think of some edge cases
 // Q2. How complicated is my approach
@@ -120,11 +121,11 @@ void deb(F&& lamda){
  * WRITE STUFF DOWN
  * DON'T GET STUCK ON ONE APPROACH
  */
+vi vec;
 void solve();
 int main(){
 	#ifndef ONLINE_JUDGE
 	freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    freopen("debug.txt","w",stderr);
     #endif
     fastIO;
     // int t;
@@ -145,66 +146,25 @@ int main(){
     // });
     solve();
 }
-struct edge{
-    ll u,v,w;
-};
-int n,m;
-vector<edge> edges;
-vvll adj;
-vb vis(n+1,false);
-ll ninf = INT64_MIN;
-bool dfs(int v){
-    vis[v]=1;
-    if(v==n){
-        return 1;
-    }
-    bool f = 0;
-    for(auto &c:adj[v]){
-        if(!vis[c])
-            f|=dfs(c);
-    }
-    return f;
-}
+
 void solve(){
-    cin>>n>>m;
-    edges.resize(m);
-    adj.resize(n+1);
-    for(int i=0;i<m;i++){
-        int u,v,w;
-        cin>>u>>v>>w;
-        edges[i] = {u,v,w};
-        adj[u].eb(v);
+    ini(n);
+    invi(v,n);
+    vi dp[31];
+    ff(i,0,30){
+        dp[i]=v;
     }
-    vll d(n+1,ninf);
-    d[1]=0;
-    for(int i=1;i<n;i++){
-        for(int j = 0;j<m;j++){
-            // if(i==j) continue;
-            int u = edges[j].u;int v=edges[j].v;int w=edges[j].w;
-            if(d[u]==ninf) continue;
-            if(d[v] < d[u]+w){
-                d[v] = d[u]+w;
-            }
+    fb(i,29,0){
+        int mask = (1<<(i));
+        vi vec(n);
+        ff(x,0,n-1){
+            vec[x] = dp[i+1][x] ^ mask;
         }
-    }
-    vb check(n+1);
-    check[n]=1;
-    for(int i=1;i<n;i++){
-        if(dfs(i)){
-            check[i]=1;
+        int maxi0 = *max_element(all(dp[i+1])),maxi1 =*max_element(all(vec));
+        if(maxi0<maxi1){
+            dp[i] = dp[i+1];
         }
-        vis = vb(n+1);
+        else dp[i]=vec;
     }
-    for(int j = 0;j<m;j++){
-        // if(i==j) continue;
-        ll u = edges[j].u;ll v=edges[j].v;ll w=edges[j].w;
-        if(d[u]==ninf) continue;
-        if(d[v] < d[u]+w){
-            if(check[v]){
-                cout<<-1<<"\n";
-                return;
-            }
-        }
-    }
-    cout<<d[n]<<"\n";
+    cout<<*max_element(all(dp[0]))<<"\n";
 }

@@ -6,6 +6,8 @@ using namespace std;
 using namespace __gnu_pbds;
 //datatype snippets
 typedef long long ll;
+typedef long double ld;
+typedef unsigned long long ull;
 //stl snippets
 typedef vector<bool> vb;
 typedef vector<int> vi;
@@ -28,6 +30,7 @@ typedef queue<pair<long long,long long>> qpll;
 typedef deque<pair<int,int>> dqpii;
 typedef deque<pair<long long,long long>> dqpll;
 typedef pair<int,int> pii;
+typedef pair<ll,ll> pll;
 typedef set<int> si;
 typedef set<ll> sll;
 typedef map<int,int> mii;
@@ -50,7 +53,7 @@ typedef map<int,pair<int,int>> mipii;
 #define invi(x,n) vi x(n);ff(i,0,n-1) cin>>x[i];
 #define invll(x,n) vll x(n);ff(i,0,n-1) cin>>x[i];
 // loop snippets
-#define ff(i,init,fin) for(int i=init;i<=fin;i++)
+#define ff(i,init,fin) for(ll i=init;i<=fin;i++)
 #define fb(i,init,fin) for(int i=init;i>=fin;i--)
 #define ffs(i,init,fin,step) for(int i=init;i<=fin;i=i+step)
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
@@ -63,8 +66,29 @@ typedef map<int,pair<int,int>> mipii;
 // ll maximum(ll a,ll b){if(a>b) return a;else return b;}
 // ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
-// ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
-// ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
+ll mod = 1e9+7;
+ll binpow(ll x, ll y,ll M)
+{
+    if (y == 0)
+        return 1;
+    ll p = binpow(x, y / 2, M) % M;
+    p = (p * p) % M;
+    return (y % 2 == 0) ? p : (x * p) % M;
+}
+ll mod_sub(ll a,ll b){return ((a-b)%mod + mod) % mod;}
+ll mod_add(ll a,ll b){return ((a%mod) + (b%mod))%mod;}
+ll mod_mult(ll a,ll b){a = a%mod;b=b%mod; return ((a*b)%mod + mod)%mod;}
+ll mod_inverse(ll A, ll M)
+{
+    return binpow(A, M - 2, M);
+}
+// ll power_of_2(ll n,ll curr){ ll val = 1<<curr; if(n%val==0) return curr + power_of_2(n/val,curr+1); else{ if(n%2==0){ return 1+power_of_2(n/2,2); } return 0; } }
+// ld prec = 1e-7;
+// bool iseq(ld v1,ld v2){ return abs(v2 - v1)<= prec; }
+// bool islt(ld v1,ld v2){if(iseq(v1,v2)) return 0; return v1<v2;}
+// bool isgt(ld v1,ld v2){if(iseq(v1,v2)) return 0; return v1>v2;}
+// bool isgte(ld v1,ld v2){if(iseq(v1,v2)) return 1; return v1>v2;}
+// bool islte(ld v1,ld v2){if(iseq(v1,v2)) return 1; return v1<v2;}
 template<typename T,typename U>
 U slicing(T const& v,int X, int Y){auto first = v.begin() + X;auto last = v.begin() + Y + 1;auto cont=U(first, last);return cont;}
 #define trace1d(arr,n) cout<<#arr<<"\n";for(int i=0;i<=n;i++)cout<<(arr[i])<<" ";cout<<"\n";
@@ -91,11 +115,17 @@ void deb(F&& lamda){
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-
+/* stuff you should look for
+ * int overflow, array bounds
+ * special cases (n=1?)
+ * do smth instead of nothing and stay organized
+ * WRITE STUFF DOWN
+ * DON'T GET STUCK ON ONE APPROACH
+ */
 void solve();
 int main(){
     #ifndef ONLINE_JUDGE
-        freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
     int t;
@@ -111,18 +141,37 @@ int main(){
         );
         solve();
     }
+    deb([]{
+        cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
+    });
 }
+int setBitNumber(int n) {
+    int k = __builtin_clz(n);
+    return (31 - k);
+}
+
 void solve(){
-    ini(a) ini(b) ini(c)
-    int a1=abs(a-1);
-    int a2=abs(b-c)+abs(c-1);
-    if(a1<a2){
-        cout<<1<<"\n";
+    ini(n) ini(k);
+    ins(s);
+
+    vi v(n+1);
+    ff(i,1,n){
+        v[i]=s[i-1]-'0';
     }
-    else if(a1>a2){
-        cout<<2<<"\n";
+
+    vi pref_01(n+1),pref_sum(n+1);
+    partial_sum(all(v),pref_sum.begin());
+    // if(v[1]==0) pref_01[1]=1;
+    ff(i,2,n){
+        if((!v[i]) && v[i-1]) pref_01[i]=pref_01[i-1]+2;
+        else pref_01[i]=pref_01[i-1];
     }
-    else{
-        cout<<3<<"\n";
+    int ans = INT_MAX;
+    ff(i,k,n){
+        ans = min(pref_01[i] - pref_01[i-k+1] + (!v[i-k+1]),ans);
+        if(pref_sum[i]-pref_sum[i-k]==k){
+            ans=0;
+        }
     }
+    cout<<ans<<"\n";
 }

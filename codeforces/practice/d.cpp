@@ -29,6 +29,7 @@ typedef queue<pair<long long,long long>> qpll;
 typedef deque<pair<int,int>> dqpii;
 typedef deque<pair<long long,long long>> dqpll;
 typedef pair<int,int> pii;
+typedef pair<ll,ll> pll;
 typedef set<int> si;
 typedef set<ll> sll;
 typedef map<int,int> mii;
@@ -51,7 +52,7 @@ typedef map<int,pair<int,int>> mipii;
 #define invi(x,n) vi x(n);ff(i,0,n-1) cin>>x[i];
 #define invll(x,n) vll x(n);ff(i,0,n-1) cin>>x[i];
 // loop snippets
-#define ff(i,init,fin) for(int i=init;i<=fin;i++)
+#define ff(i,init,fin) for(ll i=init;i<=fin;i++)
 #define fb(i,init,fin) for(int i=init;i>=fin;i--)
 #define ffs(i,init,fin,step) for(int i=init;i<=fin;i=i+step)
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
@@ -67,11 +68,11 @@ typedef map<int,pair<int,int>> mipii;
 ll mod = 1e9+7;
 ll binpow(ll x, ll y,ll M)
 {
-    if (y == 0)
-        return 1;
-    ll p = binpow(x, y / 2, M) % M;
-    p = (p * p) % M;
-    return (y % 2 == 0) ? p : (x * p) % M;
+	if (y == 0)
+		return 1;
+	ll p = binpow(x, y / 2, M) % M;
+	p = (p * p) % M;
+	return (y % 2 == 0) ? p : (x * p) % M;
 }
 ll mod_sub(ll a,ll b){return ((a-b)%mod + mod) % mod;}
 ll mod_add(ll a,ll b){return ((a%mod) + (b%mod))%mod;}
@@ -124,87 +125,40 @@ void solve();
 int main(){
 	#ifndef ONLINE_JUDGE
 	freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    freopen("debug.txt","w",stderr);
-    #endif
-    fastIO;
-    // int t;
-    // int ctr=1;
-    // cin>>t;
-    // while(t--){
-    //     deb(
-    //         [&]{
-    //             cout<<"Case #"<<ctr<<" : \n";
-    //             cout.flush();
-    //             ctr++;
-    //         }
-    //     );
-    //     solve();
-    // }
-    // deb([]{
-    //     cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
-    // });
-    solve();
+	#endif
+	fastIO;
+	// int t;
+	// int ctr=1;
+	// cin>>t;
+	// while(t--){
+	// 	deb(
+	// 		[&]{
+	// 			cout<<"Case #"<<ctr<<" : \n";
+	// 			cout.flush();
+	// 			ctr++;
+	// 		}
+	// 	);
+	// 	solve();
+	// }
+	// deb([]{
+	// 	cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
+	// });
+	solve();
 }
-struct edge{
-    ll u,v,w;
-};
-int n,m;
-vector<edge> edges;
-vvll adj;
-vb vis(n+1,false);
-ll ninf = INT64_MIN;
-bool dfs(int v){
-    vis[v]=1;
-    if(v==n){
-        return 1;
-    }
-    bool f = 0;
-    for(auto &c:adj[v]){
-        if(!vis[c])
-            f|=dfs(c);
-    }
-    return f;
+//* dp[n][k]
+ll dp[1001][1001]={-1};
+ll k;
+vll v;
+void recurse(int i,int k){
+	for(int j=i-1;j>=0;j--){
+		// fix k
+		recurse(j-1,)
+	}
 }
+
 void solve(){
-    cin>>n>>m;
-    edges.resize(m);
-    adj.resize(n+1);
-    for(int i=0;i<m;i++){
-        int u,v,w;
-        cin>>u>>v>>w;
-        edges[i] = {u,v,w};
-        adj[u].eb(v);
-    }
-    vll d(n+1,ninf);
-    d[1]=0;
-    for(int i=1;i<n;i++){
-        for(int j = 0;j<m;j++){
-            // if(i==j) continue;
-            int u = edges[j].u;int v=edges[j].v;int w=edges[j].w;
-            if(d[u]==ninf) continue;
-            if(d[v] < d[u]+w){
-                d[v] = d[u]+w;
-            }
-        }
-    }
-    vb check(n+1);
-    check[n]=1;
-    for(int i=1;i<n;i++){
-        if(dfs(i)){
-            check[i]=1;
-        }
-        vis = vb(n+1);
-    }
-    for(int j = 0;j<m;j++){
-        // if(i==j) continue;
-        ll u = edges[j].u;ll v=edges[j].v;ll w=edges[j].w;
-        if(d[u]==ninf) continue;
-        if(d[v] < d[u]+w){
-            if(check[v]){
-                cout<<-1<<"\n";
-                return;
-            }
-        }
-    }
-    cout<<d[n]<<"\n";
+	cin>>k;
+	ff(i,0,k-1){
+		cin>>v[i];
+	}
 }

@@ -29,6 +29,7 @@ typedef queue<pair<long long,long long>> qpll;
 typedef deque<pair<int,int>> dqpii;
 typedef deque<pair<long long,long long>> dqpll;
 typedef pair<int,int> pii;
+typedef pair<ll,ll> pll;
 typedef set<int> si;
 typedef set<ll> sll;
 typedef map<int,int> mii;
@@ -51,7 +52,7 @@ typedef map<int,pair<int,int>> mipii;
 #define invi(x,n) vi x(n);ff(i,0,n-1) cin>>x[i];
 #define invll(x,n) vll x(n);ff(i,0,n-1) cin>>x[i];
 // loop snippets
-#define ff(i,init,fin) for(int i=init;i<=fin;i++)
+#define ff(i,init,fin) for(ll i=init;i<=fin;i++)
 #define fb(i,init,fin) for(int i=init;i>=fin;i--)
 #define ffs(i,init,fin,step) for(int i=init;i<=fin;i=i+step)
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
@@ -143,7 +144,63 @@ int main(){
         cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
     });
 }
-#define xbet(a,l,r) (l<= a && a <= r)
 void solve(){
-	
+    ini(n) invi(v,n);
+    int _or =0;
+    ff(i,0,n-1){
+        _or |=v[i];
+    }
+    vvi p(30,vi(n));
+    vvi s(30,vi(n));
+    ff(i,0,29){
+        ff(j,0,n-1){
+            if(v[j]&(1<<i)){
+                p[i][j]++;
+            }
+        }
+    }
+    ff(i,0,29){
+        fb(j,n-1,0){
+            if(v[j]&(1<<i)){
+                s[i][j]++;
+            }
+        }
+    }
+    ff(i,0,29) ff(j,1,n-1) p[i][j]+=p[i][j-1];
+    ff(i,0,29) {
+        fb(j,n-2,0)
+            s[i][j]+=s[i][j+1];
+        reverse(all(s[i]));
+    }
+    int ans = -1;
+    ff(i,0,29){
+
+        auto it = lb(all(p[i]),0);
+        if(it == p[i].end()){
+            cout<<-1<<"\n";
+            return;
+        }
+        int fwd = it - p[i].begin();
+        int bwd = 0;
+        ff(j,0,29){
+            if(p[j][fwd]==0){
+                auto it = lb(all(s[j]),0);
+                if(it == s[j].end()){
+                    cout<<-1<<"\n";
+                    return;
+                }
+                bwd = max(bwd, int(it - s[j].begin()));
+            }
+        }
+        bwd = n - bwd;
+
+        int _ = 0;
+        ff(j,fwd+1,bwd-1){
+            _|=v[j];
+        }
+        if(_==_or){
+            ans = max(ans,bwd - fwd + 1);
+        }
+    }
+    cout<<ans<<"\n";
 }

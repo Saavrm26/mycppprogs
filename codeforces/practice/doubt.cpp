@@ -7,6 +7,7 @@ using namespace __gnu_pbds;
 //datatype snippets
 typedef long long ll;
 typedef long double ld;
+typedef unsigned long long ull;
 //stl snippets
 typedef vector<bool> vb;
 typedef vector<int> vi;
@@ -29,6 +30,7 @@ typedef queue<pair<long long,long long>> qpll;
 typedef deque<pair<int,int>> dqpii;
 typedef deque<pair<long long,long long>> dqpll;
 typedef pair<int,int> pii;
+typedef pair<ll,ll> pll;
 typedef set<int> si;
 typedef set<ll> sll;
 typedef map<int,int> mii;
@@ -51,7 +53,7 @@ typedef map<int,pair<int,int>> mipii;
 #define invi(x,n) vi x(n);ff(i,0,n-1) cin>>x[i];
 #define invll(x,n) vll x(n);ff(i,0,n-1) cin>>x[i];
 // loop snippets
-#define ff(i,init,fin) for(int i=init;i<=fin;i++)
+#define ff(i,init,fin) for(ll i=init;i<=fin;i++)
 #define fb(i,init,fin) for(int i=init;i>=fin;i--)
 #define ffs(i,init,fin,step) for(int i=init;i<=fin;i=i+step)
 #define fbs(i,init,fin,step) for(int i=init;i>=fin;i=i-step)
@@ -78,7 +80,7 @@ ll mod_add(ll a,ll b){return ((a%mod) + (b%mod))%mod;}
 ll mod_mult(ll a,ll b){a = a%mod;b=b%mod; return ((a*b)%mod + mod)%mod;}
 ll mod_inverse(ll A, ll M)
 {
-	return binpow(A, M - 2, M);
+    return binpow(A, M - 2, M);
 }
 // ll power_of_2(ll n,ll curr){ ll val = 1<<curr; if(n%val==0) return curr + power_of_2(n/val,curr+1); else{ if(n%2==0){ return 1+power_of_2(n/2,2); } return 0; } }
 // ld prec = 1e-7;
@@ -102,9 +104,9 @@ template <class T> using omm = tree<T, null_type, less_equal<T>, rb_tree_tag, tr
 #define fbo find_by_order
 template <typename F>
 void deb(F&& lamda){
-	#ifndef ONLINE_JUDGE
-		lamda();
-	#endif
+    #ifndef ONLINE_JUDGE
+        lamda();
+    #endif
 }
 
 // Questions to ask before submitting any code on OJ
@@ -122,89 +124,82 @@ void deb(F&& lamda){
  */
 void solve();
 int main(){
-	#ifndef ONLINE_JUDGE
-	freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
-    freopen("debug.txt","w",stderr);
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
     #endif
     fastIO;
-    // int t;
-    // int ctr=1;
-    // cin>>t;
-    // while(t--){
-    //     deb(
-    //         [&]{
-    //             cout<<"Case #"<<ctr<<" : \n";
-    //             cout.flush();
-    //             ctr++;
-    //         }
-    //     );
-    //     solve();
-    // }
-    // deb([]{
-    //     cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
-    // });
-    solve();
+    int t;
+    int ctr=1;
+    cin>>t;
+    while(t--){
+        deb(
+            [&]{
+                cout<<"Case #"<<ctr<<" : \n";
+                cout.flush();
+                ctr++;
+            }
+        );
+        solve();
+    }
+    deb([]{
+        cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
+    });
 }
-struct edge{
-    ll u,v,w;
-};
-int n,m;
-vector<edge> edges;
-vvll adj;
-vb vis(n+1,false);
-ll ninf = INT64_MIN;
-bool dfs(int v){
-    vis[v]=1;
-    if(v==n){
-        return 1;
+int setBitNumber(int n) {
+    int k = __builtin_clz(n);
+    return (31 - k);
+}
+int calc(vi &v,vi &pref_v,vi &_10_v,int &n,int &k){
+    deque<int> q;
+    int hi=1,lo=1;
+    int ans = INT_MAX;
+    while(hi<=n){
+        q.push_back(v[hi]);
+        if(q.size()>k){
+            q.pop_front();
+            lo++;
+        }
+        if(q.size()==k){
+            int _1= pref_v[hi] - pref_v[lo-1];
+            if(_1==0){
+                ans = min(ans,1);
+            }
+            else if(_1==k){
+                ans = min(ans,0);
+            }
+            else{
+                int x = 0;
+                if(q.front()==0){
+                    x++;
+                }
+                x+=(_10_v[hi] - _10_v[lo-1])*2;
+                ans=min(ans,x);
+            }
+        }
+        hi++;
     }
-    bool f = 0;
-    for(auto &c:adj[v]){
-        if(!vis[c])
-            f|=dfs(c);
-    }
-    return f;
+    return ans;
 }
 void solve(){
-    cin>>n>>m;
-    edges.resize(m);
-    adj.resize(n+1);
-    for(int i=0;i<m;i++){
-        int u,v,w;
-        cin>>u>>v>>w;
-        edges[i] = {u,v,w};
-        adj[u].eb(v);
+    ini(n) ini(k);
+    ins(s);
+    vi v(n+1),inv(n+1);
+    ff(i,1,n){
+        v[i]=s[i-1]-'0';
+        inv[i]=v[i]^1;
     }
-    vll d(n+1,ninf);
-    d[1]=0;
-    for(int i=1;i<n;i++){
-        for(int j = 0;j<m;j++){
-            // if(i==j) continue;
-            int u = edges[j].u;int v=edges[j].v;int w=edges[j].w;
-            if(d[u]==ninf) continue;
-            if(d[v] < d[u]+w){
-                d[v] = d[u]+w;
-            }
-        }
+    vi pref_v(n+1),pref_inv(n+1);
+    vi _10_v(n+1),_10_inv(n+1);
+    ff(i,1,n){
+        pref_v[i]=pref_v[i-1]+v[i];
+        pref_inv[i]=pref_inv[i-1]+inv[i];
     }
-    vb check(n+1);
-    check[n]=1;
-    for(int i=1;i<n;i++){
-        if(dfs(i)){
-            check[i]=1;
-        }
-        vis = vb(n+1);
+    ff(i,2,n){
+        if((!v[i]) && v[i-1]) _10_v[i]=_10_v[i-1]+1;
+        else _10_v[i]=_10_v[i-1];
+        if((!inv[i]) && inv[i-1]) _10_inv[i]=_10_inv[i-1]+1;
+        else _10_inv[i]=_10_inv[i-1];
     }
-    for(int j = 0;j<m;j++){
-        // if(i==j) continue;
-        ll u = edges[j].u;ll v=edges[j].v;ll w=edges[j].w;
-        if(d[u]==ninf) continue;
-        if(d[v] < d[u]+w){
-            if(check[v]){
-                cout<<-1<<"\n";
-                return;
-            }
-        }
-    }
-    cout<<d[n]<<"\n";
+    int ans = min(calc(v,pref_v,_10_v,n,k),1+calc(inv,pref_inv,_10_inv,n,k));
+    cout<<ans<<"\n";
 }
