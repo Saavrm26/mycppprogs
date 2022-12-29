@@ -1,1 +1,0 @@
-{"name":"Local: mexandarray","url":"d:\\c++\\codeforces\\practice\\mexandarray.cpp","tests":[{"id":1645902464322,"input":"4\n2\n1 2\n3\n2 0 1\n4\n2 0 5 1\n5\n0 1 1 0 1","output":"4\n14\n26\n48"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codeforces\\practice\\mexandarray.cpp","group":"local","local":true}

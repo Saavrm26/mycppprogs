@@ -1,1 +1,0 @@
-make && sudo -E valgrind --leak-check=full --main-stacksize=1024000000 ./Main

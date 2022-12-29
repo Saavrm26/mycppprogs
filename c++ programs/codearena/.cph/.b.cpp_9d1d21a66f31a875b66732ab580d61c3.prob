@@ -1,1 +1,0 @@
-{"name":"Local: b","url":"d:\\mycppprogs\\c++ programs\\codearena\\b.cpp","tests":[{"id":1650609453441,"input":"1\n2 2\n1 -1\n2 -1","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\mycppprogs\\c++ programs\\codearena\\b.cpp","group":"local","local":true}

@@ -1,1 +1,0 @@
-{"name":"Local: squarecounting774","url":"d:\\c++\\codeforces\\squarecounting774.cpp","tests":[{"id":1646402192598,"input":"5\n7 0\n1 1\n2 12\n3 12\n5 0","output":"0\n1\n3\n1\n6"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codeforces\\squarecounting774.cpp","group":"local","local":true}

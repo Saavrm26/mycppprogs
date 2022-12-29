@@ -1,1 +1,0 @@
-{"name":"Local: codedcp","url":"d:\\c++\\codechef\\starter29\\codedcp.cpp","tests":[{"id":1646844037625,"input":"4 2\n5 10 12 2\n1 2\n3 2 4 3\n3 1\n2 4","output":"0\n25\n0\n66"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codechef\\starter29\\codedcp.cpp","group":"local","local":true}

@@ -1,1 +1,0 @@
-{"name":"Local: deletion776","url":"d:\\c++\\codeforces\\deletion776.cpp","tests":[{"id":1646751258734,"input":"6\nabcde\nc\nabcde\nb\nx\ny\naaaaaaaaaaaaaaa\na\ncontest\nt\nabcabcabc\na","output":"YES\nNO\nNO\nYES\nYES\nYES"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codeforces\\deletion776.cpp","group":"local","local":true}

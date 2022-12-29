@@ -1,1 +1,0 @@
-{"name":"Local: balrev","url":"d:\\c++\\codechef\\starter30\\balrev.cpp","tests":[{"id":1647441901947,"input":"2\n5\n01100\n4\n0000\n","output":"00011\n0000\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codechef\\starter30\\balrev.cpp","group":"local","local":true}

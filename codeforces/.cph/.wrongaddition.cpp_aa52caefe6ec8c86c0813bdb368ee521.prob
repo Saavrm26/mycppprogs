@@ -1,1 +1,0 @@
-{"name":"Local: wrongaddition","url":"d:\\c++\\codeforces\\wrongaddition.cpp","tests":[{"id":1646721541518,"input":"7\n7236 1106911\n1 5\n108 112\n12345 1023412\n1 11\n1 20","output":"13465\n4\n-1\n90007\n10\n-1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\c++\\codeforces\\wrongaddition.cpp","group":"local","local":true}
