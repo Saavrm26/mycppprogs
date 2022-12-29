@@ -64,8 +64,22 @@ typedef map<int,pair<int,int>> mipii;
 // ll maximum(ll a,ll b){if(a>b) return a;else return b;}
 // ll absolute(ll a){if(a>=0)return a;else return a*-1;}
 // ll lcm (ll a, ll b) {return a / gcd(a, b) * b;}
-// ll mod_sub(ll a,ll b){ll mod=1e9+7;return ((a-b)%mod + mod) % mod;}
-// ll binpow(ll a, ll b) {ll res = 1;while (b > 0) {if (b & 1) res = res * a;a = a * a;b >>= 1;}return res;}
+ll mod = 1e9+7;
+ll binpow(ll x, ll y,ll M)
+{
+    if (y == 0)
+        return 1;
+    ll p = binpow(x, y / 2, M) % M;
+    p = (p * p) % M;
+    return (y % 2 == 0) ? p : (x * p) % M;
+}
+ll mod_sub(ll a,ll b){return ((a-b)%mod + mod) % mod;}
+ll mod_add(ll a,ll b){return ((a%mod) + (b%mod))%mod;}
+ll mod_mult(ll a,ll b){a = a%mod;b=b%mod; return ((a*b)%mod + mod)%mod;}
+ll mod_inverse(ll A, ll M)
+{
+	return binpow(A, M - 2, M);
+}
 // ll power_of_2(ll n,ll curr){ ll val = 1<<curr; if(n%val==0) return curr + power_of_2(n/val,curr+1); else{ if(n%2==0){ return 1+power_of_2(n/2,2); } return 0; } }
 // ld prec = 1e-7;
 // bool iseq(ld v1,ld v2){ return abs(v2 - v1)<= prec; }
@@ -99,78 +113,37 @@ void deb(F&& lamda){
 // Q3. Will your implementation be a barrier?
 // Remember:
 // Competition is with yourself
-
+/* stuff you should look for
+ * int overflow, array bounds
+ * special cases (n=1?)
+ * do smth instead of nothing and stay organized
+ * WRITE STUFF DOWN
+ * DON'T GET STUCK ON ONE APPROACH
+ */
 void solve();
-int main() {
-#ifndef ONLINE_JUDGE
-  freopen("input.txt", "r", stdin);
-  freopen("output.txt", "w", stdout);
-#endif
-  fastIO;
-  int t;
-  int ctr = 1;
-  cin >> t;
-  while (t--) {
-    deb([&] {
-      cout << "Case #" << ctr << " : \n";
-      cout.flush();
-      ctr++;
+int main(){
+	#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);freopen("output.txt", "w", stdout);
+    #endif
+    fastIO;
+    int t;
+    int ctr=1;
+    cin>>t;
+    while(t--){
+        deb(
+            [&]{
+                cout<<"Case #"<<ctr<<" : \n";
+                cout.flush();
+                ctr++;
+            }
+        );
+        solve();
+    }
+    deb([]{
+        cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC)*1000 << "ms\n";
     });
-    solve();
-  }
-  deb([] {
-    cerr << "Runtime is: " << (clock() * 1.0 / CLOCKS_PER_SEC) * 1000 << "ms\n";
-  });
 }
-void solve() {
-  ini(n) invi(v, n) vi vec;
-  vpii ans;
-  int sum = 0;
-  ff(i, 0, n - 1) { sum += v[i]; }
-  if (sum & 1) {
-    cout << -1 << "\n";
-    return;
-  }
-  int curr_0 = 0, sn = 0, s_i = 0;
-  bool start = 0;
-  ff(i, 0, n - 1) {
-    // if v[i] == 0
-    if (!v[i]) {
-      if (start)
-        curr_0++;
-      else
-        ans.eb(mp(i + 1, i + 1));
-      continue;
-    }
-    // if segment has not begun
-    if (!start) {
-      s_i = i;
-      sn = v[i];
-      start = 1;
-      continue;
-    }
-    // if segment has begun
-    int en = v[i];
-    if (sn != en) {
-      // 1 00....00 -1
-      ans.eb(mp(s_i + 1, i));
-      ans.eb(mp(i + 1, i + 1));
-    } else {
-      // 1 00000000 1
-      if (curr_0 & 1) {
-        ans.eb(mp(s_i + 1, s_i + 1));
-        ans.eb(mp(s_i + 2, i + 1));
-      } else {
-        ans.eb(mp(s_i + 1, i + 1));
-      }
-    }
-    start = 0;
-    curr_0 = 0;
-  }
-  // edge case 0000001; ...011 ...00-11 ..0100-1 etc covered
-  if (ans.back().second != n) {
-    ans.eb(mp(n, n));
-  }
-  cout << ans.size() << "\n";
-  ffa(i, ans) cout << i.fi << " " << i.se << "\n"; 
+#define xbet(a,l,r) (l<= a && a <= r)
+void solve(){
+	
 }

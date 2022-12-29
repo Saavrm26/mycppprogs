@@ -1,0 +1,1 @@
+{"breakpoints": {"line": {"/home/saarthak/Documents/mycppprogs/codeforces/practice/Main.cpp": [{"state": "ENABLED", "line": 185, "options": {}, "is_instruction_breakpoint": null}, {"state": "ENABLED", "line": 175, "options": {}, "is_instruction_breakpoint": null}]}, "function": [], "exception": {"filters": []}}, "session": {"user_choices": {}}, "variables": {"watches": []}}
